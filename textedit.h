@@ -4,6 +4,10 @@
 #include <QWidget>
 #include "ui_mainwindow.h"
 #include "cxsmalltext.h"
+#include "cxcolormenu.h"
+
+#include <QMenu>
+#include <QAction>
 
 class TextEdit : public QWidget
 {
@@ -17,6 +21,7 @@ private slots:
 	void onTextChanged() ;
 	void onSliderValueChanged(int) ;
 	void onPdf() ;
+	void onPrint() ;
 	void onMovePage(int page) ;
 	void onPrevPage() ;
 	void onNextPage() ;
@@ -30,6 +35,26 @@ private slots:
 	void onPreChanged( int id, bool isAdd ) ;
 	void onContentChanged(int) ;
 	void onSwapChapter( int s, int e ) ;
+	void onMoveContent( int index, QListWidgetItem* item ) ;
+	void onSave() ;
+	void onRequireColorMenu(CxColorWidget* w) ;
+	//////////////////////////////////////////////////////////////////////////
+	void currentCharFormatChanged(const QTextCharFormat &format);
+	void textBold();
+	void textUnderline();
+	void textItalic();
+	void textFamily(const QString &f);
+	void textSize(const QString &p);
+	void textColor();
+	void onTextLeft() ;
+	void onTextRight() ;
+	void onTextCenter() ;
+	void onShowTextFormat() ;
+	void onFontSizeIncrease() ;
+	void onFontSizeDecrease() ;
+	void onTextColorChanged(QColor col) ;
+	void onHightlightColorChanged(QColor col) ;
+	void onTextBackgroundColorChanged(QColor col) ;
 private:
 	void initUI() ;
 	void initConnection() ;
@@ -39,6 +64,13 @@ private:
 	void setEditable(bool on);
 	void switchContent(int id) ;
 	int getPageCount() ; 
+
+	void mergeFormatOnWordOrSelection(const QTextCharFormat &format);
+	void fontChanged(const QFont &f);
+	void colorChanged(const QColor &c);
+	void alignmentChanged(Qt::Alignment a);
+
+
 	Ui::Form_MainWindow ui ;
 	QString m_curBookName ;
 	QList<QString> m_chapterList ;
@@ -49,6 +81,8 @@ private:
 	CxSmallText* m_textDlg ;
 	QList<QStringList> m_contentList[2] ;
 	QList<QList<int>> m_contentTypeList[2] ;
+	bool m_isRemoteTextChange ;
+
 };
 
 #endif // TEXTEDIT_H

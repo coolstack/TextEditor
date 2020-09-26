@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1367</width>
-    <height>727</height>
+    <width>1401</width>
+    <height>728</height>
    </rect>
   </property>
   <property name="maximumSize">
@@ -18,6 +18,10 @@
   </property>
   <property name="windowTitle">
    <string>Form</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="textedit.qrc">
+    <normaloff>:/res/icon/icon.png</normaloff>:/res/icon/icon.png</iconset>
   </property>
   <property name="styleSheet">
    <string notr="true">QWidget
@@ -153,6 +157,126 @@ background:#c3c3c3;
             <property name="verticalSpacing">
              <number>0</number>
             </property>
+            <item row="0" column="11">
+             <widget class="QToolButton" name="tb_center">
+              <property name="minimumSize">
+               <size>
+                <width>40</width>
+                <height>40</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>40</width>
+                <height>40</height>
+               </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">QToolButton
+{
+background:white;
+}</string>
+              </property>
+              <property name="text">
+               <string>A-</string>
+              </property>
+              <property name="icon">
+               <iconset resource="textedit.qrc">
+                <normaloff>:/res/icon/textcenter.png</normaloff>:/res/icon/textcenter.png</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>32</width>
+                <height>32</height>
+               </size>
+              </property>
+              <property name="checkable">
+               <bool>true</bool>
+              </property>
+              <attribute name="buttonGroup">
+               <string notr="true">buttonGroup</string>
+              </attribute>
+             </widget>
+            </item>
+            <item row="0" column="9">
+             <widget class="QToolButton" name="tb_underline">
+              <property name="minimumSize">
+               <size>
+                <width>40</width>
+                <height>40</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>40</width>
+                <height>40</height>
+               </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">QToolButton
+{
+background:white;
+}</string>
+              </property>
+              <property name="text">
+               <string>U</string>
+              </property>
+              <property name="icon">
+               <iconset resource="textedit.qrc">
+                <normaloff>:/res/icon/textunder.png</normaloff>:/res/icon/textunder.png</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>32</width>
+                <height>32</height>
+               </size>
+              </property>
+              <property name="checkable">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="10">
+             <widget class="QToolButton" name="tb_left">
+              <property name="minimumSize">
+               <size>
+                <width>40</width>
+                <height>40</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>40</width>
+                <height>40</height>
+               </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">QToolButton
+{
+background:white;
+}</string>
+              </property>
+              <property name="text">
+               <string>A-</string>
+              </property>
+              <property name="icon">
+               <iconset resource="textedit.qrc">
+                <normaloff>:/res/icon/textleft.png</normaloff>:/res/icon/textleft.png</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>32</width>
+                <height>32</height>
+               </size>
+              </property>
+              <property name="checkable">
+               <bool>true</bool>
+              </property>
+              <attribute name="buttonGroup">
+               <string notr="true">buttonGroup</string>
+              </attribute>
+             </widget>
+            </item>
             <item row="0" column="18">
              <widget class="QToolButton" name="tb_pdf">
               <property name="minimumSize">
@@ -184,111 +308,6 @@ background:white;
                <size>
                 <width>32</width>
                 <height>32</height>
-               </size>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="16">
-             <widget class="QToolButton" name="tb_fill">
-              <property name="minimumSize">
-               <size>
-                <width>40</width>
-                <height>40</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>40</width>
-                <height>40</height>
-               </size>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">QToolButton
-{
-background:white;
-}</string>
-              </property>
-              <property name="text">
-               <string>A-</string>
-              </property>
-              <property name="icon">
-               <iconset resource="textedit.qrc">
-                <normaloff>:/res/icon/Back_color.png</normaloff>:/res/icon/Back_color.png</iconset>
-              </property>
-              <property name="iconSize">
-               <size>
-                <width>40</width>
-                <height>40</height>
-               </size>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="19">
-             <widget class="QToolButton" name="tb_print">
-              <property name="minimumSize">
-               <size>
-                <width>40</width>
-                <height>40</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>40</width>
-                <height>40</height>
-               </size>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">QToolButton
-{
-background:white;
-}</string>
-              </property>
-              <property name="text">
-               <string>A-</string>
-              </property>
-              <property name="icon">
-               <iconset resource="textedit.qrc">
-                <normaloff>:/res/icon/fileprint.png</normaloff>:/res/icon/fileprint.png</iconset>
-              </property>
-              <property name="iconSize">
-               <size>
-                <width>32</width>
-                <height>32</height>
-               </size>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="15">
-             <widget class="QToolButton" name="tb_highlight">
-              <property name="minimumSize">
-               <size>
-                <width>40</width>
-                <height>40</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>40</width>
-                <height>40</height>
-               </size>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">QToolButton
-{
-background:white;
-}</string>
-              </property>
-              <property name="text">
-               <string>A-</string>
-              </property>
-              <property name="icon">
-               <iconset resource="textedit.qrc">
-                <normaloff>:/res/icon/highlight_color.png</normaloff>:/res/icon/highlight_color.png</iconset>
-              </property>
-              <property name="iconSize">
-               <size>
-                <width>40</width>
-                <height>40</height>
                </size>
               </property>
              </widget>
@@ -331,8 +350,8 @@ background:white;
               </property>
              </widget>
             </item>
-            <item row="0" column="14">
-             <widget class="QToolButton" name="tb_textcolor">
+            <item row="0" column="19">
+             <widget class="QToolButton" name="tb_print">
               <property name="minimumSize">
                <size>
                 <width>40</width>
@@ -356,89 +375,13 @@ background:white;
               </property>
               <property name="icon">
                <iconset resource="textedit.qrc">
-                <normaloff>:/res/icon/font_color.png</normaloff>:/res/icon/font_color.png</iconset>
-              </property>
-              <property name="iconSize">
-               <size>
-                <width>40</width>
-                <height>40</height>
-               </size>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="10">
-             <widget class="QToolButton" name="tb_left">
-              <property name="minimumSize">
-               <size>
-                <width>40</width>
-                <height>40</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>40</width>
-                <height>40</height>
-               </size>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">QToolButton
-{
-background:white;
-}</string>
-              </property>
-              <property name="text">
-               <string>A-</string>
-              </property>
-              <property name="icon">
-               <iconset resource="textedit.qrc">
-                <normaloff>:/res/icon/textleft.png</normaloff>:/res/icon/textleft.png</iconset>
+                <normaloff>:/res/icon/fileprint.png</normaloff>:/res/icon/fileprint.png</iconset>
               </property>
               <property name="iconSize">
                <size>
                 <width>32</width>
                 <height>32</height>
                </size>
-              </property>
-              <property name="checkable">
-               <bool>true</bool>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="9">
-             <widget class="QToolButton" name="tb_underline">
-              <property name="minimumSize">
-               <size>
-                <width>40</width>
-                <height>40</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>40</width>
-                <height>40</height>
-               </size>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">QToolButton
-{
-background:white;
-}</string>
-              </property>
-              <property name="text">
-               <string>U</string>
-              </property>
-              <property name="icon">
-               <iconset resource="textedit.qrc">
-                <normaloff>:/res/icon/textunder.png</normaloff>:/res/icon/textunder.png</iconset>
-              </property>
-              <property name="iconSize">
-               <size>
-                <width>32</width>
-                <height>32</height>
-               </size>
-              </property>
-              <property name="checkable">
-               <bool>true</bool>
               </property>
              </widget>
             </item>
@@ -480,41 +423,25 @@ background:white;
               </property>
              </widget>
             </item>
-            <item row="0" column="11">
-             <widget class="QToolButton" name="tb_center">
+            <item row="0" column="2">
+             <widget class="QFontComboBox" name="cb_font">
               <property name="minimumSize">
                <size>
-                <width>40</width>
+                <width>0</width>
                 <height>40</height>
                </size>
               </property>
               <property name="maximumSize">
                <size>
-                <width>40</width>
+                <width>16777215</width>
                 <height>40</height>
                </size>
               </property>
               <property name="styleSheet">
-               <string notr="true">QToolButton
+               <string notr="true">QFontComboBox
 {
 background:white;
 }</string>
-              </property>
-              <property name="text">
-               <string>A-</string>
-              </property>
-              <property name="icon">
-               <iconset resource="textedit.qrc">
-                <normaloff>:/res/icon/textcenter.png</normaloff>:/res/icon/textcenter.png</iconset>
-              </property>
-              <property name="iconSize">
-               <size>
-                <width>32</width>
-                <height>32</height>
-               </size>
-              </property>
-              <property name="checkable">
-               <bool>true</bool>
               </property>
              </widget>
             </item>
@@ -554,6 +481,9 @@ background:white;
               <property name="checkable">
                <bool>true</bool>
               </property>
+              <attribute name="buttonGroup">
+               <string notr="true">buttonGroup</string>
+              </attribute>
              </widget>
             </item>
             <item row="0" column="20">
@@ -588,6 +518,38 @@ background:white;
                 <width>32</width>
                 <height>32</height>
                </size>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="4">
+             <widget class="QToolButton" name="tb_font_inc">
+              <property name="minimumSize">
+               <size>
+                <width>40</width>
+                <height>40</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>40</width>
+                <height>40</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <pointsize>14</pointsize>
+                <weight>75</weight>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">QToolButton
+{
+background:white;
+}</string>
+              </property>
+              <property name="text">
+               <string>A+</string>
               </property>
              </widget>
             </item>
@@ -626,6 +588,28 @@ background:white;
               </property>
              </widget>
             </item>
+            <item row="0" column="3">
+             <widget class="QComboBox" name="cb_fontsize">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>40</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>60</width>
+                <height>40</height>
+               </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">QComboBox
+{
+background:white;
+}</string>
+              </property>
+             </widget>
+            </item>
             <item row="0" column="1">
              <widget class="QToolButton" name="tb_redo">
               <property name="minimumSize">
@@ -661,28 +645,6 @@ background:white;
               </property>
              </widget>
             </item>
-            <item row="0" column="2">
-             <widget class="QFontComboBox" name="cb_font">
-              <property name="minimumSize">
-               <size>
-                <width>0</width>
-                <height>40</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>16777215</width>
-                <height>40</height>
-               </size>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">QFontComboBox
-{
-background:white;
-}</string>
-              </property>
-             </widget>
-            </item>
             <item row="0" column="13">
              <spacer name="horizontalSpacer_3">
               <property name="orientation">
@@ -698,60 +660,6 @@ background:white;
                </size>
               </property>
              </spacer>
-            </item>
-            <item row="0" column="4">
-             <widget class="QToolButton" name="tb_font_inc">
-              <property name="minimumSize">
-               <size>
-                <width>40</width>
-                <height>40</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>40</width>
-                <height>40</height>
-               </size>
-              </property>
-              <property name="font">
-               <font>
-                <pointsize>14</pointsize>
-                <weight>75</weight>
-                <bold>true</bold>
-               </font>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">QToolButton
-{
-background:white;
-}</string>
-              </property>
-              <property name="text">
-               <string>A+</string>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="3">
-             <widget class="QComboBox" name="cb_fontsize">
-              <property name="minimumSize">
-               <size>
-                <width>0</width>
-                <height>40</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>60</width>
-                <height>40</height>
-               </size>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">QComboBox
-{
-background:white;
-}</string>
-              </property>
-             </widget>
             </item>
             <item row="0" column="5">
              <widget class="QToolButton" name="tb_font_dec">
@@ -816,6 +724,54 @@ background:white;
                </size>
               </property>
              </spacer>
+            </item>
+            <item row="0" column="15">
+             <widget class="CxColorWidget" name="w_highlightcolor" native="true">
+              <property name="minimumSize">
+               <size>
+                <width>45</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>45</width>
+                <height>16777215</height>
+               </size>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="14">
+             <widget class="CxColorWidget" name="w_textcolor" native="true">
+              <property name="minimumSize">
+               <size>
+                <width>45</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>45</width>
+                <height>16777215</height>
+               </size>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="16">
+             <widget class="CxColorWidget" name="w_backgroundcolor" native="true">
+              <property name="minimumSize">
+               <size>
+                <width>45</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>45</width>
+                <height>16777215</height>
+               </size>
+              </property>
+             </widget>
             </item>
            </layout>
           </widget>
@@ -1134,7 +1090,7 @@ background:white;
                    <number>0</number>
                   </property>
                   <item row="0" column="0">
-                   <widget class="QTextEdit" name="textEdit">
+                   <widget class="CxTextEdit" name="textEdit">
                     <property name="sizePolicy">
                      <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
                       <horstretch>0</horstretch>
@@ -1498,7 +1454,7 @@ border: 1px solid black;
           <number>0</number>
          </property>
          <item row="0" column="0">
-          <widget class="QToolButton" name="toolButton_2">
+          <widget class="QToolButton" name="tb_menu_file">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
              <horstretch>0</horstretch>
@@ -1523,7 +1479,7 @@ border:0px;
           </widget>
          </item>
          <item row="0" column="1">
-          <widget class="QToolButton" name="toolButton_3">
+          <widget class="QToolButton" name="tb_menu_text">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
              <horstretch>0</horstretch>
@@ -1771,9 +1727,23 @@ background:#e9e9e9;
    <extends>QListWidget</extends>
    <header>cxchapterlist.h</header>
   </customwidget>
+  <customwidget>
+   <class>CxTextEdit</class>
+   <extends>QTextEdit</extends>
+   <header>cxtextedit.h</header>
+  </customwidget>
+  <customwidget>
+   <class>CxColorWidget</class>
+   <extends>QWidget</extends>
+   <header>cxcolorwidget.h</header>
+   <container>1</container>
+  </customwidget>
  </customwidgets>
  <resources>
   <include location="textedit.qrc"/>
  </resources>
  <connections/>
+ <buttongroups>
+  <buttongroup name="buttonGroup"/>
+ </buttongroups>
 </ui>

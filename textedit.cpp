@@ -6,6 +6,15 @@
 #include <QMessageBox>
 #include <QObject>
 #include <QScrollBar>
+#include <QColorDialog>
+#include <QFontDatabase>
+#include <QPrinter>
+#include <QFileDialog>
+#include <QPalette>
+#include <QFileInfo>
+#include <QFile>
+#include <QTextStream>
+
 TextEdit::TextEdit(QWidget *parent /* = 0 */)
 {
 	ui.setupUi(this) ;
@@ -16,13 +25,16 @@ TextEdit::TextEdit(QWidget *parent /* = 0 */)
 
 	addChapter("one") ;
 	addChapter("two") ;
-	addChapter("three") ;
+//	addChapter("three") ;
+	ui.lw_res_1->addText("AAAA") ;
+	ui.lw_res_1->addText("BBBB") ;
 //	for( int i = 0 ; i < 10; i++ ) addChapter(QString("Chapter%1").arg(i)) ;
 //	ui.lw_chapter_list->setCurrentRow(0) ;
 
 	m_textDlg = new CxSmallText ;
 	ui.lw_res_1->setIndex(0) ;
 	ui.lw_res_2->setIndex(1) ;
+	m_isRemoteTextChange = false ;
 }
 
 void TextEdit::initUI()
@@ -32,6 +44,30 @@ void TextEdit::initUI()
 	int h = 9.84*myWidget->logicalDpiY() ;
 	m_pageSize = QSize(w,h) ;
 	ui.textEdit->setFixedWidth(w) ;
+	ui.cb_fontsize->setEditable(true);
+	ui.w_textcolor->setIndex(TEXTCOLOR) ;
+	ui.w_highlightcolor->setIndex(HIGHLIGHTCOLOR) ;
+	ui.w_backgroundcolor->setIndex(FOREGROUNDCOLOR) ;
+
+	QMenu* fileMenu = new QMenu ;
+	QMenu* textMenu = new QMenu;
+	fileMenu->setFont(QFont("impact",16)) ;
+	QAction* newAction = fileMenu->addAction("New") ;
+	QAction* saveAction = fileMenu->addAction("Save") ;
+	QMenu saveMenu ;
+	saveMenu.setTitle("Save As") ;
+	fileMenu->addMenu(&saveMenu) ;
+	ui.tb_menu_file->setMenu(fileMenu) ;
+
+	textMenu->setFont(QFont("impact",16)) ;
+	QAction* collectAction = textMenu->addAction("Collect All") ;
+	QAction* autoSaveAction = textMenu->addAction("AutoSave") ;
+	autoSaveAction->setChecked(true) ;
+	ui.tb_menu_text->setMenu(textMenu) ;
+
+	connect( newAction, SIGNAL(triggered()), this, SLOT(onAddChapter())) ;
+	connect( ui.tb_menu_text, SIGNAL(clicked()),ui.tb_menu_text, SLOT(showMenu())) ;
+	connect( ui.tb_menu_file, SIGNAL(clicked()),ui.tb_menu_file, SLOT(showMenu())) ;
 }
 
 void TextEdit::initConnection()
@@ -41,6 +77,8 @@ void TextEdit::initConnection()
 	connect( ui.lw_chapter_list, SIGNAL(__swap(int,int)), this, SLOT(onSwapChapter(int,int)) );
 	connect( ui.lw_res_1, SIGNAL(__changed(int)), this, SLOT(onContentChanged(int))) ;
 	connect( ui.lw_res_2, SIGNAL(__changed(int)), this, SLOT(onContentChanged(int))) ;
+	connect( ui.lw_res_1, SIGNAL(__moveContent(int,QListWidgetItem*)), this, SLOT(onMoveContent(int,QListWidgetItem*))) ;
+	connect( ui.lw_res_2, SIGNAL(__moveContent(int,QListWidgetItem*)), this, SLOT(onMoveContent(int,QListWidgetItem*))) ;
 	connect( ui.tb_start, SIGNAL(clicked()), this, SLOT(onStartNewBook()));
 	connect( ui.tb_add_chapter, SIGNAL(clicked()), this, SLOT(onAddChapter())) ;
 	connect( ui.lw_chapter_list, SIGNAL(__selectChapter(int)), this, SLOT(onSelectChapter(int))) ;
@@ -56,7 +94,8 @@ void TextEdit::initConnection()
 	connect( ui.tb_redo, SIGNAL(clicked()), this, SLOT(onRedo())) ;
 	connect( ui.tb_next_chapter, SIGNAL(clicked()), ui.lw_chapter_list, SLOT(onNext())) ;
 	connect( ui.tb_prev_chapter, SIGNAL(clicked()), ui.lw_chapter_list, SLOT(onPrevious())) ;
-
+	connect(ui.tb_pdf, SIGNAL(clicked()), this, SLOT(onPdf())) ;
+	connect(ui.tb_print, SIGNAL(clicked()), this, SLOT(onPrint())) ;
 	for( int i = 1; i <= 5; i++ )
 	{
 		CxPageLabel* lb = (CxPageLabel*)(findChild<QLabel*>(QString("lb_page_%1").arg(i)));
@@ -64,13 +103,45 @@ void TextEdit::initConnection()
 		connect( lb, SIGNAL(__movePage(int)), this, SLOT(onMovePage(int))) ;
 	}
 
+	QFontDatabase db;
+	foreach(int size, db.standardSizes())
+		ui.cb_fontsize->addItem(QString::number(size));
+
+	/*
+	connect(ui.textEdit, SIGNAL(currentCharFormatChanged(QTextCharFormat)),
+		this, SLOT(currentCharFormatChanged(QTextCharFormat)));
+	fontChanged(ui.textEdit->font());
+	colorChanged(ui.textEdit->textColor());
+	alignmentChanged(ui.textEdit->alignment());
+	connect(ui.tb_textcolor, SIGNAL(clicked()), this, SLOT(textColor()));
+	*/
+	connect(ui.textEdit, SIGNAL(__showTextFormat()), this, SLOT(onShowTextFormat())) ;
+	connect(ui.textEdit, SIGNAL(cursorPositionChanged()),this, SLOT(onShowTextFormat()));
+	connect(ui.cb_font, SIGNAL(activated(QString)), this, SLOT(textFamily(QString)));
+	connect(ui.cb_fontsize, SIGNAL(activated(QString)), this, SLOT(textSize(QString)));
+	connect(ui.tb_bold, SIGNAL(clicked()), this, SLOT(textBold()));
+	connect(ui.tb_italic, SIGNAL(clicked()), this, SLOT(textItalic()));
+	connect(ui.tb_underline, SIGNAL(clicked()), this, SLOT(textUnderline()));
+	connect(ui.tb_left, SIGNAL(clicked()), this, SLOT(onTextLeft()));
+	connect(ui.tb_center, SIGNAL(clicked()), this, SLOT(onTextCenter()));
+	connect(ui.tb_right, SIGNAL(clicked()), this, SLOT(onTextRight()));
+	connect(ui.tb_font_inc, SIGNAL(clicked()), this, SLOT(onFontSizeIncrease())) ;
+	connect(ui.tb_font_dec, SIGNAL(clicked()), this, SLOT(onFontSizeDecrease())) ;
+	connect(ui.w_textcolor, SIGNAL(__requireMenu(CxColorWidget*)),this, SLOT(onRequireColorMenu(CxColorWidget*))) ;
+	connect(ui.w_textcolor,SIGNAL(__colorChanged(QColor)),this,SLOT(onTextColorChanged(QColor))); 
+
+	connect(ui.w_highlightcolor, SIGNAL(__requireMenu(CxColorWidget*)),this, SLOT(onRequireColorMenu(CxColorWidget*))) ;
+	connect(ui.w_highlightcolor,SIGNAL(__colorChanged(QColor)),this,SLOT(onHightlightColorChanged(QColor))); 
+
+	connect(ui.w_backgroundcolor, SIGNAL(__requireMenu(CxColorWidget*)),this, SLOT(onRequireColorMenu(CxColorWidget*))) ;
+	connect(ui.w_backgroundcolor,SIGNAL(__colorChanged(QColor)),this,SLOT(onTextBackgroundColorChanged(QColor))); 
 }
 
 void TextEdit::onAddChapter()
 {
 	bool ok;
 	QString text = QInputDialog::getText(NULL, tr("Create Chapter"),
-		tr("Chapter Name:"), QLineEdit::Normal, QDir::home().dirName(), &ok);
+		tr("Chapter Name:"), QLineEdit::Normal, "", &ok);
 	if (ok && !text.isEmpty())
 	{
 		addChapter(text) ;
@@ -82,15 +153,23 @@ void TextEdit::addChapter(QString text)
 	setEditable(true) ;
 	m_chapterList << "" ;
 	QTextDocument* doc = new QTextDocument ;
+//	doc->setDefaultStyleSheet("QTextDocument{background:red;}") ;
 	m_docList << doc ;
 	//		doc->setTextWidth(m_pageSize.width()) ;
 	doc->setDefaultFont(QFont("Arial",11)) ;
 	doc->setPageSize(m_pageSize) ;
 	ui.lw_chapter_list->addChapter(text) ;
+
+//	doc->setDefaultStyleSheet("body { color : green; background-color : black; }");
 }
 
 void TextEdit::onStartNewBook()
 {
+	if( m_curBookName.length() )
+	{
+		onSave() ;
+		return ;
+	}
 	bool ok;
 	QString text = QInputDialog::getText(NULL, tr("Create New Book"),
 		tr("Book Name:"), QLineEdit::Normal, QDir::home().dirName(), &ok);
@@ -106,6 +185,7 @@ void TextEdit::startBook(QString str)
 	init() ;
 	ui.w_top->setEnabled(true) ;
 	setWindowTitle(m_curBookName) ;
+	ui.tb_start->setText("Save") ;
 }
 
 void TextEdit::init()
@@ -134,15 +214,29 @@ void TextEdit::setEditable(bool on)
 
 void TextEdit::onSelectChapter(int id)
 {
+	ui.lbl_status->setText(QString("%1").arg(id)) ;
+	if( !m_docList.count() ) return ;
 	m_curChapter = id ;
+//	QMessageBox::information(NULL,"",QString("%1 %2").arg(id).arg(m_docList.count())) ;
 	ui.textEdit->setDocument(m_docList[id]) ;
 	onTextChanged() ;
 	ui.lw_res_1->setData(m_contentList[0][id],m_contentTypeList[0][id]) ;
 	ui.lw_res_2->setData(m_contentList[1][id],m_contentTypeList[1][id]) ;
+
+	/*
+	QPalette p = ui.textEdit->palette(); // define pallete for textEdit.. 
+	p.setColor(QPalette::Base, Qt::red); // set color "Red" for textedit base
+	p.setColor(QPalette::Text, Qt::green); // set text color which is selected from color pallete
+	ui.textEdit->setPalette(p);
+	ui.textEdit->setStyleSheet("QTextEdit{background:green;}") ;
+	ui.textEdit->setTextBackgroundColor(Qt::red) ;
+	*/
 }
 
 int TextEdit::getPageCount()
 {
+//	QMessageBox::information(NULL,"","A") ;
+	if( !m_docList.count() ) return 1 ;
 	int h = m_docList[m_curChapter]->size().height() ;
 	int pg = h/m_pageSize.height() ;
 	if( pg*m_pageSize.height() < h ) pg++ ;
@@ -151,6 +245,7 @@ int TextEdit::getPageCount()
 
 void TextEdit::onTextChanged()
 {
+//	QMessageBox::information(NULL,"","A") ;
 	int pg = getPageCount() ;
 //	QMessageBox::information(NULL,"",QString::number(pg)) ;
 	for( int i = 1; i <= 5; i++ )
@@ -168,7 +263,6 @@ void TextEdit::onSliderValueChanged(int val)
 	val = val + ui.textEdit->verticalScrollBar()->pageStep() ;
 	m_curPage = val/m_pageSize.height() ;
 	if( m_curPage*m_pageSize.height() <= val ) m_curPage++ ;
-	ui.lbl_status->setText(QString("page:%1  %2 (%3) docH:%4").arg(m_curPage).arg(val).arg(ui.textEdit->verticalScrollBar()->maximum()).arg(m_docList[m_curChapter]->size().height())) ;
 	for( int i = 1; i <= 5; i++ )
 	{
 		CxPageLabel* lb = (CxPageLabel*)(findChild<QLabel*>(QString("lb_page_%1").arg(i)));
@@ -198,7 +292,33 @@ void TextEdit::onNextPage()
 
 void TextEdit::onUploadFile()
 {
-
+	QString fileName = QFileDialog::getOpenFileName(this, tr("Upload File"),
+		"",
+		tr("Files (*.txt *.png *.jpg)")) ;
+	if( fileName.length() == 0 ) return ;
+	QString suf = QFileInfo(fileName).suffix().toLower() ;
+	CxResListWidget* w = ui.lw_res_1 ;
+	if( m_curLWTab ) w = ui.lw_res_2 ;
+	if(suf.contains("txt"))
+	{
+		QString str;
+		QFile file(fileName) ;
+		file.open(QIODevice::ReadOnly) ;
+		QTextStream in(&file);
+		str = in.readAll() ;
+		file.close() ;
+		w->addText(str) ;
+	}
+	if(suf.contains("png") || suf.contains("jpg"))
+	{
+		QPixmap pix(fileName) ;
+		if( pix.isNull() )
+		{
+			QMessageBox::information(NULL,"","Invalid image format") ;
+			return ;
+		}
+		w->addImage(fileName) ;
+	}
 }
 
 void TextEdit::onCreateText()
@@ -245,31 +365,17 @@ void TextEdit::switchContent(int id)
 
 void TextEdit::onUndo()
 {
+	ui.textEdit->undo() ;
+	onShowTextFormat() ;
 }
 
 void TextEdit::onRedo()
 {
-
+	ui.textEdit->redo() ;
+	onShowTextFormat() ;
 }
 
 //////////////////////////////////////////////////////////////////////////
-void TextEdit::onPdf()
-{
-	/*
-	QPrinter printer(QPrinter::ScreenResolution);
-	printer.setPaperSize(QPrinter::A4);
-	printer.setOutputFormat(QPrinter::PdfFormat);
-	printer.setOutputFileName( fileName );
-	// printer.setPageMargins(0.925, 0.8, 0.5, 0.8, QPrinter::Inch);
-
-	QSizeF paperSize;
-	paperSize.setWidth(printer.width());
-	paperSize.setHeight(printer.height());
-	document->setHtml(html);
-	document->setPageSize(paperSize); // the document needs a valid PageSize
-	document->print(&printer);
-	*/
-}
 
 void TextEdit::onContentChanged(int id)
 {
@@ -301,6 +407,9 @@ void TextEdit::onPreChanged( int id, bool isAdd )
 		m_contentTypeList[0].takeAt(id) ;
 		m_contentList[1].takeAt(id) ;
 		m_contentTypeList[1].takeAt(id) ;
+//		QMessageBox::information(NULL,"",QString("%1 %2").arg(m_docList.count()).arg(id)) ;
+		m_docList.takeAt(id) ;
+//		QMessageBox::information(NULL,"","N") ;
 	}
 }
 
@@ -311,11 +420,268 @@ void TextEdit::onSwapChapter(int s, int e)
 	m_contentTypeList[1].swap(s,e) ;
 	m_contentList[0].swap(s,e) ;
 	m_contentList[1].swap(s,e) ;
+	m_docList.swap(s,e) ;
 }
 
 void TextEdit::onChapterChanged()
 {
 	m_chapterList = ui.lw_chapter_list->chapterList() ;
 	int cnt = m_chapterList.count() ;
-	setEnabled(cnt) ;
+//	setEnabled(cnt) ;
+	ui.w_main->setEnabled(cnt) ;
 }
+
+void TextEdit::onMoveContent( int index, QListWidgetItem* item )
+{
+	if( index == 0 )
+	{
+		ui.lw_res_2->addText(item->data(Qt::EditRole).toString()) ;
+	}
+	else
+	{
+		ui.lw_res_1->addText(item->data(Qt::EditRole).toString()) ;
+	}
+}
+
+//////////////////////////////////////////////////////////////////////////
+
+void TextEdit::fontChanged(const QFont &f)
+{
+	ui.cb_font->setCurrentIndex(ui.cb_font->findText(QFontInfo(f).family()));
+	ui.cb_fontsize->setCurrentIndex(ui.cb_fontsize->findText(QString::number(f.pointSize())));
+	ui.tb_bold->setChecked(f.bold());
+	ui.tb_italic->setChecked(f.italic());
+	ui.tb_underline->setChecked(f.underline());
+}
+
+void TextEdit::colorChanged(const QColor &c)
+{
+	QPixmap pix(16, 16);
+	pix.fill(c);
+//	ui.tb_textcolor->setIcon(pix);
+}
+
+void TextEdit::alignmentChanged(Qt::Alignment a)
+{
+	if (a & Qt::AlignLeft)
+		ui.tb_left->setChecked(true);
+	else if (a & Qt::AlignHCenter)
+		ui.tb_center->setChecked(true);
+	else if (a & Qt::AlignRight)
+		ui.tb_right->setChecked(true);
+}
+
+void TextEdit::mergeFormatOnWordOrSelection(const QTextCharFormat &format)
+{
+	QTextCursor cursor = ui.textEdit->textCursor();
+	if (!cursor.hasSelection())
+		cursor.select(QTextCursor::WordUnderCursor);
+	cursor.mergeCharFormat(format);
+	ui.textEdit->mergeCurrentCharFormat(format);
+}
+
+void TextEdit::currentCharFormatChanged(const QTextCharFormat &format)
+{
+	fontChanged(format.font());
+	colorChanged(format.foreground().color());
+}
+
+void TextEdit::onShowTextFormat()
+{
+	QTextCursor cursor = ui.textEdit->textCursor() ;
+	m_isRemoteTextChange = true ;
+	QTextCharFormat cfmt = cursor.charFormat() ;
+	QFont f = cfmt.font() ;
+	QTextBlockFormat bfmt = cursor.blockFormat() ; 
+	ui.tb_bold->setChecked(cfmt.fontWeight()==QFont::Bold) ;
+	ui.tb_italic->setChecked(cfmt.fontItalic()) ;
+	ui.tb_underline->setChecked(cfmt.fontUnderline()) ;
+	ui.tb_left->setChecked(bfmt.alignment()==Qt::AlignLeft) ;
+	ui.tb_right->setChecked(bfmt.alignment()==Qt::AlignRight) ;
+	ui.tb_center->setChecked(bfmt.alignment()==Qt::AlignHCenter) ;
+	ui.cb_font->setCurrentIndex(ui.cb_font->findText(QFontInfo(f).family()));
+	ui.cb_fontsize->setCurrentIndex(ui.cb_fontsize->findText(QString::number(f.pointSize())));
+//	ui.w_textcolor->setColor(cfmt.foreground().color()) ;
+	m_isRemoteTextChange = false ;
+//	alignmentChanged(ui.textEdit->alignment());
+}
+
+void TextEdit::textBold()
+{
+	if( m_isRemoteTextChange ) return ;
+	QTextCharFormat fmt;
+	fmt.setFontWeight(ui.tb_bold->isChecked() ? QFont::Bold : QFont::Normal);
+	QTextCursor cursor = ui.textEdit->textCursor();
+	if (!cursor.hasSelection())
+		cursor.select(QTextCursor::WordUnderCursor);
+	cursor.mergeCharFormat(fmt);
+
+//	mergeFormatOnWordOrSelection(fmt);
+}
+
+void TextEdit::textUnderline()
+{
+	if( m_isRemoteTextChange ) return ;
+	QTextCharFormat fmt;
+	fmt.setFontUnderline(ui.tb_underline->isChecked());
+	QTextCursor cursor = ui.textEdit->textCursor();
+	if (!cursor.hasSelection())
+		cursor.select(QTextCursor::WordUnderCursor);
+	cursor.mergeCharFormat(fmt);
+}
+
+void TextEdit::textItalic()
+{
+	if( m_isRemoteTextChange ) return ;
+	QTextCharFormat fmt;
+	fmt.setFontItalic(ui.tb_italic->isChecked());
+	QTextCursor cursor = ui.textEdit->textCursor();
+	if (!cursor.hasSelection())
+		cursor.select(QTextCursor::WordUnderCursor);
+	cursor.mergeCharFormat(fmt);
+}
+
+void TextEdit::textFamily(const QString &f)
+{
+	if( m_isRemoteTextChange ) return ;
+	QTextCharFormat fmt;
+	fmt.setFontFamily(f);
+	QTextCursor cursor = ui.textEdit->textCursor();
+	cursor.mergeCharFormat(fmt);
+//	mergeFormatOnWordOrSelection(fmt);
+}
+
+void TextEdit::textSize(const QString &p)
+{
+	if( m_isRemoteTextChange ) return ;
+	qreal pointSize = p.toFloat();
+	if (p.toFloat() > 0) {
+		QTextCharFormat fmt;
+		fmt.setFontPointSize(pointSize);
+		QTextCursor cursor = ui.textEdit->textCursor();
+		cursor.mergeCharFormat(fmt);
+//		mergeFormatOnWordOrSelection(fmt);
+	}
+}
+
+void TextEdit::onTextColorChanged(QColor col)
+{
+	QTextCharFormat fmt;
+	fmt.setForeground(col);
+	QTextCursor cursor = ui.textEdit->textCursor();
+	cursor.mergeCharFormat(fmt);
+}
+
+void TextEdit::textColor()
+{
+	QColor col = QColorDialog::getColor(ui.textEdit->textColor(), this);
+	if (!col.isValid())
+		return;
+	QTextCharFormat fmt;
+	fmt.setForeground(col);
+	mergeFormatOnWordOrSelection(fmt);
+	colorChanged(col);
+}
+
+void TextEdit::onTextLeft()
+{
+	if( m_isRemoteTextChange ) return ;
+	ui.textEdit->setAlignment(Qt::AlignLeft | Qt::AlignAbsolute);
+}
+
+void TextEdit::onTextRight()
+{
+	if( m_isRemoteTextChange ) return ;
+	ui.textEdit->setAlignment(Qt::AlignRight | Qt::AlignAbsolute);
+}
+
+void TextEdit::onTextCenter()
+{
+	if( m_isRemoteTextChange ) return ;
+	ui.textEdit->setAlignment(Qt::AlignHCenter);
+}
+
+void TextEdit::onFontSizeIncrease()
+{
+// 	int cur = ui.cb_fontsize->currentText().toInt() ;
+// 	QMessageBox::information(NULL,"",QString::number(cur)) ;
+// 	cur += 2 ;
+	QTextCursor cursor = ui.textEdit->textCursor() ;
+	int cur = cursor.charFormat().font().pointSize() ;
+	cur += 2 ;
+	QTextCharFormat fmt;
+	fmt.setFontPointSize(cur);
+	cursor.mergeCharFormat(fmt);
+	int id = ui.cb_fontsize->findText(QString::number(cur)) ;
+	if( id != -1 ) ui.cb_fontsize->setCurrentIndex(id);
+	else ui.cb_fontsize->setEditText(QString::number(cur));
+}
+
+void TextEdit::onFontSizeDecrease()
+{
+	QTextCursor cursor = ui.textEdit->textCursor() ;
+	int cur = cursor.charFormat().font().pointSize() ;
+	if( cur < 4 ) return ;
+	cur -= 2 ;
+	QTextCharFormat fmt;
+	fmt.setFontPointSize(cur);
+	cursor.mergeCharFormat(fmt);
+	int id = ui.cb_fontsize->findText(QString::number(cur)) ;
+	if( id != -1 ) ui.cb_fontsize->setCurrentIndex(id);
+	else ui.cb_fontsize->setEditText(QString::number(cur));
+}
+
+void TextEdit::onSave()
+{
+	ui.tb_save->setEnabled(false) ;
+}
+
+void TextEdit::onRequireColorMenu(CxColorWidget* w)
+{
+	CxColorMenu menu(this) ;
+	QRect rc = w->geometry() ;
+	QPoint st = rc.topLeft() ;
+	st = w->mapToGlobal(QPoint(0,0)) ;
+	menu.setGeometry(st.x(),st.y()+w->height()+5,COLORMENUW,COLORMENUH) ;
+	if ( menu.exec() == QDialog::Accepted )
+	{
+		w->setColor(menu.myColor()) ;
+	}
+}
+
+void TextEdit::onTextBackgroundColorChanged(QColor col)
+{
+	ui.textEdit->setStyleSheet(QString("QTextEdit{background:%1;}").arg(col.name())) ;
+}
+
+void TextEdit::onHightlightColorChanged(QColor col)
+{
+	QTextCharFormat fmt;
+	fmt.setBackground(col);
+	QTextCursor cursor = ui.textEdit->textCursor();
+	cursor.mergeCharFormat(fmt);
+}
+//////////////////////////////////////////////////////////////////////////
+
+void TextEdit::onPdf()
+{
+	QString fileName = QFileDialog::getSaveFileName(this, tr("Save to PDF"),"",tr("Pdf files (*.pdf)"));	
+	if( fileName.isEmpty() ) return ;
+	QPrinter printer(QPrinter::ScreenResolution);
+	printer.setPaperSize(QPrinter::B5);
+	printer.setOutputFormat(QPrinter::PdfFormat);
+	printer.setOutputFileName( fileName );
+	printer.setPageMargins(0.3, 0.3, 0.3, 0.3, QPrinter::Inch);
+
+	QSizeF paperSize;
+	paperSize.setWidth(printer.width());
+	paperSize.setHeight(printer.height());
+	ui.textEdit->document()->setPageSize(paperSize); // the document needs a valid PageSize
+	ui.textEdit->document()->print(&printer);
+	QMessageBox::information(NULL,"","Saved to PDF") ;
+}
+
+void TextEdit::onPrint()
+{
+}
+

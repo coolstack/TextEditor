@@ -30,6 +30,7 @@ protected:
 
 private:
 	QStringList m_chapterList ;
+	bool m_isRemoteSelection ;
 };
 
 #endif // CXCHAPTERLIST_H

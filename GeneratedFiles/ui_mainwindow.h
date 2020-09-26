@@ -19,12 +19,13 @@
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QSpacerItem>
-#include <QtWidgets/QTextEdit>
 #include <QtWidgets/QToolButton>
 #include <QtWidgets/QWidget>
 #include "cxchapterlist.h"
+#include "cxcolorwidget.h"
 #include "cxpagelabel.h"
 #include "cxreslistwidget.h"
+#include "cxtextedit.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -41,27 +42,27 @@ public:
     QGridLayout *gridLayout_6;
     QWidget *w_text_control;
     QGridLayout *gridLayout_8;
-    QToolButton *tb_pdf;
-    QToolButton *tb_fill;
-    QToolButton *tb_print;
-    QToolButton *tb_highlight;
-    QToolButton *tb_italic;
-    QToolButton *tb_textcolor;
-    QToolButton *tb_left;
-    QToolButton *tb_underline;
-    QToolButton *tb_bold;
     QToolButton *tb_center;
+    QToolButton *tb_underline;
+    QToolButton *tb_left;
+    QToolButton *tb_pdf;
+    QToolButton *tb_italic;
+    QToolButton *tb_print;
+    QToolButton *tb_bold;
+    QFontComboBox *cb_font;
     QToolButton *tb_right;
     QToolButton *tb_save;
-    QToolButton *tb_undo;
-    QToolButton *tb_redo;
-    QFontComboBox *cb_font;
-    QSpacerItem *horizontalSpacer_3;
     QToolButton *tb_font_inc;
+    QToolButton *tb_undo;
     QComboBox *cb_fontsize;
+    QToolButton *tb_redo;
+    QSpacerItem *horizontalSpacer_3;
     QToolButton *tb_font_dec;
     QSpacerItem *horizontalSpacer_2;
     QSpacerItem *horizontalSpacer_4;
+    CxColorWidget *w_highlightcolor;
+    CxColorWidget *w_textcolor;
+    CxColorWidget *w_backgroundcolor;
     QWidget *widget_9;
     QGridLayout *gridLayout_12;
     QWidget *widget_10;
@@ -80,7 +81,7 @@ public:
     CxPageLabel *lb_page_5;
     QWidget *widget_12;
     QGridLayout *gridLayout_14;
-    QTextEdit *textEdit;
+    CxTextEdit *textEdit;
     QWidget *w_content;
     QGridLayout *gridLayout_9;
     QWidget *widget;
@@ -103,8 +104,8 @@ public:
     QGridLayout *gridLayout_2;
     QWidget *widget_5;
     QGridLayout *gridLayout_3;
-    QToolButton *toolButton_2;
-    QToolButton *toolButton_3;
+    QToolButton *tb_menu_file;
+    QToolButton *tb_menu_text;
     QSpacerItem *horizontalSpacer;
     QToolButton *tb_add_chapter;
     QWidget *w_chapter_control;
@@ -113,13 +114,17 @@ public:
     QToolButton *tb_prev_chapter;
     QToolButton *tb_start;
     QToolButton *tb_next_chapter;
+    QButtonGroup *buttonGroup;
 
     void setupUi(QWidget *Form_MainWindow)
     {
         if (Form_MainWindow->objectName().isEmpty())
             Form_MainWindow->setObjectName(QStringLiteral("Form_MainWindow"));
-        Form_MainWindow->resize(1367, 727);
+        Form_MainWindow->resize(1401, 728);
         Form_MainWindow->setMaximumSize(QSize(11111, 11111));
+        QIcon icon;
+        icon.addFile(QStringLiteral(":/res/icon/icon.png"), QSize(), QIcon::Normal, QIcon::Off);
+        Form_MainWindow->setWindowIcon(icon);
         Form_MainWindow->setStyleSheet(QLatin1String("QWidget\n"
 "{\n"
 "background:#c3c3c3;\n"
@@ -172,112 +177,24 @@ public:
         gridLayout_8->setHorizontalSpacing(5);
         gridLayout_8->setVerticalSpacing(0);
         gridLayout_8->setContentsMargins(0, 0, 0, 0);
-        tb_pdf = new QToolButton(w_text_control);
-        tb_pdf->setObjectName(QStringLiteral("tb_pdf"));
-        tb_pdf->setMinimumSize(QSize(40, 40));
-        tb_pdf->setMaximumSize(QSize(40, 40));
-        tb_pdf->setStyleSheet(QLatin1String("QToolButton\n"
-"{\n"
-"background:white;\n"
-"}"));
-        QIcon icon;
-        icon.addFile(QStringLiteral(":/res/icon/exportpdf.png"), QSize(), QIcon::Normal, QIcon::Off);
-        tb_pdf->setIcon(icon);
-        tb_pdf->setIconSize(QSize(32, 32));
-
-        gridLayout_8->addWidget(tb_pdf, 0, 18, 1, 1);
-
-        tb_fill = new QToolButton(w_text_control);
-        tb_fill->setObjectName(QStringLiteral("tb_fill"));
-        tb_fill->setMinimumSize(QSize(40, 40));
-        tb_fill->setMaximumSize(QSize(40, 40));
-        tb_fill->setStyleSheet(QLatin1String("QToolButton\n"
+        tb_center = new QToolButton(w_text_control);
+        buttonGroup = new QButtonGroup(Form_MainWindow);
+        buttonGroup->setObjectName(QStringLiteral("buttonGroup"));
+        buttonGroup->addButton(tb_center);
+        tb_center->setObjectName(QStringLiteral("tb_center"));
+        tb_center->setMinimumSize(QSize(40, 40));
+        tb_center->setMaximumSize(QSize(40, 40));
+        tb_center->setStyleSheet(QLatin1String("QToolButton\n"
 "{\n"
 "background:white;\n"
 "}"));
         QIcon icon1;
-        icon1.addFile(QStringLiteral(":/res/icon/Back_color.png"), QSize(), QIcon::Normal, QIcon::Off);
-        tb_fill->setIcon(icon1);
-        tb_fill->setIconSize(QSize(40, 40));
+        icon1.addFile(QStringLiteral(":/res/icon/textcenter.png"), QSize(), QIcon::Normal, QIcon::Off);
+        tb_center->setIcon(icon1);
+        tb_center->setIconSize(QSize(32, 32));
+        tb_center->setCheckable(true);
 
-        gridLayout_8->addWidget(tb_fill, 0, 16, 1, 1);
-
-        tb_print = new QToolButton(w_text_control);
-        tb_print->setObjectName(QStringLiteral("tb_print"));
-        tb_print->setMinimumSize(QSize(40, 40));
-        tb_print->setMaximumSize(QSize(40, 40));
-        tb_print->setStyleSheet(QLatin1String("QToolButton\n"
-"{\n"
-"background:white;\n"
-"}"));
-        QIcon icon2;
-        icon2.addFile(QStringLiteral(":/res/icon/fileprint.png"), QSize(), QIcon::Normal, QIcon::Off);
-        tb_print->setIcon(icon2);
-        tb_print->setIconSize(QSize(32, 32));
-
-        gridLayout_8->addWidget(tb_print, 0, 19, 1, 1);
-
-        tb_highlight = new QToolButton(w_text_control);
-        tb_highlight->setObjectName(QStringLiteral("tb_highlight"));
-        tb_highlight->setMinimumSize(QSize(40, 40));
-        tb_highlight->setMaximumSize(QSize(40, 40));
-        tb_highlight->setStyleSheet(QLatin1String("QToolButton\n"
-"{\n"
-"background:white;\n"
-"}"));
-        QIcon icon3;
-        icon3.addFile(QStringLiteral(":/res/icon/highlight_color.png"), QSize(), QIcon::Normal, QIcon::Off);
-        tb_highlight->setIcon(icon3);
-        tb_highlight->setIconSize(QSize(40, 40));
-
-        gridLayout_8->addWidget(tb_highlight, 0, 15, 1, 1);
-
-        tb_italic = new QToolButton(w_text_control);
-        tb_italic->setObjectName(QStringLiteral("tb_italic"));
-        tb_italic->setMinimumSize(QSize(40, 40));
-        tb_italic->setMaximumSize(QSize(40, 40));
-        tb_italic->setStyleSheet(QLatin1String("QToolButton\n"
-"{\n"
-"background:white;\n"
-"}"));
-        QIcon icon4;
-        icon4.addFile(QStringLiteral(":/res/icon/textitalic.png"), QSize(), QIcon::Normal, QIcon::Off);
-        tb_italic->setIcon(icon4);
-        tb_italic->setIconSize(QSize(32, 32));
-        tb_italic->setCheckable(true);
-
-        gridLayout_8->addWidget(tb_italic, 0, 8, 1, 1);
-
-        tb_textcolor = new QToolButton(w_text_control);
-        tb_textcolor->setObjectName(QStringLiteral("tb_textcolor"));
-        tb_textcolor->setMinimumSize(QSize(40, 40));
-        tb_textcolor->setMaximumSize(QSize(40, 40));
-        tb_textcolor->setStyleSheet(QLatin1String("QToolButton\n"
-"{\n"
-"background:white;\n"
-"}"));
-        QIcon icon5;
-        icon5.addFile(QStringLiteral(":/res/icon/font_color.png"), QSize(), QIcon::Normal, QIcon::Off);
-        tb_textcolor->setIcon(icon5);
-        tb_textcolor->setIconSize(QSize(40, 40));
-
-        gridLayout_8->addWidget(tb_textcolor, 0, 14, 1, 1);
-
-        tb_left = new QToolButton(w_text_control);
-        tb_left->setObjectName(QStringLiteral("tb_left"));
-        tb_left->setMinimumSize(QSize(40, 40));
-        tb_left->setMaximumSize(QSize(40, 40));
-        tb_left->setStyleSheet(QLatin1String("QToolButton\n"
-"{\n"
-"background:white;\n"
-"}"));
-        QIcon icon6;
-        icon6.addFile(QStringLiteral(":/res/icon/textleft.png"), QSize(), QIcon::Normal, QIcon::Off);
-        tb_left->setIcon(icon6);
-        tb_left->setIconSize(QSize(32, 32));
-        tb_left->setCheckable(true);
-
-        gridLayout_8->addWidget(tb_left, 0, 10, 1, 1);
+        gridLayout_8->addWidget(tb_center, 0, 11, 1, 1);
 
         tb_underline = new QToolButton(w_text_control);
         tb_underline->setObjectName(QStringLiteral("tb_underline"));
@@ -287,13 +204,76 @@ public:
 "{\n"
 "background:white;\n"
 "}"));
-        QIcon icon7;
-        icon7.addFile(QStringLiteral(":/res/icon/textunder.png"), QSize(), QIcon::Normal, QIcon::Off);
-        tb_underline->setIcon(icon7);
+        QIcon icon2;
+        icon2.addFile(QStringLiteral(":/res/icon/textunder.png"), QSize(), QIcon::Normal, QIcon::Off);
+        tb_underline->setIcon(icon2);
         tb_underline->setIconSize(QSize(32, 32));
         tb_underline->setCheckable(true);
 
         gridLayout_8->addWidget(tb_underline, 0, 9, 1, 1);
+
+        tb_left = new QToolButton(w_text_control);
+        buttonGroup->addButton(tb_left);
+        tb_left->setObjectName(QStringLiteral("tb_left"));
+        tb_left->setMinimumSize(QSize(40, 40));
+        tb_left->setMaximumSize(QSize(40, 40));
+        tb_left->setStyleSheet(QLatin1String("QToolButton\n"
+"{\n"
+"background:white;\n"
+"}"));
+        QIcon icon3;
+        icon3.addFile(QStringLiteral(":/res/icon/textleft.png"), QSize(), QIcon::Normal, QIcon::Off);
+        tb_left->setIcon(icon3);
+        tb_left->setIconSize(QSize(32, 32));
+        tb_left->setCheckable(true);
+
+        gridLayout_8->addWidget(tb_left, 0, 10, 1, 1);
+
+        tb_pdf = new QToolButton(w_text_control);
+        tb_pdf->setObjectName(QStringLiteral("tb_pdf"));
+        tb_pdf->setMinimumSize(QSize(40, 40));
+        tb_pdf->setMaximumSize(QSize(40, 40));
+        tb_pdf->setStyleSheet(QLatin1String("QToolButton\n"
+"{\n"
+"background:white;\n"
+"}"));
+        QIcon icon4;
+        icon4.addFile(QStringLiteral(":/res/icon/exportpdf.png"), QSize(), QIcon::Normal, QIcon::Off);
+        tb_pdf->setIcon(icon4);
+        tb_pdf->setIconSize(QSize(32, 32));
+
+        gridLayout_8->addWidget(tb_pdf, 0, 18, 1, 1);
+
+        tb_italic = new QToolButton(w_text_control);
+        tb_italic->setObjectName(QStringLiteral("tb_italic"));
+        tb_italic->setMinimumSize(QSize(40, 40));
+        tb_italic->setMaximumSize(QSize(40, 40));
+        tb_italic->setStyleSheet(QLatin1String("QToolButton\n"
+"{\n"
+"background:white;\n"
+"}"));
+        QIcon icon5;
+        icon5.addFile(QStringLiteral(":/res/icon/textitalic.png"), QSize(), QIcon::Normal, QIcon::Off);
+        tb_italic->setIcon(icon5);
+        tb_italic->setIconSize(QSize(32, 32));
+        tb_italic->setCheckable(true);
+
+        gridLayout_8->addWidget(tb_italic, 0, 8, 1, 1);
+
+        tb_print = new QToolButton(w_text_control);
+        tb_print->setObjectName(QStringLiteral("tb_print"));
+        tb_print->setMinimumSize(QSize(40, 40));
+        tb_print->setMaximumSize(QSize(40, 40));
+        tb_print->setStyleSheet(QLatin1String("QToolButton\n"
+"{\n"
+"background:white;\n"
+"}"));
+        QIcon icon6;
+        icon6.addFile(QStringLiteral(":/res/icon/fileprint.png"), QSize(), QIcon::Normal, QIcon::Off);
+        tb_print->setIcon(icon6);
+        tb_print->setIconSize(QSize(32, 32));
+
+        gridLayout_8->addWidget(tb_print, 0, 19, 1, 1);
 
         tb_bold = new QToolButton(w_text_control);
         tb_bold->setObjectName(QStringLiteral("tb_bold"));
@@ -303,31 +283,27 @@ public:
 "{\n"
 "background:white;\n"
 "}"));
-        QIcon icon8;
-        icon8.addFile(QStringLiteral(":/res/icon/textbold.png"), QSize(), QIcon::Normal, QIcon::Off);
-        tb_bold->setIcon(icon8);
+        QIcon icon7;
+        icon7.addFile(QStringLiteral(":/res/icon/textbold.png"), QSize(), QIcon::Normal, QIcon::Off);
+        tb_bold->setIcon(icon7);
         tb_bold->setIconSize(QSize(32, 32));
         tb_bold->setCheckable(true);
 
         gridLayout_8->addWidget(tb_bold, 0, 7, 1, 1);
 
-        tb_center = new QToolButton(w_text_control);
-        tb_center->setObjectName(QStringLiteral("tb_center"));
-        tb_center->setMinimumSize(QSize(40, 40));
-        tb_center->setMaximumSize(QSize(40, 40));
-        tb_center->setStyleSheet(QLatin1String("QToolButton\n"
+        cb_font = new QFontComboBox(w_text_control);
+        cb_font->setObjectName(QStringLiteral("cb_font"));
+        cb_font->setMinimumSize(QSize(0, 40));
+        cb_font->setMaximumSize(QSize(16777215, 40));
+        cb_font->setStyleSheet(QLatin1String("QFontComboBox\n"
 "{\n"
 "background:white;\n"
 "}"));
-        QIcon icon9;
-        icon9.addFile(QStringLiteral(":/res/icon/textcenter.png"), QSize(), QIcon::Normal, QIcon::Off);
-        tb_center->setIcon(icon9);
-        tb_center->setIconSize(QSize(32, 32));
-        tb_center->setCheckable(true);
 
-        gridLayout_8->addWidget(tb_center, 0, 11, 1, 1);
+        gridLayout_8->addWidget(cb_font, 0, 2, 1, 1);
 
         tb_right = new QToolButton(w_text_control);
+        buttonGroup->addButton(tb_right);
         tb_right->setObjectName(QStringLiteral("tb_right"));
         tb_right->setMinimumSize(QSize(40, 40));
         tb_right->setMaximumSize(QSize(40, 40));
@@ -335,9 +311,9 @@ public:
 "{\n"
 "background:white;\n"
 "}"));
-        QIcon icon10;
-        icon10.addFile(QStringLiteral(":/res/icon/textright.png"), QSize(), QIcon::Normal, QIcon::Off);
-        tb_right->setIcon(icon10);
+        QIcon icon8;
+        icon8.addFile(QStringLiteral(":/res/icon/textright.png"), QSize(), QIcon::Normal, QIcon::Off);
+        tb_right->setIcon(icon8);
         tb_right->setIconSize(QSize(32, 32));
         tb_right->setCheckable(true);
 
@@ -351,57 +327,12 @@ public:
 "{\n"
 "background:white;\n"
 "}"));
-        QIcon icon11;
-        icon11.addFile(QStringLiteral(":/res/icon/filesave.png"), QSize(), QIcon::Normal, QIcon::Off);
-        tb_save->setIcon(icon11);
+        QIcon icon9;
+        icon9.addFile(QStringLiteral(":/res/icon/filesave.png"), QSize(), QIcon::Normal, QIcon::Off);
+        tb_save->setIcon(icon9);
         tb_save->setIconSize(QSize(32, 32));
 
         gridLayout_8->addWidget(tb_save, 0, 20, 1, 1);
-
-        tb_undo = new QToolButton(w_text_control);
-        tb_undo->setObjectName(QStringLiteral("tb_undo"));
-        tb_undo->setMinimumSize(QSize(40, 40));
-        tb_undo->setMaximumSize(QSize(40, 40));
-        tb_undo->setStyleSheet(QLatin1String("QToolButton\n"
-"{\n"
-"background:white;\n"
-"}"));
-        QIcon icon12;
-        icon12.addFile(QStringLiteral(":/res/icon/editundo.png"), QSize(), QIcon::Normal, QIcon::Off);
-        tb_undo->setIcon(icon12);
-        tb_undo->setIconSize(QSize(32, 32));
-
-        gridLayout_8->addWidget(tb_undo, 0, 0, 1, 1);
-
-        tb_redo = new QToolButton(w_text_control);
-        tb_redo->setObjectName(QStringLiteral("tb_redo"));
-        tb_redo->setMinimumSize(QSize(40, 40));
-        tb_redo->setMaximumSize(QSize(40, 40));
-        tb_redo->setStyleSheet(QLatin1String("QToolButton\n"
-"{\n"
-"background:white;\n"
-"}"));
-        QIcon icon13;
-        icon13.addFile(QStringLiteral(":/res/icon/editredo.png"), QSize(), QIcon::Normal, QIcon::Off);
-        tb_redo->setIcon(icon13);
-        tb_redo->setIconSize(QSize(32, 32));
-
-        gridLayout_8->addWidget(tb_redo, 0, 1, 1, 1);
-
-        cb_font = new QFontComboBox(w_text_control);
-        cb_font->setObjectName(QStringLiteral("cb_font"));
-        cb_font->setMinimumSize(QSize(0, 40));
-        cb_font->setMaximumSize(QSize(16777215, 40));
-        cb_font->setStyleSheet(QLatin1String("QFontComboBox\n"
-"{\n"
-"background:white;\n"
-"}"));
-
-        gridLayout_8->addWidget(cb_font, 0, 2, 1, 1);
-
-        horizontalSpacer_3 = new QSpacerItem(20, 20, QSizePolicy::Fixed, QSizePolicy::Minimum);
-
-        gridLayout_8->addItem(horizontalSpacer_3, 0, 13, 1, 1);
 
         tb_font_inc = new QToolButton(w_text_control);
         tb_font_inc->setObjectName(QStringLiteral("tb_font_inc"));
@@ -419,6 +350,21 @@ public:
 
         gridLayout_8->addWidget(tb_font_inc, 0, 4, 1, 1);
 
+        tb_undo = new QToolButton(w_text_control);
+        tb_undo->setObjectName(QStringLiteral("tb_undo"));
+        tb_undo->setMinimumSize(QSize(40, 40));
+        tb_undo->setMaximumSize(QSize(40, 40));
+        tb_undo->setStyleSheet(QLatin1String("QToolButton\n"
+"{\n"
+"background:white;\n"
+"}"));
+        QIcon icon10;
+        icon10.addFile(QStringLiteral(":/res/icon/editundo.png"), QSize(), QIcon::Normal, QIcon::Off);
+        tb_undo->setIcon(icon10);
+        tb_undo->setIconSize(QSize(32, 32));
+
+        gridLayout_8->addWidget(tb_undo, 0, 0, 1, 1);
+
         cb_fontsize = new QComboBox(w_text_control);
         cb_fontsize->setObjectName(QStringLiteral("cb_fontsize"));
         cb_fontsize->setMinimumSize(QSize(0, 40));
@@ -429,6 +375,25 @@ public:
 "}"));
 
         gridLayout_8->addWidget(cb_fontsize, 0, 3, 1, 1);
+
+        tb_redo = new QToolButton(w_text_control);
+        tb_redo->setObjectName(QStringLiteral("tb_redo"));
+        tb_redo->setMinimumSize(QSize(40, 40));
+        tb_redo->setMaximumSize(QSize(40, 40));
+        tb_redo->setStyleSheet(QLatin1String("QToolButton\n"
+"{\n"
+"background:white;\n"
+"}"));
+        QIcon icon11;
+        icon11.addFile(QStringLiteral(":/res/icon/editredo.png"), QSize(), QIcon::Normal, QIcon::Off);
+        tb_redo->setIcon(icon11);
+        tb_redo->setIconSize(QSize(32, 32));
+
+        gridLayout_8->addWidget(tb_redo, 0, 1, 1, 1);
+
+        horizontalSpacer_3 = new QSpacerItem(20, 20, QSizePolicy::Fixed, QSizePolicy::Minimum);
+
+        gridLayout_8->addItem(horizontalSpacer_3, 0, 13, 1, 1);
 
         tb_font_dec = new QToolButton(w_text_control);
         tb_font_dec->setObjectName(QStringLiteral("tb_font_dec"));
@@ -449,6 +414,27 @@ public:
         horizontalSpacer_4 = new QSpacerItem(20, 20, QSizePolicy::Fixed, QSizePolicy::Minimum);
 
         gridLayout_8->addItem(horizontalSpacer_4, 0, 6, 1, 1);
+
+        w_highlightcolor = new CxColorWidget(w_text_control);
+        w_highlightcolor->setObjectName(QStringLiteral("w_highlightcolor"));
+        w_highlightcolor->setMinimumSize(QSize(45, 0));
+        w_highlightcolor->setMaximumSize(QSize(45, 16777215));
+
+        gridLayout_8->addWidget(w_highlightcolor, 0, 15, 1, 1);
+
+        w_textcolor = new CxColorWidget(w_text_control);
+        w_textcolor->setObjectName(QStringLiteral("w_textcolor"));
+        w_textcolor->setMinimumSize(QSize(45, 0));
+        w_textcolor->setMaximumSize(QSize(45, 16777215));
+
+        gridLayout_8->addWidget(w_textcolor, 0, 14, 1, 1);
+
+        w_backgroundcolor = new CxColorWidget(w_text_control);
+        w_backgroundcolor->setObjectName(QStringLiteral("w_backgroundcolor"));
+        w_backgroundcolor->setMinimumSize(QSize(45, 0));
+        w_backgroundcolor->setMaximumSize(QSize(45, 16777215));
+
+        gridLayout_8->addWidget(w_backgroundcolor, 0, 16, 1, 1);
 
 
         gridLayout_6->addWidget(w_text_control, 0, 0, 1, 1);
@@ -529,9 +515,9 @@ public:
         tb_prev_page->setObjectName(QStringLiteral("tb_prev_page"));
         tb_prev_page->setMinimumSize(QSize(30, 50));
         tb_prev_page->setMaximumSize(QSize(30, 50));
-        QIcon icon14;
-        icon14.addFile(QStringLiteral(":/res/icon/Actions-go-previous-view-icon.png"), QSize(), QIcon::Normal, QIcon::Off);
-        tb_prev_page->setIcon(icon14);
+        QIcon icon12;
+        icon12.addFile(QStringLiteral(":/res/icon/Actions-go-previous-view-icon.png"), QSize(), QIcon::Normal, QIcon::Off);
+        tb_prev_page->setIcon(icon12);
         tb_prev_page->setIconSize(QSize(50, 50));
 
         gridLayout_15->addWidget(tb_prev_page, 0, 6, 1, 1);
@@ -540,9 +526,9 @@ public:
         tb_next_page->setObjectName(QStringLiteral("tb_next_page"));
         tb_next_page->setMinimumSize(QSize(30, 50));
         tb_next_page->setMaximumSize(QSize(30, 50));
-        QIcon icon15;
-        icon15.addFile(QStringLiteral(":/res/icon/Actions-go-next-view-icon.png"), QSize(), QIcon::Normal, QIcon::Off);
-        tb_next_page->setIcon(icon15);
+        QIcon icon13;
+        icon13.addFile(QStringLiteral(":/res/icon/Actions-go-next-view-icon.png"), QSize(), QIcon::Normal, QIcon::Off);
+        tb_next_page->setIcon(icon13);
         tb_next_page->setIconSize(QSize(100, 100));
 
         gridLayout_15->addWidget(tb_next_page, 0, 7, 1, 1);
@@ -552,9 +538,9 @@ public:
         tb_show_page->setEnabled(true);
         tb_show_page->setMinimumSize(QSize(50, 50));
         tb_show_page->setMaximumSize(QSize(50, 50));
-        QIcon icon16;
-        icon16.addFile(QStringLiteral(":/res/icon/more_page_btn_diasbled.png"), QSize(), QIcon::Normal, QIcon::Off);
-        tb_show_page->setIcon(icon16);
+        QIcon icon14;
+        icon14.addFile(QStringLiteral(":/res/icon/more_page_btn_diasbled.png"), QSize(), QIcon::Normal, QIcon::Off);
+        tb_show_page->setIcon(icon14);
         tb_show_page->setIconSize(QSize(50, 50));
 
         gridLayout_15->addWidget(tb_show_page, 0, 8, 1, 1);
@@ -577,7 +563,7 @@ public:
         gridLayout_14->setSpacing(0);
         gridLayout_14->setObjectName(QStringLiteral("gridLayout_14"));
         gridLayout_14->setContentsMargins(0, 0, 0, 0);
-        textEdit = new QTextEdit(widget_12);
+        textEdit = new CxTextEdit(widget_12);
         textEdit->setObjectName(QStringLiteral("textEdit"));
         QSizePolicy sizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
         sizePolicy.setHorizontalStretch(0);
@@ -748,32 +734,32 @@ public:
         gridLayout_3->setSpacing(0);
         gridLayout_3->setObjectName(QStringLiteral("gridLayout_3"));
         gridLayout_3->setContentsMargins(0, 0, 0, 0);
-        toolButton_2 = new QToolButton(widget_5);
-        toolButton_2->setObjectName(QStringLiteral("toolButton_2"));
-        sizePolicy.setHeightForWidth(toolButton_2->sizePolicy().hasHeightForWidth());
-        toolButton_2->setSizePolicy(sizePolicy);
+        tb_menu_file = new QToolButton(widget_5);
+        tb_menu_file->setObjectName(QStringLiteral("tb_menu_file"));
+        sizePolicy.setHeightForWidth(tb_menu_file->sizePolicy().hasHeightForWidth());
+        tb_menu_file->setSizePolicy(sizePolicy);
         QFont font3;
         font3.setFamily(QStringLiteral("Impact"));
         font3.setPointSize(14);
-        toolButton_2->setFont(font3);
-        toolButton_2->setStyleSheet(QLatin1String("QToolButton\n"
+        tb_menu_file->setFont(font3);
+        tb_menu_file->setStyleSheet(QLatin1String("QToolButton\n"
 "{\n"
 "border:0px;\n"
 "}"));
 
-        gridLayout_3->addWidget(toolButton_2, 0, 0, 1, 1);
+        gridLayout_3->addWidget(tb_menu_file, 0, 0, 1, 1);
 
-        toolButton_3 = new QToolButton(widget_5);
-        toolButton_3->setObjectName(QStringLiteral("toolButton_3"));
-        sizePolicy.setHeightForWidth(toolButton_3->sizePolicy().hasHeightForWidth());
-        toolButton_3->setSizePolicy(sizePolicy);
-        toolButton_3->setFont(font3);
-        toolButton_3->setStyleSheet(QLatin1String("QToolButton\n"
+        tb_menu_text = new QToolButton(widget_5);
+        tb_menu_text->setObjectName(QStringLiteral("tb_menu_text"));
+        sizePolicy.setHeightForWidth(tb_menu_text->sizePolicy().hasHeightForWidth());
+        tb_menu_text->setSizePolicy(sizePolicy);
+        tb_menu_text->setFont(font3);
+        tb_menu_text->setStyleSheet(QLatin1String("QToolButton\n"
 "{\n"
 "border:0px;\n"
 "}"));
 
-        gridLayout_3->addWidget(toolButton_3, 0, 1, 1, 1);
+        gridLayout_3->addWidget(tb_menu_text, 0, 1, 1, 1);
 
 
         gridLayout_2->addWidget(widget_5, 0, 0, 1, 1);
@@ -830,9 +816,9 @@ public:
 "{\n"
 "background:#e9e9e9;\n"
 "}"));
-        QIcon icon17;
-        icon17.addFile(QStringLiteral(":/res/icon/prev.png"), QSize(), QIcon::Normal, QIcon::Off);
-        tb_prev_chapter->setIcon(icon17);
+        QIcon icon15;
+        icon15.addFile(QStringLiteral(":/res/icon/prev.png"), QSize(), QIcon::Normal, QIcon::Off);
+        tb_prev_chapter->setIcon(icon15);
         tb_prev_chapter->setIconSize(QSize(50, 50));
 
         gridLayout_4->addWidget(tb_prev_chapter, 0, 0, 1, 1);
@@ -856,9 +842,9 @@ public:
 "{\n"
 "background:#e9e9e9;\n"
 "}"));
-        QIcon icon18;
-        icon18.addFile(QStringLiteral(":/res/icon/next.png"), QSize(), QIcon::Normal, QIcon::Off);
-        tb_next_chapter->setIcon(icon18);
+        QIcon icon16;
+        icon16.addFile(QStringLiteral(":/res/icon/next.png"), QSize(), QIcon::Normal, QIcon::Off);
+        tb_next_chapter->setIcon(icon16);
         tb_next_chapter->setIconSize(QSize(50, 50));
 
         gridLayout_4->addWidget(tb_next_chapter, 0, 3, 1, 1);
@@ -876,21 +862,18 @@ public:
     {
         Form_MainWindow->setWindowTitle(QApplication::translate("Form_MainWindow", "Form", 0));
         lbl_status->setText(QApplication::translate("Form_MainWindow", "TextLabel", 0));
-        tb_pdf->setText(QApplication::translate("Form_MainWindow", "A-", 0));
-        tb_fill->setText(QApplication::translate("Form_MainWindow", "A-", 0));
-        tb_print->setText(QApplication::translate("Form_MainWindow", "A-", 0));
-        tb_highlight->setText(QApplication::translate("Form_MainWindow", "A-", 0));
-        tb_italic->setText(QApplication::translate("Form_MainWindow", "I", 0));
-        tb_textcolor->setText(QApplication::translate("Form_MainWindow", "A-", 0));
-        tb_left->setText(QApplication::translate("Form_MainWindow", "A-", 0));
-        tb_underline->setText(QApplication::translate("Form_MainWindow", "U", 0));
-        tb_bold->setText(QApplication::translate("Form_MainWindow", "B", 0));
         tb_center->setText(QApplication::translate("Form_MainWindow", "A-", 0));
+        tb_underline->setText(QApplication::translate("Form_MainWindow", "U", 0));
+        tb_left->setText(QApplication::translate("Form_MainWindow", "A-", 0));
+        tb_pdf->setText(QApplication::translate("Form_MainWindow", "A-", 0));
+        tb_italic->setText(QApplication::translate("Form_MainWindow", "I", 0));
+        tb_print->setText(QApplication::translate("Form_MainWindow", "A-", 0));
+        tb_bold->setText(QApplication::translate("Form_MainWindow", "B", 0));
         tb_right->setText(QApplication::translate("Form_MainWindow", "A-", 0));
         tb_save->setText(QApplication::translate("Form_MainWindow", "A-", 0));
+        tb_font_inc->setText(QApplication::translate("Form_MainWindow", "A+", 0));
         tb_undo->setText(QApplication::translate("Form_MainWindow", "...", 0));
         tb_redo->setText(QApplication::translate("Form_MainWindow", "...", 0));
-        tb_font_inc->setText(QApplication::translate("Form_MainWindow", "A+", 0));
         tb_font_dec->setText(QApplication::translate("Form_MainWindow", "A-", 0));
         lb_page_2->setText(QApplication::translate("Form_MainWindow", "2", 0));
         lb_page_3->setText(QApplication::translate("Form_MainWindow", "3", 0));
@@ -904,8 +887,8 @@ public:
         tb_create_text->setText(QApplication::translate("Form_MainWindow", "CREATE TEXT", 0));
         tb_res_1->setText(QApplication::translate("Form_MainWindow", "CONTENT+", 0));
         tb_res_2->setText(QApplication::translate("Form_MainWindow", "CONTENT-", 0));
-        toolButton_2->setText(QApplication::translate("Form_MainWindow", "FILE", 0));
-        toolButton_3->setText(QApplication::translate("Form_MainWindow", "TEXT", 0));
+        tb_menu_file->setText(QApplication::translate("Form_MainWindow", "FILE", 0));
+        tb_menu_text->setText(QApplication::translate("Form_MainWindow", "TEXT", 0));
         tb_add_chapter->setText(QApplication::translate("Form_MainWindow", "+ ADD CHAP", 0));
         tb_prev_chapter->setText(QApplication::translate("Form_MainWindow", "<-", 0));
         tb_start->setText(QApplication::translate("Form_MainWindow", "START", 0));

@@ -27,6 +27,7 @@ CxChapterList::CxChapterList(QWidget *parent)
 
 
 	connect( this, SIGNAL(itemSelectionChanged()), this, SLOT(onSelectionChanged())) ;
+	m_isRemoteSelection = false ;
 }
 
 CxChapterList::~CxChapterList()
@@ -38,12 +39,13 @@ void CxChapterList::addChapter( QString txt )
 {
 	m_chapterList << txt ;
 	QListWidgetItem* item = new QListWidgetItem(QString("%1-%2").arg(m_chapterList.count()).arg(txt)) ;
-	item->setSizeHint(QSize(ITEMW,ITEMH)) ;
 	int cnt = count() ;
 	emit __preChanged(cnt,true) ;
 	addItem(item) ;
 	QLabel* lb = new QLabel ;
-	lb->resize(ITEMW,ITEMH) ;
+	int w = ITEMW ;
+	item->setSizeHint(QSize(w,ITEMH)) ;
+	lb->resize(w,ITEMH) ;
 	lb->setFont(QFont("Impact",16)) ;
 	lb->setAlignment(Qt::AlignCenter) ;
 	lb->setText(QString("%1-%2").arg(m_chapterList.count()).arg(txt)) ;
@@ -56,13 +58,15 @@ void CxChapterList::addChapter( QString txt )
 
 void CxChapterList::onSelectionChanged()
 {
+	if( m_isRemoteSelection ) return ;
 //	QMessageBox::information(NULL,"","A") ;
 	for( int i = count()-1; i >= 0; i-- )
 	{
 		QListWidgetItem* var = item(i) ;
 		bool sel = var->isSelected() ;
-		if( sel ) emit __selectChapter(i) ;
 		QLabel* lb = (QLabel*)itemWidget(var) ;
+		if(!lb) continue ;
+		if( sel ) emit __selectChapter(i) ;
 		if( sel )
 		{
 			lb->setStyleSheet("QLabel{background:#fff758;}QLabel::hover{background:#e5de51;}") ;
@@ -115,8 +119,11 @@ void CxChapterList::contextMenuEvent(QContextMenuEvent *event)
 		if( ret == deleteAction )
 		{
 			int r = row(cur) ;
+			m_isRemoteSelection = true ;
 			emit __preChanged(r,false) ;
 			takeItem(r) ;
+			m_isRemoteSelection = false ;
+			onSelectionChanged() ;
 			onChanged() ;
 		}
 	}

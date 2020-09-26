@@ -1,5 +1,7 @@
 <RCC>
   <qresource prefix="/">
+    <file>res/icon/icon.ico</file>
+    <file>res/icon/icon.png</file>
     <file>res/icon/Actions-go-next-view-icon.png</file>
     <file>res/icon/Actions-go-previous-view-icon.png</file>
     <file>res/icon/Back_color.png</file>

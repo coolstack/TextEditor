@@ -3,6 +3,7 @@
 
 #include <QListWidget>
 #include <QLabel>
+#include <QMimeData>
 
 #define TEXTTYPE 0
 #define IMAGETYPE 1
@@ -15,6 +16,7 @@ public:
 	CxResListWidget(QWidget *parent);
 	~CxResListWidget();
 	void addText(QString txt) ;
+	void addImage(QString fileName) ;
 	void refresh() ;
 	QLabel* getLabel(QListWidgetItem* item) ;
 	void setIndex( int id ) { m_index = id ; }
@@ -24,14 +26,18 @@ public:
 	QList<int> contentTypeList() { return m_typeList ; }
 signals:
 	void __changed(int) ;
+	void __moveContent( int id, QListWidgetItem* item ) ;
 protected:
 	void dropEvent(QDropEvent* event) ;
 	void contextMenuEvent(QContextMenuEvent *event) ;
+	void startDrag(Qt::DropActions supportedActions) ;
+	QMimeData *mimeData(const QList<QListWidgetItem *> items) const ;
 private:
 	QStringList m_contentList ;
 	QList<int> m_typeList ;
 	int m_index ;
 	bool m_isRemoteMode ;
+
 };
 
 #endif // CXRESLISTWIDGET_H
