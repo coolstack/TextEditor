@@ -56,7 +56,12 @@ public:
         tb_action->setMinimumSize(QSize(26, 22));
         tb_action->setMaximumSize(QSize(26, 22));
         tb_action->setStyleSheet(QLatin1String("QToolButton\n"
-"{ border-style:none;}"));
+"{ border-style:none;}\n"
+"\n"
+"QToolButton:hover\n"
+"{\n"
+"background:#e5e5e5;\n"
+"}"));
 
         gridLayout_2->addWidget(tb_action, 0, 0, 1, 1);
 
@@ -74,6 +79,11 @@ public:
         tb_menu->setObjectName(QStringLiteral("tb_menu"));
         tb_menu->setMinimumSize(QSize(15, 30));
         tb_menu->setMaximumSize(QSize(15, 30));
+        tb_menu->setStyleSheet(QLatin1String("\n"
+"QToolButton:hover\n"
+"{\n"
+"background:#e5e5e5;\n"
+"}"));
         QIcon icon;
         icon.addFile(QStringLiteral(":/res/icon/dropdown.png"), QSize(), QIcon::Normal, QIcon::Off);
         tb_menu->setIcon(icon);

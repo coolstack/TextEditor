@@ -11,6 +11,7 @@
 #include <QBasicTimer>
 #include <QUuid>
 #include <QCloseEvent>
+#include <QTimeLine>
 
 #include "cxpagemenu.h"
 #include "cxallchapterdlg.h"
@@ -52,6 +53,7 @@ private slots:
 	void onShowPageMenu(bool on) ;
 	void saveContent() ;
 	void saveText() ;
+	void saveText( int id ) ;
 	//////////////////////////////////////////////////////////////////////////
 	void currentCharFormatChanged(const QTextCharFormat &format);
 	void textBold();
@@ -69,6 +71,8 @@ private slots:
 	void onTextColorChanged(QColor col) ;
 	void onHightlightColorChanged(QColor col) ;
 	void onTextBackgroundColorChanged(QColor col) ;
+
+	void onDocumentChanged( bool on ) ;
 protected:
 	void mouseMoveEvent(QMouseEvent *event) ;
 	void timerEvent(QTimerEvent* event) ;
@@ -107,6 +111,7 @@ private:
 	CxPageMenu* m_pageMenu ;
 	CxAllChapterDlg* m_collectDlg ;
 	CxWordHandler* m_wordHandler ;
+	QTimeLine* m_autoSaveTimer ;
 	int m_version ;
 };
 

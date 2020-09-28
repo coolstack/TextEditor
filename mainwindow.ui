@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1170</width>
-    <height>728</height>
+    <width>1210</width>
+    <height>744</height>
    </rect>
   </property>
   <property name="maximumSize">
@@ -169,48 +169,7 @@ background:#c3c3c3;
             <property name="verticalSpacing">
              <number>0</number>
             </property>
-            <item row="0" column="11">
-             <widget class="QToolButton" name="tb_center">
-              <property name="minimumSize">
-               <size>
-                <width>30</width>
-                <height>30</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>30</width>
-                <height>30</height>
-               </size>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">QToolButton
-{
-background:white;
-}</string>
-              </property>
-              <property name="text">
-               <string>A-</string>
-              </property>
-              <property name="icon">
-               <iconset resource="textedit.qrc">
-                <normaloff>:/res/icon/textcenter.png</normaloff>:/res/icon/textcenter.png</iconset>
-              </property>
-              <property name="iconSize">
-               <size>
-                <width>25</width>
-                <height>25</height>
-               </size>
-              </property>
-              <property name="checkable">
-               <bool>true</bool>
-              </property>
-              <attribute name="buttonGroup">
-               <string notr="true">buttonGroup</string>
-              </attribute>
-             </widget>
-            </item>
-            <item row="0" column="9">
+            <item row="0" column="8">
              <widget class="QToolButton" name="tb_underline">
               <property name="minimumSize">
                <size>
@@ -228,6 +187,10 @@ background:white;
                <string notr="true">QToolButton
 {
 background:white;
+}
+QToolButton:hover
+{
+background:#e5e5e5;
 }</string>
               </property>
               <property name="text">
@@ -248,7 +211,7 @@ background:white;
               </property>
              </widget>
             </item>
-            <item row="0" column="10">
+            <item row="0" column="9">
              <widget class="QToolButton" name="tb_left">
               <property name="minimumSize">
                <size>
@@ -266,6 +229,10 @@ background:white;
                <string notr="true">QToolButton
 {
 background:white;
+}
+QToolButton:hover
+{
+background:#e5e5e5;
 }</string>
               </property>
               <property name="text">
@@ -289,8 +256,8 @@ background:white;
               </attribute>
              </widget>
             </item>
-            <item row="0" column="18">
-             <widget class="QToolButton" name="tb_pdf">
+            <item row="0" column="10">
+             <widget class="QToolButton" name="tb_center">
               <property name="minimumSize">
                <size>
                 <width>30</width>
@@ -307,6 +274,10 @@ background:white;
                <string notr="true">QToolButton
 {
 background:white;
+}
+QToolButton:hover
+{
+background:#e5e5e5;
 }</string>
               </property>
               <property name="text">
@@ -314,42 +285,7 @@ background:white;
               </property>
               <property name="icon">
                <iconset resource="textedit.qrc">
-                <normaloff>:/res/icon/exportpdf.png</normaloff>:/res/icon/exportpdf.png</iconset>
-              </property>
-              <property name="iconSize">
-               <size>
-                <width>32</width>
-                <height>32</height>
-               </size>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="8">
-             <widget class="QToolButton" name="tb_italic">
-              <property name="minimumSize">
-               <size>
-                <width>30</width>
-                <height>30</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>30</width>
-                <height>30</height>
-               </size>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">QToolButton
-{
-background:white;
-}</string>
-              </property>
-              <property name="text">
-               <string>I</string>
-              </property>
-              <property name="icon">
-               <iconset resource="textedit.qrc">
-                <normaloff>:/res/icon/textitalic.png</normaloff>:/res/icon/textitalic.png</iconset>
+                <normaloff>:/res/icon/textcenter.png</normaloff>:/res/icon/textcenter.png</iconset>
               </property>
               <property name="iconSize">
                <size>
@@ -360,9 +296,12 @@ background:white;
               <property name="checkable">
                <bool>true</bool>
               </property>
+              <attribute name="buttonGroup">
+               <string notr="true">buttonGroup</string>
+              </attribute>
              </widget>
             </item>
-            <item row="0" column="19">
+            <item row="0" column="18">
              <widget class="QToolButton" name="tb_print">
               <property name="minimumSize">
                <size>
@@ -380,6 +319,10 @@ background:white;
                <string notr="true">QToolButton
 {
 background:white;
+}
+QToolButton:hover
+{
+background:#e5e5e5;
 }</string>
               </property>
               <property name="text">
@@ -397,7 +340,46 @@ background:white;
               </property>
              </widget>
             </item>
-            <item row="0" column="7">
+            <item row="0" column="17">
+             <widget class="QToolButton" name="tb_pdf">
+              <property name="minimumSize">
+               <size>
+                <width>30</width>
+                <height>30</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>30</width>
+                <height>30</height>
+               </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">QToolButton
+{
+background:white;
+}
+QToolButton:hover
+{
+background:#e5e5e5;
+}</string>
+              </property>
+              <property name="text">
+               <string>A-</string>
+              </property>
+              <property name="icon">
+               <iconset resource="textedit.qrc">
+                <normaloff>:/res/icon/exportpdf.png</normaloff>:/res/icon/exportpdf.png</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>32</width>
+                <height>32</height>
+               </size>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="6">
              <widget class="QToolButton" name="tb_bold">
               <property name="minimumSize">
                <size>
@@ -415,6 +397,10 @@ background:white;
                <string notr="true">QToolButton
 {
 background:white;
+}
+QToolButton:hover
+{
+background:#e5e5e5;
 }</string>
               </property>
               <property name="text">
@@ -435,30 +421,8 @@ background:white;
               </property>
              </widget>
             </item>
-            <item row="0" column="2">
-             <widget class="QFontComboBox" name="cb_font">
-              <property name="minimumSize">
-               <size>
-                <width>0</width>
-                <height>30</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>16777215</width>
-                <height>30</height>
-               </size>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">QFontComboBox
-{
-background:white;
-}</string>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="12">
-             <widget class="QToolButton" name="tb_right">
+            <item row="0" column="7">
+             <widget class="QToolButton" name="tb_italic">
               <property name="minimumSize">
                <size>
                 <width>30</width>
@@ -475,14 +439,18 @@ background:white;
                <string notr="true">QToolButton
 {
 background:white;
+}
+QToolButton:hover
+{
+background:#e5e5e5;
 }</string>
               </property>
               <property name="text">
-               <string>A-</string>
+               <string>I</string>
               </property>
               <property name="icon">
                <iconset resource="textedit.qrc">
-                <normaloff>:/res/icon/textright.png</normaloff>:/res/icon/textright.png</iconset>
+                <normaloff>:/res/icon/textitalic.png</normaloff>:/res/icon/textitalic.png</iconset>
               </property>
               <property name="iconSize">
                <size>
@@ -493,47 +461,47 @@ background:white;
               <property name="checkable">
                <bool>true</bool>
               </property>
-              <attribute name="buttonGroup">
-               <string notr="true">buttonGroup</string>
-              </attribute>
              </widget>
             </item>
-            <item row="0" column="20">
-             <widget class="QToolButton" name="tb_save">
+            <item row="0" column="2">
+             <widget class="QComboBox" name="cb_fontsize">
               <property name="minimumSize">
                <size>
-                <width>30</width>
+                <width>0</width>
                 <height>30</height>
                </size>
               </property>
               <property name="maximumSize">
                <size>
-                <width>30</width>
+                <width>60</width>
                 <height>30</height>
                </size>
               </property>
               <property name="styleSheet">
-               <string notr="true">QToolButton
+               <string notr="true">QComboBox
 {
 background:white;
 }</string>
               </property>
-              <property name="text">
-               <string>A-</string>
-              </property>
-              <property name="icon">
-               <iconset resource="textedit.qrc">
-                <normaloff>:/res/icon/filesave.png</normaloff>:/res/icon/filesave.png</iconset>
-              </property>
-              <property name="iconSize">
-               <size>
-                <width>32</width>
-                <height>32</height>
-               </size>
-              </property>
              </widget>
             </item>
-            <item row="0" column="4">
+            <item row="0" column="12">
+             <spacer name="horizontalSpacer_3">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeType">
+               <enum>QSizePolicy::Fixed</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>10</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item row="0" column="3">
              <widget class="QToolButton" name="tb_font_inc">
               <property name="minimumSize">
                <size>
@@ -558,6 +526,10 @@ background:white;
                <string notr="true">QToolButton
 {
 background:white;
+}
+QToolButton:hover
+{
+background:#e5e5e5;
 }</string>
               </property>
               <property name="text">
@@ -575,43 +547,8 @@ background:white;
               </property>
              </widget>
             </item>
-            <item row="0" column="0">
-             <widget class="QToolButton" name="tb_undo">
-              <property name="minimumSize">
-               <size>
-                <width>30</width>
-                <height>30</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>30</width>
-                <height>30</height>
-               </size>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">QToolButton
-{
-background:white;
-}</string>
-              </property>
-              <property name="text">
-               <string>...</string>
-              </property>
-              <property name="icon">
-               <iconset resource="textedit.qrc">
-                <normaloff>:/res/icon/editundo.png</normaloff>:/res/icon/editundo.png</iconset>
-              </property>
-              <property name="iconSize">
-               <size>
-                <width>32</width>
-                <height>32</height>
-               </size>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="3">
-             <widget class="QComboBox" name="cb_fontsize">
+            <item row="0" column="1">
+             <widget class="QFontComboBox" name="cb_font">
               <property name="minimumSize">
                <size>
                 <width>0</width>
@@ -620,20 +557,20 @@ background:white;
               </property>
               <property name="maximumSize">
                <size>
-                <width>60</width>
+                <width>16777215</width>
                 <height>30</height>
                </size>
               </property>
               <property name="styleSheet">
-               <string notr="true">QComboBox
+               <string notr="true">QFontComboBox
 {
 background:white;
 }</string>
               </property>
              </widget>
             </item>
-            <item row="0" column="1">
-             <widget class="QToolButton" name="tb_redo">
+            <item row="0" column="19">
+             <widget class="QToolButton" name="tb_save">
               <property name="minimumSize">
                <size>
                 <width>30</width>
@@ -650,14 +587,18 @@ background:white;
                <string notr="true">QToolButton
 {
 background:white;
+}
+QToolButton:hover
+{
+background:#e5e5e5;
 }</string>
               </property>
               <property name="text">
-               <string>...</string>
+               <string>A-</string>
               </property>
               <property name="icon">
                <iconset resource="textedit.qrc">
-                <normaloff>:/res/icon/editredo.png</normaloff>:/res/icon/editredo.png</iconset>
+                <normaloff>:/res/icon/filesave.png</normaloff>:/res/icon/filesave.png</iconset>
               </property>
               <property name="iconSize">
                <size>
@@ -667,8 +608,53 @@ background:white;
               </property>
              </widget>
             </item>
-            <item row="0" column="13">
-             <spacer name="horizontalSpacer_3">
+            <item row="0" column="11">
+             <widget class="QToolButton" name="tb_right">
+              <property name="minimumSize">
+               <size>
+                <width>30</width>
+                <height>30</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>30</width>
+                <height>30</height>
+               </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">QToolButton
+{
+background:white;
+}
+QToolButton:hover
+{
+background:#e5e5e5;
+}</string>
+              </property>
+              <property name="text">
+               <string>A-</string>
+              </property>
+              <property name="icon">
+               <iconset resource="textedit.qrc">
+                <normaloff>:/res/icon/textright.png</normaloff>:/res/icon/textright.png</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>25</width>
+                <height>25</height>
+               </size>
+              </property>
+              <property name="checkable">
+               <bool>true</bool>
+              </property>
+              <attribute name="buttonGroup">
+               <string notr="true">buttonGroup</string>
+              </attribute>
+             </widget>
+            </item>
+            <item row="0" column="5">
+             <spacer name="horizontalSpacer_4">
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
               </property>
@@ -683,7 +669,23 @@ background:white;
               </property>
              </spacer>
             </item>
-            <item row="0" column="5">
+            <item row="0" column="16">
+             <spacer name="horizontalSpacer_2">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeType">
+               <enum>QSizePolicy::Fixed</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>10</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item row="0" column="4">
              <widget class="QToolButton" name="tb_font_dec">
               <property name="minimumSize">
                <size>
@@ -708,6 +710,10 @@ background:white;
                <string notr="true">QToolButton
 {
 background:white;
+}
+QToolButton:hover
+{
+background:#e5e5e5;
 }</string>
               </property>
               <property name="text">
@@ -725,40 +731,8 @@ background:white;
               </property>
              </widget>
             </item>
-            <item row="0" column="17">
-             <spacer name="horizontalSpacer_2">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeType">
-               <enum>QSizePolicy::Fixed</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>10</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item row="0" column="6">
-             <spacer name="horizontalSpacer_4">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeType">
-               <enum>QSizePolicy::Fixed</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>10</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
             <item row="0" column="15">
-             <widget class="CxColorWidget" name="w_highlightcolor" native="true">
+             <widget class="CxColorWidget" name="w_backgroundcolor" native="true">
               <property name="minimumSize">
                <size>
                 <width>45</width>
@@ -774,6 +748,22 @@ background:white;
              </widget>
             </item>
             <item row="0" column="14">
+             <widget class="CxColorWidget" name="w_highlightcolor" native="true">
+              <property name="minimumSize">
+               <size>
+                <width>45</width>
+                <height>30</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>45</width>
+                <height>30</height>
+               </size>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="13">
              <widget class="CxColorWidget" name="w_textcolor" native="true">
               <property name="minimumSize">
                <size>
@@ -789,20 +779,133 @@ background:white;
               </property>
              </widget>
             </item>
-            <item row="0" column="16">
-             <widget class="CxColorWidget" name="w_backgroundcolor" native="true">
+            <item row="0" column="0">
+             <widget class="QWidget" name="widget_4" native="true">
               <property name="minimumSize">
                <size>
-                <width>45</width>
-                <height>30</height>
+                <width>65</width>
+                <height>0</height>
                </size>
               </property>
               <property name="maximumSize">
                <size>
-                <width>45</width>
-                <height>30</height>
+                <width>65</width>
+                <height>16777215</height>
                </size>
               </property>
+              <property name="styleSheet">
+               <string notr="true">QWidget
+{
+background:white;
+border: 1px solid blue;
+}</string>
+              </property>
+              <layout class="QGridLayout" name="gridLayout_20">
+               <property name="leftMargin">
+                <number>0</number>
+               </property>
+               <property name="topMargin">
+                <number>0</number>
+               </property>
+               <property name="rightMargin">
+                <number>0</number>
+               </property>
+               <property name="bottomMargin">
+                <number>0</number>
+               </property>
+               <property name="horizontalSpacing">
+                <number>0</number>
+               </property>
+               <property name="verticalSpacing">
+                <number>5</number>
+               </property>
+               <item row="0" column="0">
+                <widget class="QToolButton" name="tb_undo">
+                 <property name="minimumSize">
+                  <size>
+                   <width>30</width>
+                   <height>30</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>30</width>
+                   <height>30</height>
+                  </size>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">QToolButton
+{
+background-color:transparent;
+border:none;
+}
+
+QToolButton:hover
+{
+border:0px;
+background:#83d7f3;
+}
+</string>
+                 </property>
+                 <property name="text">
+                  <string>...</string>
+                 </property>
+                 <property name="icon">
+                  <iconset resource="textedit.qrc">
+                   <normaloff>:/res/icon/Undo-icon.png</normaloff>:/res/icon/Undo-icon.png</iconset>
+                 </property>
+                 <property name="iconSize">
+                  <size>
+                   <width>25</width>
+                   <height>25</height>
+                  </size>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="1">
+                <widget class="QToolButton" name="tb_redo">
+                 <property name="minimumSize">
+                  <size>
+                   <width>30</width>
+                   <height>30</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>30</width>
+                   <height>30</height>
+                  </size>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">QToolButton
+{
+background-color:transparent;
+border:none;
+}
+
+QToolButton:hover
+{
+border:0px;
+background:#83d7f3;
+}
+</string>
+                 </property>
+                 <property name="text">
+                  <string>...</string>
+                 </property>
+                 <property name="icon">
+                  <iconset resource="textedit.qrc">
+                   <normaloff>:/res/icon/Redo-icon.png</normaloff>:/res/icon/Redo-icon.png</iconset>
+                 </property>
+                 <property name="iconSize">
+                  <size>
+                   <width>25</width>
+                   <height>25</height>
+                  </size>
+                 </property>
+                </widget>
+               </item>
+              </layout>
              </widget>
             </item>
            </layout>
@@ -1186,7 +1289,7 @@ border:1px solid #a0a0a0;
         </property>
         <property name="minimumSize">
          <size>
-          <width>300</width>
+          <width>340</width>
           <height>0</height>
          </size>
         </property>
@@ -1242,29 +1345,73 @@ border:1px solid #a0a0a0;
             <property name="spacing">
              <number>0</number>
             </property>
-            <item row="0" column="0">
-             <widget class="QToolButton" name="tb_upload">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="text">
-               <string>UPLOAD FILE</string>
-              </property>
-             </widget>
-            </item>
             <item row="0" column="1">
-             <widget class="QToolButton" name="tb_create_text">
+             <widget class="CxCenterButton" name="tb_create_text">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
+              </property>
+              <property name="font">
+               <font>
+                <family>Impact</family>
+                <pointsize>16</pointsize>
+               </font>
+              </property>
+              <property name="layoutDirection">
+               <enum>Qt::RightToLeft</enum>
               </property>
               <property name="text">
                <string>CREATE TEXT</string>
+              </property>
+              <property name="icon">
+               <iconset resource="textedit.qrc">
+                <normaloff>:/res/icon/down-icon.png</normaloff>:/res/icon/down-icon.png</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>25</width>
+                <height>25</height>
+               </size>
+              </property>
+              <property name="toolButtonStyle">
+               <enum>Qt::ToolButtonTextBesideIcon</enum>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="0">
+             <widget class="CxCenterButton" name="tb_upload">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="font">
+               <font>
+                <family>Impact</family>
+                <pointsize>16</pointsize>
+               </font>
+              </property>
+              <property name="layoutDirection">
+               <enum>Qt::RightToLeft</enum>
+              </property>
+              <property name="text">
+               <string>UPLOAD FILE </string>
+              </property>
+              <property name="icon">
+               <iconset resource="textedit.qrc">
+                <normaloff>:/res/icon/Upload-2-icon.png</normaloff>:/res/icon/Upload-2-icon.png</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>25</width>
+                <height>25</height>
+               </size>
+              </property>
+              <property name="toolButtonStyle">
+               <enum>Qt::ToolButtonTextBesideIcon</enum>
               </property>
              </widget>
             </item>
@@ -1516,23 +1663,23 @@ background:#919191;
          </size>
         </property>
         <property name="styleSheet">
-         <string notr="true">QToolButton
+         <string notr="true">QWidget
 {
-border: 1px solid black;
+border: 5px solid #919191;
 }</string>
         </property>
         <layout class="QGridLayout" name="gridLayout_3">
          <property name="leftMargin">
-          <number>0</number>
+          <number>5</number>
          </property>
          <property name="topMargin">
-          <number>0</number>
+          <number>5</number>
          </property>
          <property name="rightMargin">
-          <number>0</number>
+          <number>5</number>
          </property>
          <property name="bottomMargin">
-          <number>0</number>
+          <number>5</number>
          </property>
          <property name="spacing">
           <number>0</number>
@@ -1555,10 +1702,24 @@ border: 1px solid black;
             <string notr="true">QToolButton
 {
 border:0px;
-}</string>
+background:#c3c3c3;
+}
+
+QToolButton::menu-indicator { image: none; }
+
+QToolButton:hover
+{
+border:0px;
+background:#83d7f3;
+}
+
+</string>
            </property>
            <property name="text">
             <string>FILE</string>
+           </property>
+           <property name="popupMode">
+            <enum>QToolButton::InstantPopup</enum>
            </property>
           </widget>
          </item>
@@ -1580,10 +1741,27 @@ border:0px;
             <string notr="true">QToolButton
 {
 border:0px;
-}</string>
+background:#c3c3c3;
+}
+
+QToolButton::menu-indicator { image: none; }
+
+QToolButton:hover
+{
+border:0px;
+background:#83d7f3;
+}
+
+</string>
            </property>
            <property name="text">
             <string>TEXT</string>
+           </property>
+           <property name="popupMode">
+            <enum>QToolButton::DelayedPopup</enum>
+           </property>
+           <property name="arrowType">
+            <enum>Qt::NoArrow</enum>
            </property>
           </widget>
          </item>
@@ -1594,7 +1772,7 @@ border:0px;
        <widget class="QToolButton" name="tb_add_chapter">
         <property name="minimumSize">
          <size>
-          <width>140</width>
+          <width>150</width>
           <height>40</height>
          </size>
         </property>
@@ -1607,7 +1785,7 @@ border:0px;
         <property name="font">
          <font>
           <family>Impact</family>
-          <pointsize>14</pointsize>
+          <pointsize>20</pointsize>
          </font>
         </property>
         <property name="styleSheet">
@@ -1741,6 +1919,13 @@ background:#919191;
          <string notr="true">QToolButton
 {
 background:#e9e9e9;
+border:none;
+}
+
+QToolButton:hover
+{
+background:#919191;
+border:none;
 }</string>
         </property>
         <property name="text">
@@ -1748,12 +1933,12 @@ background:#e9e9e9;
         </property>
         <property name="icon">
          <iconset resource="textedit.qrc">
-          <normaloff>:/res/icon/prev.png</normaloff>:/res/icon/prev.png</iconset>
+          <normaloff>:/res/icon/left-xxl.png</normaloff>:/res/icon/left-xxl.png</iconset>
         </property>
         <property name="iconSize">
          <size>
-          <width>50</width>
-          <height>50</height>
+          <width>40</width>
+          <height>40</height>
          </size>
         </property>
        </widget>
@@ -1801,6 +1986,13 @@ background:#fff75b;
          <string notr="true">QToolButton
 {
 background:#e9e9e9;
+border:none;
+}
+
+QToolButton:hover
+{
+background:#919191;
+border:none;
 }</string>
         </property>
         <property name="text">
@@ -1808,12 +2000,12 @@ background:#e9e9e9;
         </property>
         <property name="icon">
          <iconset resource="textedit.qrc">
-          <normaloff>:/res/icon/next.png</normaloff>:/res/icon/next.png</iconset>
+          <normaloff>:/res/icon/right-xxl.png</normaloff>:/res/icon/right-xxl.png</iconset>
         </property>
         <property name="iconSize">
          <size>
-          <width>50</width>
-          <height>50</height>
+          <width>40</width>
+          <height>40</height>
          </size>
         </property>
        </widget>
@@ -1854,6 +2046,11 @@ background:#e9e9e9;
    <class>CxPageButton</class>
    <extends>QToolButton</extends>
    <header>cxpagebutton.h</header>
+  </customwidget>
+  <customwidget>
+   <class>CxCenterButton</class>
+   <extends>QToolButton</extends>
+   <header>cxcenterbutton.h</header>
   </customwidget>
  </customwidgets>
  <resources>

@@ -14,6 +14,7 @@ public:
 	void addChapter( QString txt ) ;
 	QLabel* getLabel(QListWidgetItem* item){ return (QLabel*)(itemWidget(item)); }
 	QStringList chapterList(){ return m_chapterList ; }
+	void resizeItem( QListWidgetItem* item ) ;
 public slots:
 	void onNext() ;
 	void onPrevious() ;

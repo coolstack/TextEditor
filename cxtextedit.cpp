@@ -68,7 +68,8 @@ void CxTextEdit::dropEvent(QDropEvent *event)
 	if( contentType == 1 )//Image
 	{
 //		t.insertImage(QImage(str)) ;
-		QUrl Uri = QUrl::fromLocalFile(str);
+		QUrl Uri = QUrl(str);
+//		QUrl Uri = QUrl::fromLocalFile(str);
 		QImage image = QImageReader(str).read();
 		QTextDocument * textDocument = document();
 		textDocument->addResource( QTextDocument::ImageResource, Uri, QVariant (image) );

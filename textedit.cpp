@@ -18,6 +18,8 @@
 #include <QTimerEvent>
 #include <QStandardPaths>
 #include <QDataStream>
+#include <QPrintDialog>
+#include "centeredtoolbuttonstyle.h"
 
 TextEdit::TextEdit(QWidget *parent /* = 0 */)
 {
@@ -25,6 +27,7 @@ TextEdit::TextEdit(QWidget *parent /* = 0 */)
 	m_version = 100 ;
 	m_pageMenu = new CxPageMenu(this) ;
 	m_pageMenu->hide() ;
+	m_autoSaveTimer = new QTimeLine(20000,this) ;
 	m_collectDlg = new CxAllChapterDlg ;
 	m_wordHandler = new CxWordHandler ;
 	initUI() ;
@@ -46,6 +49,9 @@ TextEdit::TextEdit(QWidget *parent /* = 0 */)
 	m_isRemoteTextChange = false ;
 	m_isAutoSave = true ;
 	load() ;
+	ui.tb_undo->setEnabled(false) ;
+	ui.tb_redo->setEnabled(false) ;
+	onDocumentChanged(false) ;
 //	ui.w_pagination->setMouseTracking(true) ;
 }
 
@@ -96,6 +102,9 @@ void TextEdit::initUI()
 
 void TextEdit::initConnection()
 {
+	connect( ui.textEdit, SIGNAL(undoAvailable(bool)), ui.tb_undo, SLOT(setEnabled(bool))) ;
+	connect( ui.textEdit, SIGNAL(redoAvailable(bool)), ui.tb_redo, SLOT(setEnabled(bool))) ;
+	connect( m_autoSaveTimer, SIGNAL(finished()), this, SLOT(onSave())) ;
 	connect( ui.lw_chapter_list, SIGNAL(__changed()), this, SLOT(onChapterChanged())) ;
 	connect( ui.lw_chapter_list, SIGNAL(__preChanged(int,bool)), this, SLOT(onPreChanged(int,bool))) ;
 	connect( ui.lw_chapter_list, SIGNAL(__swap(int,int)), this, SLOT(onSwapChapter(int,int)) );
@@ -134,9 +143,9 @@ void TextEdit::initConnection()
 	foreach(int size, db.standardSizes())
 		ui.cb_fontsize->addItem(QString::number(size));
 
-	/*
 	connect(ui.textEdit, SIGNAL(currentCharFormatChanged(QTextCharFormat)),
 		this, SLOT(currentCharFormatChanged(QTextCharFormat)));
+	/*
 	fontChanged(ui.textEdit->font());
 	colorChanged(ui.textEdit->textColor());
 	alignmentChanged(ui.textEdit->alignment());
@@ -166,9 +175,8 @@ void TextEdit::initConnection()
 
 void TextEdit::onAddChapter()
 {
-//	QMessageBox::information(NULL,"",QString::number(ui.w_text_area->width()));
 	bool ok;
-	QString text = QInputDialog::getText(NULL, tr("Create Chapter"),
+	QString text = QInputDialog::getText(NULL, tr("New  "),
 		tr("Chapter Name:"), QLineEdit::Normal, "", &ok);
 	if (ok && !text.isEmpty())
 	{
@@ -193,7 +201,7 @@ void TextEdit::addChapter(QString text)
 
 void TextEdit::onStartNewBook()
 {
-	if( m_curBookName.length() )
+	if( m_curBookName.length() )//means SAVE button
 	{
 		onSave() ;
 		return ;
@@ -241,6 +249,7 @@ void TextEdit::startBook(QString str, bool isOpenMode)
 	ui.w_top->setEnabled(true) ;
 	setWindowTitle(m_curBookName) ;
 	ui.tb_start->setText("Save") ;
+	if( m_isAutoSave ) m_autoSaveTimer->start() ;
 }
 
 void TextEdit::init()
@@ -269,10 +278,9 @@ void TextEdit::setEditable(bool on)
 
 void TextEdit::onSelectChapter(int id)
 {
-	ui.lbl_status->setText(QString("%1").arg(id)) ;
+//	ui.lbl_status->setText(QString("%1").arg(id)) ;
 	if( !m_docList.count() ) return ;
 	m_curChapter = id ;
-//	QMessageBox::information(NULL,"",QString("%1 %2").arg(id).arg(m_docList.count())) ;
 	ui.textEdit->setDocument(m_docList[id]) ;
 	onTextChanged() ;
 	ui.lw_res_1->setData(m_contentList[0][id],m_contentTypeList[0][id]) ;
@@ -290,7 +298,6 @@ void TextEdit::onSelectChapter(int id)
 
 int TextEdit::getPageCount()
 {
-//	QMessageBox::information(NULL,"","A") ;
 	if( !m_docList.count() ) return 1 ;
 	int h = m_docList[m_curChapter]->size().height() ;
 	int pg = h/m_pageSize.height() ;
@@ -300,10 +307,9 @@ int TextEdit::getPageCount()
 
 void TextEdit::onTextChanged()
 {
-//	QMessageBox::information(NULL,"","A") ;
+	onDocumentChanged(true);
 	int pg = getPageCount() ;
 	m_pageMenu->setCount(pg) ;
-//	QMessageBox::information(NULL,"",QString::number(pg)) ;
 	for( int i = 1; i <= 5; i++ )
 	{
 		QLabel* lb = findChild<QLabel*>(QString("lb_page_%1").arg(i));
@@ -375,7 +381,9 @@ void TextEdit::onUploadFile()
 			QMessageBox::information(NULL,"","Invalid image format") ;
 			return ;
 		}
-		w->addImage(fileName) ;
+		QString filePath = QString("res/image/%1.%2").arg(createSimpleUuid()).arg(QFileInfo(fileName).suffix()) ;
+		QFile(fileName).copy(filePath) ;
+		w->addImage(filePath) ;
 		return ;
 	}
 	QFile file(fileName) ;
@@ -386,6 +394,7 @@ void TextEdit::onUploadFile()
 	QApplication::restoreOverrideCursor() ;
 	w->addText(content) ;
 	QFile(filePath).remove() ;
+	
 }
 
 void TextEdit::onCreateText()
@@ -448,12 +457,19 @@ void TextEdit::onContentChanged(int id)
 {
 	CxResListWidget* w = ui.lw_res_1 ;
 	if( id == 1 ) w = ui.lw_res_2 ;
-	m_contentList[id][m_curChapter] = ui.lw_res_1->contentList() ;
-	m_contentTypeList[id][m_curChapter] = ui.lw_res_1->contentTypeList() ;
+	m_contentList[id][m_curChapter] = w->contentList() ;
+	m_contentTypeList[id][m_curChapter] = w->contentTypeList() ;
+	onDocumentChanged(true) ;
+}
+
+void TextEdit::onDocumentChanged(bool on)
+{
+	ui.tb_save->setEnabled(on) ;
 }
 
 void TextEdit::onPreChanged( int id, bool isAdd )
 {
+	onDocumentChanged(true);
 	if( isAdd ) {
 		QStringList contentList;
 		QList<int> typeList ;
@@ -477,6 +493,7 @@ void TextEdit::onPreChanged( int id, bool isAdd )
 void TextEdit::onSwapChapter(int s, int e)
 {
 //	QMessageBox::information(NULL,"",QString("%1 %2").arg(s).arg(e)) ;
+	onDocumentChanged(true);
 	m_contentTypeList[0].swap(s,e) ;
 	m_contentTypeList[1].swap(s,e) ;
 	m_contentList[0].swap(s,e) ;
@@ -541,8 +558,9 @@ void TextEdit::mergeFormatOnWordOrSelection(const QTextCharFormat &format)
 
 void TextEdit::currentCharFormatChanged(const QTextCharFormat &format)
 {
-	fontChanged(format.font());
-	colorChanged(format.foreground().color());
+//	onDocumentChanged(true);
+//	fontChanged(format.font());
+//	colorChanged(format.foreground().color());
 }
 
 void TextEdit::onShowTextFormat()
@@ -692,7 +710,20 @@ void TextEdit::onFontSizeDecrease()
 
 void TextEdit::onSave()
 {
-	ui.tb_save->setEnabled(false) ;
+	if( m_autoSaveTimer->state() == QTimeLine::Running )
+	{
+		m_autoSaveTimer->stop() ;
+	}
+	QApplication::setOverrideCursor(Qt::WaitCursor) ;
+	saveContent() ;
+	saveText() ;
+	onDocumentChanged(false) ;
+	if( m_isAutoSave )
+	{
+		m_autoSaveTimer->setCurrentTime(0) ;
+		m_autoSaveTimer->start() ;
+	}
+	QApplication::restoreOverrideCursor() ;
 }
 
 void TextEdit::onRequireColorMenu(CxColorWidget* w)
@@ -725,6 +756,14 @@ void TextEdit::onAutoSave()
 {
 	m_isAutoSave = !m_isAutoSave ;
 	m_autoSaveAction->setChecked(m_isAutoSave) ;
+	if( m_isAutoSave )
+	{
+		m_autoSaveTimer->start() ;
+	}
+	else
+	{
+		m_autoSaveTimer->stop() ;
+	}
 }
 
 void TextEdit::onCollectAll()
@@ -755,7 +794,23 @@ void TextEdit::onPdf()
 
 void TextEdit::onPrint()
 {
-	saveContent() ;
+//	QPrinter printer(QPrinter::HighResolution);
+	QPrinter printer(QPrinter::ScreenResolution);
+	printer.setPageSize(QPagedPaintDevice::B5) ;
+	printer.setPageMargins(0.3, 0.3, 0.3, 0.3, QPrinter::Inch);
+	QPrintDialog *dlg = new QPrintDialog(&printer, this);
+	if (ui.textEdit->textCursor().hasSelection()) dlg->addEnabledOption(QAbstractPrintDialog::PrintSelection);
+	dlg->setWindowTitle(tr("Print Document"));
+
+	QApplication::setOverrideCursor(Qt::WaitCursor) ;
+	QSizeF paperSize;
+	paperSize.setWidth(printer.width());
+	paperSize.setHeight(printer.height());
+	ui.textEdit->document()->setPageSize(paperSize); // the document needs a valid PageSize
+	if (dlg->exec() == QDialog::Accepted)
+		ui.textEdit->print(&printer);
+	QApplication::restoreOverrideCursor() ;
+	delete dlg;
 }
 
 void TextEdit::onODT()
@@ -772,8 +827,8 @@ void TextEdit::mouseMoveEvent(QMouseEvent* event)
 {
 	QWidget::mouseMoveEvent(event) ;
 	QPoint pnt = event->pos() ;
-	ui.lbl_status->setText(QString("%1 %2").arg(pnt.x()).arg(pnt.y())) ;
-	ui.lbl_status->repaint() ;
+//	ui.lbl_status->setText(QString("%1 %2").arg(pnt.x()).arg(pnt.y())) ;
+//	ui.lbl_status->repaint() ;
 }
 
 void TextEdit::onShowPageMenu( bool on )
@@ -816,8 +871,22 @@ QString TextEdit::createSimpleUuid()
 
 void TextEdit::closeEvent(QCloseEvent* event)
 {
-	saveContent() ;
-	saveText() ;
+	if( ui.tb_save->isEnabled() )
+	{
+		QMessageBox::StandardButton ret;
+		ret = QMessageBox::warning(NULL, tr("Confirm"),
+			tr("The document has been modified.\n"
+			"Do you want to save your changes?"),
+			QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel);
+		if (ret == QMessageBox::Save) {
+			saveContent() ;
+			saveText() ;
+		}
+		if (ret == QMessageBox::Cancel) {
+			event->ignore() ;
+			return ;
+		}
+	}
 	event->accept() ;
 }
 
@@ -848,13 +917,28 @@ void TextEdit::saveContent()
 
 	QFile settingFile("last.data") ;
 	QDataStream settingOut(&settingFile) ;
+	settingFile.open(QIODevice::WriteOnly) ;
 	settingOut << m_version << m_curBookName ;
 	settingFile.close() ;
 }
 
 void TextEdit::saveText()
 {
+	int cnt = m_docList.count() ;
+	for( int i = 0; i < cnt; i++ )
+	{
+		saveText(i) ;
+	}
+}
 
+void TextEdit::saveText(int id)
+{
+	QFile file(QString("%1/%2.dat").arg(m_curDirPath).arg(id+1)) ;
+	QDataStream out(&file) ;
+	if( file.open(QIODevice::WriteOnly) )
+	{
+		out << m_docList[id]->toHtml() ;
+	}
 }
 
 void TextEdit::load()
@@ -874,7 +958,7 @@ void TextEdit::load()
 	}
 	QFile file(m_curDirPath+"/content.config") ;
 	QDataStream in(&file) ;
-	int cnt, sz, contentType ;
+	int cnt = 0, sz, contentType ;
 	QString content ;
 	if( file.open(QIODevice::ReadOnly) )
 	{
@@ -889,7 +973,7 @@ void TextEdit::load()
 			QList<int> typeList ;
 			for( int j = 0; j < sz; j++ )
 			{
-				in >> content >> contentType ;
+				in >> contentType >> content  ;
 				contentList << content ;
 				typeList << contentType ;
 			}
@@ -900,11 +984,24 @@ void TextEdit::load()
 			typeList.clear() ;
 			for( int j = 0; j < sz; j++ )
 			{
-				in >> content >> contentType ;
+				in >> contentType >> content  ;
 				contentList << content ;
 				typeList << contentType ;
 			}
 			ui.lw_res_2->setData(contentList,typeList) ;
 		}
 	}
+	for( int i = 0; i < cnt; i++ )
+	{
+		QFile file(QString("%1/%2.dat").arg(m_curDirPath).arg(i+1)) ;
+		if( !file.exists() ) continue ;
+		QDataStream in(&file) ;
+		if( file.open(QIODevice::ReadOnly) )
+		{
+			QString str ;
+			in >> str ;
+			m_docList[i]->setHtml(str) ;
+		}
+	}
+	if( m_chapterList.count() ) ui.lw_chapter_list->setCurrentRow(0) ;
 }

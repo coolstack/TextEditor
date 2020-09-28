@@ -90,7 +90,12 @@
         </property>
         <property name="styleSheet">
          <string notr="true">QToolButton
-{ border-style:none;}</string>
+{ border-style:none;}
+
+QToolButton:hover
+{
+background:#e5e5e5;
+}</string>
         </property>
         <property name="text">
          <string>...</string>
@@ -132,6 +137,13 @@
        <width>15</width>
        <height>30</height>
       </size>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">
+QToolButton:hover
+{
+background:#e5e5e5;
+}</string>
      </property>
      <property name="text">
       <string/>

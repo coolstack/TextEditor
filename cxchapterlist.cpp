@@ -8,6 +8,7 @@
 #include <QInputDialog>
 #include <QDir>
 #include <QScrollBar>
+#include <QFontMetrics>
 
 #define ITEMW 100
 #define ITEMH 42
@@ -54,6 +55,7 @@ void CxChapterList::addChapter( QString txt )
 	clearSelection() ;
 	item->setSelected(true) ;
 	onChanged() ;
+	resizeItem(item) ;
 }
 
 void CxChapterList::onSelectionChanged()
@@ -114,6 +116,7 @@ void CxChapterList::contextMenuEvent(QContextMenuEvent *event)
 			QLabel* lb = getLabel(cur) ;
 			cur->setData(Qt::EditRole,text) ;
 			lb->setText(QString("%1-%2").arg(row(cur)+1).arg(text)) ;
+			resizeItem(cur) ;
 			onChanged() ;
 		}
 		if( ret == deleteAction )
@@ -160,4 +163,14 @@ void CxChapterList::onPrevious()
 //	scrollContentsBy(-30,0) ;
 //	scrollToItem(item(cur-1)) ;
 	horizontalScrollBar()->setValue(horizontalScrollBar()->value()-30) ;
+}
+
+void CxChapterList::resizeItem(QListWidgetItem* item)
+{
+	QFontMetrics metrics(QFont("Impact",16)) ;
+	QLabel* lb = getLabel(item) ;
+	if( !lb ) return ;
+	int w = qMax( metrics.width(lb->text())+20, ITEMW ) ;
+	item->setSizeHint(QSize(w,ITEMH)); 
+	lb->resize(w,ITEMH) ;
 }
