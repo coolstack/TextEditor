@@ -14,10 +14,13 @@
 #include <QFileInfo>
 #include <QFile>
 #include <QTextStream>
+#include <QTextDocumentWriter>
+#include <QTimerEvent>
 
 TextEdit::TextEdit(QWidget *parent /* = 0 */)
 {
 	ui.setupUi(this) ;
+	m_pageMenu = new CxPageMenu(this) ;
 	initUI() ;
 	initConnection() ;
 	init() ;
@@ -35,7 +38,10 @@ TextEdit::TextEdit(QWidget *parent /* = 0 */)
 	ui.lw_res_1->setIndex(0) ;
 	ui.lw_res_2->setIndex(1) ;
 	m_isRemoteTextChange = false ;
+	m_isAutoSave = true ;
+//	ui.w_pagination->setMouseTracking(true) ;
 }
+
 
 void TextEdit::initUI()
 {	
@@ -54,18 +60,28 @@ void TextEdit::initUI()
 	fileMenu->setFont(QFont("impact",16)) ;
 	QAction* newAction = fileMenu->addAction("New") ;
 	QAction* saveAction = fileMenu->addAction("Save") ;
-	QMenu saveMenu ;
-	saveMenu.setTitle("Save As") ;
-	fileMenu->addMenu(&saveMenu) ;
+	QMenu* saveMenu = new QMenu;
+	saveMenu->setTitle("Save As") ;
+	fileMenu->addMenu(saveMenu) ;
+	saveMenu->setFont(QFont("impact",16)) ;
+	QAction* saveToPdf = saveMenu->addAction("Save to PDF") ;
+	QAction* saveToODT = saveMenu->addAction("Save to ODT") ;
 	ui.tb_menu_file->setMenu(fileMenu) ;
 
 	textMenu->setFont(QFont("impact",16)) ;
 	QAction* collectAction = textMenu->addAction("Collect All") ;
-	QAction* autoSaveAction = textMenu->addAction("AutoSave") ;
-	autoSaveAction->setChecked(true) ;
+	m_autoSaveAction = textMenu->addAction("AutoSave") ;
+	m_autoSaveAction->setCheckable(true) ;
+	m_autoSaveAction->setChecked(true) ;
 	ui.tb_menu_text->setMenu(textMenu) ;
 
+	connect( saveAction, SIGNAL(triggered()), this, SLOT(onSave())) ;
 	connect( newAction, SIGNAL(triggered()), this, SLOT(onAddChapter())) ;
+	connect( saveToODT, SIGNAL(triggered()), this, SLOT(onODT())) ;
+	connect( saveToPdf, SIGNAL(triggered()), this, SLOT(onPdf())) ;
+
+	connect( collectAction, SIGNAL(triggered()), this, SLOT(onCollectAll())) ;
+	connect( m_autoSaveAction, SIGNAL(triggered()), this, SLOT(onAutoSave())) ;
 	connect( ui.tb_menu_text, SIGNAL(clicked()),ui.tb_menu_text, SLOT(showMenu())) ;
 	connect( ui.tb_menu_file, SIGNAL(clicked()),ui.tb_menu_file, SLOT(showMenu())) ;
 }
@@ -96,6 +112,8 @@ void TextEdit::initConnection()
 	connect( ui.tb_prev_chapter, SIGNAL(clicked()), ui.lw_chapter_list, SLOT(onPrevious())) ;
 	connect(ui.tb_pdf, SIGNAL(clicked()), this, SLOT(onPdf())) ;
 	connect(ui.tb_print, SIGNAL(clicked()), this, SLOT(onPrint())) ;
+	connect( ui.tb_save, SIGNAL(clicked()), this, SLOT(onSave())) ;
+	connect( ui.tb_show_page, SIGNAL(__showPageMenu(bool)), this, SLOT(onShowPageMenu(bool))) ;
 	for( int i = 1; i <= 5; i++ )
 	{
 		CxPageLabel* lb = (CxPageLabel*)(findChild<QLabel*>(QString("lb_page_%1").arg(i)));
@@ -433,14 +451,12 @@ void TextEdit::onChapterChanged()
 
 void TextEdit::onMoveContent( int index, QListWidgetItem* item )
 {
-	if( index == 0 )
-	{
-		ui.lw_res_2->addText(item->data(Qt::EditRole).toString()) ;
-	}
-	else
-	{
-		ui.lw_res_1->addText(item->data(Qt::EditRole).toString()) ;
-	}
+	CxResListWidget* w = ui.lw_res_1 ;
+
+	if( index == 0 ) w = ui.lw_res_2 ; 
+	int t = item->data(Qt::EditRole+1).toInt() ;
+	if( t == TEXTTYPE ) w->addText(item->data(Qt::EditRole).toString()) ;
+	else w->addImage(item->data(Qt::EditRole).toString()) ;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -661,6 +677,18 @@ void TextEdit::onHightlightColorChanged(QColor col)
 	QTextCursor cursor = ui.textEdit->textCursor();
 	cursor.mergeCharFormat(fmt);
 }
+
+void TextEdit::onAutoSave()
+{
+	m_isAutoSave = !m_isAutoSave ;
+	m_autoSaveAction->setChecked(m_isAutoSave) ;
+}
+
+void TextEdit::onCollectAll()
+{
+
+}
+
 //////////////////////////////////////////////////////////////////////////
 
 void TextEdit::onPdf()
@@ -685,3 +713,46 @@ void TextEdit::onPrint()
 {
 }
 
+void TextEdit::onODT()
+{
+	QString fileName = QFileDialog::getSaveFileName(this, tr("Save to ODT file"),"",tr("ODT files (*.odf)"));	
+	if( !fileName.length() ) return ;
+	QTextDocumentWriter writer(fileName) ;
+	writer.setFormat("odf") ;
+	writer.write(ui.textEdit->document()) ;
+}
+
+
+void TextEdit::mouseMoveEvent(QMouseEvent* event)
+{
+	QWidget::mouseMoveEvent(event) ;
+	QPoint pnt = event->pos() ;
+	ui.lbl_status->setText(QString("%1 %2").arg(pnt.x()).arg(pnt.y())) ;
+	ui.lbl_status->repaint() ;
+}
+
+void TextEdit::onShowPageMenu( bool on )
+{
+	if( on )
+	{
+		QPoint pnt = mapFromGlobal(ui.tb_show_page->mapToGlobal(QPoint(0,0))) ;
+		m_pageMenu->setGeometry(pnt.x()-310,pnt.y(), 300, 300 ) ;
+		m_pageMenu->setVisible(true) ;
+	}
+	else
+	{
+		m_timer.start(100,this) ;
+	}
+}
+
+void TextEdit::timerEvent(QTimerEvent* event)
+{
+	if( event->timerId() != m_timer.timerId() ) return ;
+	if( m_pageMenu->isVisible() )
+	{
+		QRect rc = m_pageMenu->geometry() ;
+		if( rc.contains(QCursor::pos()) ) return ;
+		m_pageMenu->hide();
+	}
+	m_timer.stop() ;
+}

@@ -67,9 +67,8 @@ void CxTextEdit::dropEvent(QDropEvent *event)
 	}
 	if( contentType == 1 )//Image
 	{
-		t.insertImage(QImage(str)) ;
-		/*
-		QUrl Uri ( QString ( "file://%1" ).arg (str) );
+//		t.insertImage(QImage(str)) ;
+		QUrl Uri = QUrl::fromLocalFile(str);
 		QImage image = QImageReader(str).read();
 		QTextDocument * textDocument = document();
 		textDocument->addResource( QTextDocument::ImageResource, Uri, QVariant (image) );
@@ -78,7 +77,6 @@ void CxTextEdit::dropEvent(QDropEvent *event)
 		imageFormat.setHeight( image.height() );
 		imageFormat.setName( Uri.toString() );
 		textCursor().insertImage(imageFormat);
-		*/
 	}
 
 	QMimeData* mimeData = new QMimeData ;

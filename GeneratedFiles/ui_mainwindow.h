@@ -23,6 +23,7 @@
 #include <QtWidgets/QWidget>
 #include "cxchapterlist.h"
 #include "cxcolorwidget.h"
+#include "cxpagebutton.h"
 #include "cxpagelabel.h"
 #include "cxreslistwidget.h"
 #include "cxtextedit.h"
@@ -77,7 +78,7 @@ public:
     CxPageLabel *lb_page_1;
     QToolButton *tb_prev_page;
     QToolButton *tb_next_page;
-    QToolButton *tb_show_page;
+    CxPageButton *tb_show_page;
     CxPageLabel *lb_page_5;
     QWidget *widget_12;
     QGridLayout *gridLayout_14;
@@ -533,7 +534,7 @@ public:
 
         gridLayout_15->addWidget(tb_next_page, 0, 7, 1, 1);
 
-        tb_show_page = new QToolButton(w_pagination);
+        tb_show_page = new CxPageButton(w_pagination);
         tb_show_page->setObjectName(QStringLiteral("tb_show_page"));
         tb_show_page->setEnabled(true);
         tb_show_page->setMinimumSize(QSize(50, 50));

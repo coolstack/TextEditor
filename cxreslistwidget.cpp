@@ -147,7 +147,8 @@ void CxResListWidget::setData( QStringList contentList, QList<int> typeList )
 	m_isRemoteMode = true ;
 	for( int i = 0; i < cnt; i++ )
 	{
-		addText(contentList[i]) ;
+		if( typeList[i] == TEXTTYPE ) addText(contentList[i]) ;
+		if( typeList[i] == IMAGETYPE ) addImage(contentList[i]) ;
 	}
 	m_isRemoteMode = false ;
 }

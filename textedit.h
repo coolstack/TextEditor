@@ -8,6 +8,9 @@
 
 #include <QMenu>
 #include <QAction>
+#include <QBasicTimer>
+
+#include "cxpagemenu.h"
 
 class TextEdit : public QWidget
 {
@@ -21,6 +24,7 @@ private slots:
 	void onTextChanged() ;
 	void onSliderValueChanged(int) ;
 	void onPdf() ;
+	void onODT() ;
 	void onPrint() ;
 	void onMovePage(int page) ;
 	void onPrevPage() ;
@@ -38,6 +42,9 @@ private slots:
 	void onMoveContent( int index, QListWidgetItem* item ) ;
 	void onSave() ;
 	void onRequireColorMenu(CxColorWidget* w) ;
+	void onCollectAll() ;
+	void onAutoSave() ;
+	void onShowPageMenu(bool on) ;
 	//////////////////////////////////////////////////////////////////////////
 	void currentCharFormatChanged(const QTextCharFormat &format);
 	void textBold();
@@ -55,6 +62,9 @@ private slots:
 	void onTextColorChanged(QColor col) ;
 	void onHightlightColorChanged(QColor col) ;
 	void onTextBackgroundColorChanged(QColor col) ;
+protected:
+	void mouseMoveEvent(QMouseEvent *event) ;
+	void timerEvent(QTimerEvent* event) ;
 private:
 	void initUI() ;
 	void initConnection() ;
@@ -82,7 +92,10 @@ private:
 	QList<QStringList> m_contentList[2] ;
 	QList<QList<int>> m_contentTypeList[2] ;
 	bool m_isRemoteTextChange ;
-
+	bool m_isAutoSave ;
+	QAction* m_autoSaveAction ;
+	QBasicTimer m_timer ;
+	CxPageMenu* m_pageMenu ;
 };
 
 #endif // TEXTEDIT_H
