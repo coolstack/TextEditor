@@ -16,23 +16,27 @@
 #include <QTextStream>
 #include <QTextDocumentWriter>
 #include <QTimerEvent>
+#include <QStandardPaths>
+#include <QDataStream>
 
 TextEdit::TextEdit(QWidget *parent /* = 0 */)
 {
 	ui.setupUi(this) ;
+	m_version = 100 ;
 	m_pageMenu = new CxPageMenu(this) ;
 	m_pageMenu->hide() ;
 	m_collectDlg = new CxAllChapterDlg ;
+	m_wordHandler = new CxWordHandler ;
 	initUI() ;
 	initConnection() ;
 	init() ;
+	/*
 	startBook("SSSS") ;
-
 	addChapter("one") ;
 	addChapter("two") ;
-//	addChapter("three") ;
 	ui.lw_res_1->addText("AAAA") ;
 	ui.lw_res_1->addText("BBBB") ;
+	*/
 //	for( int i = 0 ; i < 10; i++ ) addChapter(QString("Chapter%1").arg(i)) ;
 //	ui.lw_chapter_list->setCurrentRow(0) ;
 
@@ -41,6 +45,7 @@ TextEdit::TextEdit(QWidget *parent /* = 0 */)
 	ui.lw_res_2->setIndex(1) ;
 	m_isRemoteTextChange = false ;
 	m_isAutoSave = true ;
+	load() ;
 //	ui.w_pagination->setMouseTracking(true) ;
 }
 
@@ -161,7 +166,7 @@ void TextEdit::initConnection()
 
 void TextEdit::onAddChapter()
 {
-	QMessageBox::information(NULL,"",QString::number(ui.w_text_area->width()));
+//	QMessageBox::information(NULL,"",QString::number(ui.w_text_area->width()));
 	bool ok;
 	QString text = QInputDialog::getText(NULL, tr("Create Chapter"),
 		tr("Chapter Name:"), QLineEdit::Normal, "", &ok);
@@ -202,8 +207,35 @@ void TextEdit::onStartNewBook()
 	}
 }
 
-void TextEdit::startBook(QString str)
+void TextEdit::startBook(QString str, bool isOpenMode)
 {
+	QString dirPath = QString("doc/%1").arg(str) ;
+
+	if( isOpenMode )
+	{
+		if( !QDir(dirPath).exists() )
+		{
+			QMessageBox::information(NULL,"","Last book does n't exists."); 
+			return ;
+		}
+	}
+	else
+	{
+		if( QDir(dirPath).exists() )
+		{
+			QMessageBox::information(NULL,"","Same name exists already."); 
+			return ;
+		}
+		QDir().mkpath(dirPath) ;
+		if( !QDir(dirPath).exists() )
+		{
+			QMessageBox::information(NULL,"","Please try again with another name"); 
+			return ;
+		}
+	}
+
+
+	m_curDirPath = dirPath ;
 	m_curBookName = str ;
 	init() ;
 	ui.w_top->setEnabled(true) ;
@@ -319,7 +351,7 @@ void TextEdit::onUploadFile()
 {
 	QString fileName = QFileDialog::getOpenFileName(this, tr("Upload File"),
 		"",
-		tr("Files (*.txt *.png *.jpg)")) ;
+		tr("Files (*.txt *.doc *.docx *.png *.jpg)")) ;
 	if( fileName.length() == 0 ) return ;
 	QString suf = QFileInfo(fileName).suffix().toLower() ;
 	CxResListWidget* w = ui.lw_res_1 ;
@@ -333,6 +365,7 @@ void TextEdit::onUploadFile()
 		str = in.readAll() ;
 		file.close() ;
 		w->addText(str) ;
+		return ;
 	}
 	if(suf.contains("png") || suf.contains("jpg"))
 	{
@@ -343,7 +376,16 @@ void TextEdit::onUploadFile()
 			return ;
 		}
 		w->addImage(fileName) ;
+		return ;
 	}
+	QFile file(fileName) ;
+	QString filePath = QString("%1/%2.%3").arg(QStandardPaths::writableLocation(QStandardPaths::HomeLocation)).arg(createSimpleUuid()).arg(QFileInfo(fileName).suffix()) ;
+	file.copy(filePath) ;
+	QApplication::setOverrideCursor(Qt::WaitCursor) ;
+	QString content =m_wordHandler->readDoc(filePath) ;
+	QApplication::restoreOverrideCursor() ;
+	w->addText(content) ;
+	QFile(filePath).remove() ;
 }
 
 void TextEdit::onCreateText()
@@ -713,6 +755,7 @@ void TextEdit::onPdf()
 
 void TextEdit::onPrint()
 {
+	saveContent() ;
 }
 
 void TextEdit::onODT()
@@ -761,4 +804,107 @@ void TextEdit::timerEvent(QTimerEvent* event)
 		m_pageMenu->hide();
 	}
 	m_timer.stop() ;
+}
+
+QString TextEdit::createSimpleUuid()
+{
+	QString ret = QUuid::createUuid().toString() ;
+	ret.chop(1) ;
+	ret = ret.right(ret.length()-1) ;
+	return ret ;
+}
+
+void TextEdit::closeEvent(QCloseEvent* event)
+{
+	saveContent() ;
+	saveText() ;
+	event->accept() ;
+}
+
+void TextEdit::saveContent()
+{
+	if( !m_curBookName.length() ) return ; 
+	int cnt = m_contentList[0].count() ;
+	QFile file(m_curDirPath+"/"+"content.config") ;
+	QDataStream out(&file) ;
+	file.open(QIODevice::WriteOnly) ;
+	out << cnt ;
+	int sz, j ;
+	for( int i = 0; i < cnt; i++ ) {
+
+		out << m_chapterList[i] ;
+
+		sz = m_contentList[0][i].count() ;
+
+		out << sz ;
+		for( int j = 0; j < sz; j++ ) out << m_contentTypeList[0][i][j] << m_contentList[0][i][j] ;
+
+		sz = m_contentList[1][i].count() ;
+
+		out << sz ;
+		for( int j = 0; j < sz; j++ ) out << m_contentTypeList[1][i][j] << m_contentList[1][i][j] ;
+	}
+	file.close() ;
+
+	QFile settingFile("last.data") ;
+	QDataStream settingOut(&settingFile) ;
+	settingOut << m_version << m_curBookName ;
+	settingFile.close() ;
+}
+
+void TextEdit::saveText()
+{
+
+}
+
+void TextEdit::load()
+{
+	QFile settingFile("last.data") ;
+	QDataStream settingIn(&settingFile) ;
+	int version ;
+	QString book ;
+	if( settingFile.open(QIODevice::ReadOnly) )
+	{
+		settingIn >> version >> book ;
+		startBook(book,true) ;
+	}
+	else
+	{
+		return ;
+	}
+	QFile file(m_curDirPath+"/content.config") ;
+	QDataStream in(&file) ;
+	int cnt, sz, contentType ;
+	QString content ;
+	if( file.open(QIODevice::ReadOnly) )
+	{
+		in >> cnt ;
+		QString chapter ;
+		for( int i = 0; i < cnt; i++ )
+		{
+			in >> chapter ;
+			addChapter(chapter) ;
+			in >> sz ;
+			QStringList contentList ;
+			QList<int> typeList ;
+			for( int j = 0; j < sz; j++ )
+			{
+				in >> content >> contentType ;
+				contentList << content ;
+				typeList << contentType ;
+			}
+			ui.lw_res_1->setData(contentList,typeList) ;
+
+			in >> sz ;
+			contentList.clear() ;
+			typeList.clear() ;
+			for( int j = 0; j < sz; j++ )
+			{
+				in >> content >> contentType ;
+				contentList << content ;
+				typeList << contentType ;
+			}
+			ui.lw_res_2->setData(contentList,typeList) ;
+		}
+	}
 }

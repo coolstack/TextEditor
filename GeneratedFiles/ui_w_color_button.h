@@ -77,7 +77,7 @@ public:
         QIcon icon;
         icon.addFile(QStringLiteral(":/res/icon/dropdown.png"), QSize(), QIcon::Normal, QIcon::Off);
         tb_menu->setIcon(icon);
-        tb_menu->setIconSize(QSize(13, 13));
+        tb_menu->setIconSize(QSize(10, 10));
 
         gridLayout->addWidget(tb_menu, 0, 1, 1, 1);
 

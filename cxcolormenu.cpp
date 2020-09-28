@@ -1,5 +1,6 @@
 #include "cxcolormenu.h"
 #include <QColorDialog>
+#include <QMessageBox>
 
 CxColorMenu::CxColorMenu(QWidget *parent)
 	: QDialog(parent)
@@ -34,6 +35,7 @@ void CxColorMenu::onChooseMore()
 	{
 		m_ret = col ;
 		accept() ;
+		return ;
 	}
 	reject() ;
 }

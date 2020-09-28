@@ -9,15 +9,19 @@
 #include <QMenu>
 #include <QAction>
 #include <QBasicTimer>
+#include <QUuid>
+#include <QCloseEvent>
 
 #include "cxpagemenu.h"
 #include "cxallchapterdlg.h"
+#include "cxwordhandler.h"
 
 class TextEdit : public QWidget
 {
     Q_OBJECT
 public:
     TextEdit(QWidget *parent = 0);
+	QString createSimpleUuid() ;
 private slots:
 	void onStartNewBook() ;
 	void onAddChapter() ;
@@ -46,6 +50,8 @@ private slots:
 	void onCollectAll() ;
 	void onAutoSave() ;
 	void onShowPageMenu(bool on) ;
+	void saveContent() ;
+	void saveText() ;
 	//////////////////////////////////////////////////////////////////////////
 	void currentCharFormatChanged(const QTextCharFormat &format);
 	void textBold();
@@ -66,11 +72,13 @@ private slots:
 protected:
 	void mouseMoveEvent(QMouseEvent *event) ;
 	void timerEvent(QTimerEvent* event) ;
+	void closeEvent(QCloseEvent* event) ;
 private:
 	void initUI() ;
 	void initConnection() ;
 	void init() ;
-	void startBook(QString str) ;
+	void load() ;
+	void startBook(QString str, bool isOpenMode=false) ;
 	void addChapter(QString text) ;
 	void setEditable(bool on);
 	void switchContent(int id) ;
@@ -83,7 +91,7 @@ private:
 
 
 	Ui::Form_MainWindow ui ;
-	QString m_curBookName ;
+	QString m_curBookName, m_curDirPath ;
 	QList<QString> m_chapterList ;
 	QList<QTextDocument*> m_docList ;
 	int m_curChapter ;
@@ -98,6 +106,8 @@ private:
 	QBasicTimer m_timer ;
 	CxPageMenu* m_pageMenu ;
 	CxAllChapterDlg* m_collectDlg ;
+	CxWordHandler* m_wordHandler ;
+	int m_version ;
 };
 
 #endif // TEXTEDIT_H

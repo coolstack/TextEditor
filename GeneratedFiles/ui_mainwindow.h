@@ -179,7 +179,7 @@ public:
         w_text_control->setMaximumSize(QSize(16777215, 40));
         gridLayout_8 = new QGridLayout(w_text_control);
         gridLayout_8->setObjectName(QStringLiteral("gridLayout_8"));
-        gridLayout_8->setHorizontalSpacing(2);
+        gridLayout_8->setHorizontalSpacing(4);
         gridLayout_8->setVerticalSpacing(0);
         gridLayout_8->setContentsMargins(0, 0, 10, 0);
         tb_center = new QToolButton(w_text_control);

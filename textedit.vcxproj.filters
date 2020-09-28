@@ -166,6 +166,15 @@
     <ClCompile Include="GeneratedFiles\Release\moc_cxallchapterdlg.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
+    <ClCompile Include="cxwordhandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_cxwordhandler.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_cxwordhandler.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="textedit.h">
@@ -221,6 +230,9 @@
     </CustomBuild>
     <CustomBuild Include="dlg_all_chapter.ui">
       <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="cxwordhandler.h">
+      <Filter>Header Files</Filter>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
