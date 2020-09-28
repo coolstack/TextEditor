@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1401</width>
+    <width>1170</width>
     <height>728</height>
    </rect>
   </property>
@@ -78,7 +78,7 @@ background:#c3c3c3;
       <item row="0" column="0">
        <widget class="QLabel" name="lbl_status">
         <property name="text">
-         <string>TextLabel</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -98,13 +98,13 @@ background:#c3c3c3;
      </property>
      <layout class="QGridLayout" name="gridLayout_5">
       <property name="leftMargin">
-       <number>0</number>
+       <number>10</number>
       </property>
       <property name="topMargin">
        <number>0</number>
       </property>
       <property name="rightMargin">
-       <number>0</number>
+       <number>10</number>
       </property>
       <property name="bottomMargin">
        <number>0</number>
@@ -113,7 +113,19 @@ background:#c3c3c3;
        <number>0</number>
       </property>
       <item row="0" column="0">
-       <widget class="QWidget" name="widget_6" native="true">
+       <widget class="QWidget" name="w_text" native="true">
+        <property name="minimumSize">
+         <size>
+          <width>850</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>850</width>
+          <height>16777215</height>
+         </size>
+        </property>
         <layout class="QGridLayout" name="gridLayout_6">
          <property name="leftMargin">
           <number>0</number>
@@ -146,13 +158,13 @@ background:#c3c3c3;
              <number>0</number>
             </property>
             <property name="rightMargin">
-             <number>0</number>
+             <number>10</number>
             </property>
             <property name="bottomMargin">
              <number>0</number>
             </property>
             <property name="horizontalSpacing">
-             <number>5</number>
+             <number>4</number>
             </property>
             <property name="verticalSpacing">
              <number>0</number>
@@ -161,14 +173,14 @@ background:#c3c3c3;
              <widget class="QToolButton" name="tb_center">
               <property name="minimumSize">
                <size>
-                <width>40</width>
-                <height>40</height>
+                <width>30</width>
+                <height>30</height>
                </size>
               </property>
               <property name="maximumSize">
                <size>
-                <width>40</width>
-                <height>40</height>
+                <width>30</width>
+                <height>30</height>
                </size>
               </property>
               <property name="styleSheet">
@@ -186,8 +198,8 @@ background:white;
               </property>
               <property name="iconSize">
                <size>
-                <width>32</width>
-                <height>32</height>
+                <width>25</width>
+                <height>25</height>
                </size>
               </property>
               <property name="checkable">
@@ -202,14 +214,14 @@ background:white;
              <widget class="QToolButton" name="tb_underline">
               <property name="minimumSize">
                <size>
-                <width>40</width>
-                <height>40</height>
+                <width>30</width>
+                <height>30</height>
                </size>
               </property>
               <property name="maximumSize">
                <size>
-                <width>40</width>
-                <height>40</height>
+                <width>30</width>
+                <height>30</height>
                </size>
               </property>
               <property name="styleSheet">
@@ -227,8 +239,8 @@ background:white;
               </property>
               <property name="iconSize">
                <size>
-                <width>32</width>
-                <height>32</height>
+                <width>25</width>
+                <height>25</height>
                </size>
               </property>
               <property name="checkable">
@@ -240,14 +252,14 @@ background:white;
              <widget class="QToolButton" name="tb_left">
               <property name="minimumSize">
                <size>
-                <width>40</width>
-                <height>40</height>
+                <width>30</width>
+                <height>30</height>
                </size>
               </property>
               <property name="maximumSize">
                <size>
-                <width>40</width>
-                <height>40</height>
+                <width>30</width>
+                <height>30</height>
                </size>
               </property>
               <property name="styleSheet">
@@ -265,8 +277,8 @@ background:white;
               </property>
               <property name="iconSize">
                <size>
-                <width>32</width>
-                <height>32</height>
+                <width>25</width>
+                <height>25</height>
                </size>
               </property>
               <property name="checkable">
@@ -281,14 +293,14 @@ background:white;
              <widget class="QToolButton" name="tb_pdf">
               <property name="minimumSize">
                <size>
-                <width>40</width>
-                <height>40</height>
+                <width>30</width>
+                <height>30</height>
                </size>
               </property>
               <property name="maximumSize">
                <size>
-                <width>40</width>
-                <height>40</height>
+                <width>30</width>
+                <height>30</height>
                </size>
               </property>
               <property name="styleSheet">
@@ -316,14 +328,14 @@ background:white;
              <widget class="QToolButton" name="tb_italic">
               <property name="minimumSize">
                <size>
-                <width>40</width>
-                <height>40</height>
+                <width>30</width>
+                <height>30</height>
                </size>
               </property>
               <property name="maximumSize">
                <size>
-                <width>40</width>
-                <height>40</height>
+                <width>30</width>
+                <height>30</height>
                </size>
               </property>
               <property name="styleSheet">
@@ -341,8 +353,8 @@ background:white;
               </property>
               <property name="iconSize">
                <size>
-                <width>32</width>
-                <height>32</height>
+                <width>25</width>
+                <height>25</height>
                </size>
               </property>
               <property name="checkable">
@@ -354,14 +366,14 @@ background:white;
              <widget class="QToolButton" name="tb_print">
               <property name="minimumSize">
                <size>
-                <width>40</width>
-                <height>40</height>
+                <width>30</width>
+                <height>30</height>
                </size>
               </property>
               <property name="maximumSize">
                <size>
-                <width>40</width>
-                <height>40</height>
+                <width>30</width>
+                <height>30</height>
                </size>
               </property>
               <property name="styleSheet">
@@ -389,14 +401,14 @@ background:white;
              <widget class="QToolButton" name="tb_bold">
               <property name="minimumSize">
                <size>
-                <width>40</width>
-                <height>40</height>
+                <width>30</width>
+                <height>30</height>
                </size>
               </property>
               <property name="maximumSize">
                <size>
-                <width>40</width>
-                <height>40</height>
+                <width>30</width>
+                <height>30</height>
                </size>
               </property>
               <property name="styleSheet">
@@ -414,8 +426,8 @@ background:white;
               </property>
               <property name="iconSize">
                <size>
-                <width>32</width>
-                <height>32</height>
+                <width>25</width>
+                <height>25</height>
                </size>
               </property>
               <property name="checkable">
@@ -428,13 +440,13 @@ background:white;
               <property name="minimumSize">
                <size>
                 <width>0</width>
-                <height>40</height>
+                <height>30</height>
                </size>
               </property>
               <property name="maximumSize">
                <size>
                 <width>16777215</width>
-                <height>40</height>
+                <height>30</height>
                </size>
               </property>
               <property name="styleSheet">
@@ -449,14 +461,14 @@ background:white;
              <widget class="QToolButton" name="tb_right">
               <property name="minimumSize">
                <size>
-                <width>40</width>
-                <height>40</height>
+                <width>30</width>
+                <height>30</height>
                </size>
               </property>
               <property name="maximumSize">
                <size>
-                <width>40</width>
-                <height>40</height>
+                <width>30</width>
+                <height>30</height>
                </size>
               </property>
               <property name="styleSheet">
@@ -474,8 +486,8 @@ background:white;
               </property>
               <property name="iconSize">
                <size>
-                <width>32</width>
-                <height>32</height>
+                <width>25</width>
+                <height>25</height>
                </size>
               </property>
               <property name="checkable">
@@ -490,14 +502,14 @@ background:white;
              <widget class="QToolButton" name="tb_save">
               <property name="minimumSize">
                <size>
-                <width>40</width>
-                <height>40</height>
+                <width>30</width>
+                <height>30</height>
                </size>
               </property>
               <property name="maximumSize">
                <size>
-                <width>40</width>
-                <height>40</height>
+                <width>30</width>
+                <height>30</height>
                </size>
               </property>
               <property name="styleSheet">
@@ -525,19 +537,19 @@ background:white;
              <widget class="QToolButton" name="tb_font_inc">
               <property name="minimumSize">
                <size>
-                <width>40</width>
-                <height>40</height>
+                <width>30</width>
+                <height>30</height>
                </size>
               </property>
               <property name="maximumSize">
                <size>
-                <width>40</width>
-                <height>40</height>
+                <width>30</width>
+                <height>30</height>
                </size>
               </property>
               <property name="font">
                <font>
-                <pointsize>14</pointsize>
+                <pointsize>12</pointsize>
                 <weight>75</weight>
                 <bold>true</bold>
                </font>
@@ -551,20 +563,30 @@ background:white;
               <property name="text">
                <string>A+</string>
               </property>
+              <property name="icon">
+               <iconset resource="textedit.qrc">
+                <normaloff>:/res/icon/font_increase.png</normaloff>:/res/icon/font_increase.png</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>20</width>
+                <height>20</height>
+               </size>
+              </property>
              </widget>
             </item>
             <item row="0" column="0">
              <widget class="QToolButton" name="tb_undo">
               <property name="minimumSize">
                <size>
-                <width>40</width>
-                <height>40</height>
+                <width>30</width>
+                <height>30</height>
                </size>
               </property>
               <property name="maximumSize">
                <size>
-                <width>40</width>
-                <height>40</height>
+                <width>30</width>
+                <height>30</height>
                </size>
               </property>
               <property name="styleSheet">
@@ -593,13 +615,13 @@ background:white;
               <property name="minimumSize">
                <size>
                 <width>0</width>
-                <height>40</height>
+                <height>30</height>
                </size>
               </property>
               <property name="maximumSize">
                <size>
                 <width>60</width>
-                <height>40</height>
+                <height>30</height>
                </size>
               </property>
               <property name="styleSheet">
@@ -614,14 +636,14 @@ background:white;
              <widget class="QToolButton" name="tb_redo">
               <property name="minimumSize">
                <size>
-                <width>40</width>
-                <height>40</height>
+                <width>30</width>
+                <height>30</height>
                </size>
               </property>
               <property name="maximumSize">
                <size>
-                <width>40</width>
-                <height>40</height>
+                <width>30</width>
+                <height>30</height>
                </size>
               </property>
               <property name="styleSheet">
@@ -655,7 +677,7 @@ background:white;
               </property>
               <property name="sizeHint" stdset="0">
                <size>
-                <width>20</width>
+                <width>10</width>
                 <height>20</height>
                </size>
               </property>
@@ -665,19 +687,19 @@ background:white;
              <widget class="QToolButton" name="tb_font_dec">
               <property name="minimumSize">
                <size>
-                <width>40</width>
-                <height>40</height>
+                <width>30</width>
+                <height>30</height>
                </size>
               </property>
               <property name="maximumSize">
                <size>
-                <width>40</width>
-                <height>40</height>
+                <width>30</width>
+                <height>30</height>
                </size>
               </property>
               <property name="font">
                <font>
-                <pointsize>14</pointsize>
+                <pointsize>12</pointsize>
                 <weight>75</weight>
                 <bold>true</bold>
                </font>
@@ -691,6 +713,16 @@ background:white;
               <property name="text">
                <string>A-</string>
               </property>
+              <property name="icon">
+               <iconset resource="textedit.qrc">
+                <normaloff>:/res/icon/font_decrease.png</normaloff>:/res/icon/font_decrease.png</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>20</width>
+                <height>20</height>
+               </size>
+              </property>
              </widget>
             </item>
             <item row="0" column="17">
@@ -703,7 +735,7 @@ background:white;
               </property>
               <property name="sizeHint" stdset="0">
                <size>
-                <width>20</width>
+                <width>10</width>
                 <height>20</height>
                </size>
               </property>
@@ -719,7 +751,7 @@ background:white;
               </property>
               <property name="sizeHint" stdset="0">
                <size>
-                <width>20</width>
+                <width>10</width>
                 <height>20</height>
                </size>
               </property>
@@ -730,13 +762,13 @@ background:white;
               <property name="minimumSize">
                <size>
                 <width>45</width>
-                <height>0</height>
+                <height>30</height>
                </size>
               </property>
               <property name="maximumSize">
                <size>
                 <width>45</width>
-                <height>16777215</height>
+                <height>30</height>
                </size>
               </property>
              </widget>
@@ -746,13 +778,13 @@ background:white;
               <property name="minimumSize">
                <size>
                 <width>45</width>
-                <height>0</height>
+                <height>30</height>
                </size>
               </property>
               <property name="maximumSize">
                <size>
                 <width>45</width>
-                <height>16777215</height>
+                <height>30</height>
                </size>
               </property>
              </widget>
@@ -762,13 +794,13 @@ background:white;
               <property name="minimumSize">
                <size>
                 <width>45</width>
-                <height>0</height>
+                <height>30</height>
                </size>
               </property>
               <property name="maximumSize">
                <size>
                 <width>45</width>
-                <height>16777215</height>
+                <height>30</height>
                </size>
               </property>
              </widget>
@@ -779,31 +811,43 @@ background:white;
          <item row="1" column="0">
           <widget class="QWidget" name="widget_9" native="true">
            <layout class="QGridLayout" name="gridLayout_12">
-            <item row="0" column="0">
-             <widget class="QWidget" name="widget_10" native="true">
+            <item row="0" column="1">
+             <widget class="QWidget" name="w_text_area" native="true">
               <property name="minimumSize">
                <size>
-                <width>100</width>
+                <width>755</width>
                 <height>0</height>
                </size>
               </property>
               <property name="maximumSize">
                <size>
-                <width>100</width>
+                <width>755</width>
                 <height>16777215</height>
                </size>
               </property>
-             </widget>
-            </item>
-            <item row="0" column="1">
-             <widget class="QWidget" name="widget_4" native="true">
               <property name="styleSheet">
                <string notr="true">QWidget
 {
-background:#ababab;
+background:white;
+border: 15px solid #ababab;
 }</string>
               </property>
               <layout class="QGridLayout" name="gridLayout_13">
+               <property name="leftMargin">
+                <number>50</number>
+               </property>
+               <property name="topMargin">
+                <number>20</number>
+               </property>
+               <property name="rightMargin">
+                <number>40</number>
+               </property>
+               <property name="bottomMargin">
+                <number>30</number>
+               </property>
+               <property name="verticalSpacing">
+                <number>0</number>
+               </property>
                <item row="0" column="0">
                 <widget class="QWidget" name="w_pagination" native="true">
                  <property name="minimumSize">
@@ -822,6 +866,7 @@ background:#ababab;
                   <string notr="true">QWidget
 {
 background:white;
+border:none;
 }</string>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_15">
@@ -1101,6 +1146,7 @@ background:white;
                      <string notr="true">QTextEdit
 {
 background:white;
+border:1px solid #a0a0a0;
 }</string>
                     </property>
                    </widget>
@@ -1111,6 +1157,19 @@ background:white;
               </layout>
              </widget>
             </item>
+            <item row="0" column="0">
+             <spacer name="horizontalSpacer">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
            </layout>
           </widget>
          </item>
@@ -1119,6 +1178,12 @@ background:white;
       </item>
       <item row="0" column="1">
        <widget class="QWidget" name="w_content" native="true">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="minimumSize">
          <size>
           <width>300</width>
@@ -1127,7 +1192,7 @@ background:white;
         </property>
         <property name="maximumSize">
          <size>
-          <width>300</width>
+          <width>16777215</width>
           <height>16777215</height>
          </size>
         </property>
@@ -1357,6 +1422,14 @@ border-color:black;
                 <verstretch>0</verstretch>
                </sizepolicy>
               </property>
+              <property name="styleSheet">
+               <string notr="true">QListWidget
+{
+border-style:solid;
+border-width:3px;
+border-color:yellow;
+}</string>
+              </property>
               <property name="horizontalScrollBarPolicy">
                <enum>Qt::ScrollBarAlwaysOff</enum>
               </property>
@@ -1369,6 +1442,14 @@ border-color:black;
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">QListWidget
+{
+border-style:solid;
+border-width:3px;
+border-color:yellow;
+}</string>
               </property>
               <property name="horizontalScrollBarPolicy">
                <enum>Qt::ScrollBarAlwaysOff</enum>
@@ -1417,6 +1498,9 @@ background:#919191;
       <property name="bottomMargin">
        <number>0</number>
       </property>
+      <property name="horizontalSpacing">
+       <number>0</number>
+      </property>
       <item row="0" column="0">
        <widget class="QWidget" name="widget_5" native="true">
         <property name="minimumSize">
@@ -1427,7 +1511,7 @@ background:#919191;
         </property>
         <property name="maximumSize">
          <size>
-          <width>16777215</width>
+          <width>140</width>
           <height>40</height>
          </size>
         </property>
@@ -1506,19 +1590,6 @@ border:0px;
         </layout>
        </widget>
       </item>
-      <item row="0" column="2">
-       <spacer name="horizontalSpacer">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
       <item row="0" column="1">
        <widget class="QToolButton" name="tb_add_chapter">
         <property name="minimumSize">
@@ -1548,6 +1619,46 @@ background:#fff200;
         <property name="text">
          <string>+ ADD CHAP</string>
         </property>
+       </widget>
+      </item>
+      <item row="0" column="2">
+       <widget class="QWidget" name="widget_7" native="true">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <layout class="QGridLayout" name="gridLayout_19">
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>15</number>
+         </property>
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <item row="0" column="0">
+          <widget class="QLabel" name="label">
+           <property name="styleSheet">
+            <string notr="true">QLabel
+{
+background:#919191;
+}</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </widget>
       </item>
      </layout>
@@ -1600,7 +1711,8 @@ background:#fff200;
         <property name="styleSheet">
          <string notr="true">QListWidget
 {
-border:none;
+  border-top: 4px solid gray;;
+  border-bottom: 4px solid #e9e9e9;
 }</string>
         </property>
         <property name="verticalScrollBarPolicy">

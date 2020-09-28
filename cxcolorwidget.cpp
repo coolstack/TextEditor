@@ -34,7 +34,8 @@ void CxColorWidget::onClick()
 void CxColorWidget::setIndex( int id )
 {
 	m_index = id ;
-	if( id == TEXTCOLOR ) setColor(Qt::black) ;
-	if( id == HIGHLIGHTCOLOR ) setColor(QColor("#fff200")) ;
-	if( id == FOREGROUNDCOLOR ) setColor(QColor("#cfcfe1")) ;
+	if( id == TEXTCOLOR ) setColor(Qt::black) , ui.tb_action->setIcon(QIcon(":res/icon/font.png")) ;
+	if( id == HIGHLIGHTCOLOR ) setColor(QColor("#fff200")) ,ui.tb_action->setIcon(QIcon(":res/icon/text_highlight.png")) ;
+	if( id == FOREGROUNDCOLOR ) setColor(QColor("#cfcfe1")) ,ui.tb_action->setIcon(QIcon(":res/icon/fill.png")) ;
+	ui.tb_action->setIconSize(QSize(20,20)) ;
 }

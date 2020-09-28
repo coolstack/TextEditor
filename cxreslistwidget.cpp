@@ -26,6 +26,8 @@ CxResListWidget::CxResListWidget(QWidget *parent)
 	setWrapping(false);
 	showDropIndicator() ;
 //	setIconSize(QSize(ITEMW,ITEMH)) ;
+	connect( this, SIGNAL(itemDoubleClicked(QListWidgetItem*)), this, SLOT(onChangeItem(QListWidgetItem*))) ;
+	connect( this, SIGNAL(itemSelectionChanged()), this, SLOT(onSelectionChanged())) ;
 }
 
 CxResListWidget::~CxResListWidget()
@@ -78,6 +80,19 @@ void CxResListWidget::dropEvent(QDropEvent* event)
 	refresh() ;
 }
 
+void CxResListWidget::onChangeItem( QListWidgetItem* item )
+{
+	if( item->data(Qt::EditRole+1).toInt() == IMAGETYPE ) return ;
+	CxSmallText dlg ;
+	dlg.setText(item->data(Qt::EditRole).toString()) ;
+	if( dlg.exec() == QDialog::Accepted )
+	{
+		item->setData(Qt::EditRole,dlg.content()) ;
+		getLabel(item)->setText(dlg.content()) ;
+		refresh() ;
+	}
+}
+
 void CxResListWidget::contextMenuEvent(QContextMenuEvent *event)
 {
 	QListWidgetItem*item = itemAt(event->pos()) ;
@@ -94,14 +109,7 @@ void CxResListWidget::contextMenuEvent(QContextMenuEvent *event)
 		QAction* ret = menu.exec(QCursor::pos()) ;
 		if( ret == changeAction && itemType == TEXTTYPE )
 		{
-			CxSmallText dlg ;
-			dlg.setText(item->data(Qt::EditRole).toString()) ;
-			if( dlg.exec() == QDialog::Accepted )
-			{
-				item->setData(Qt::EditRole,dlg.content()) ;
-				getLabel(item)->setText(dlg.content()) ;
-				refresh() ;
-			}
+			onChangeItem(item) ;
 		}
 		if( ret == deleteAction )
 		{
@@ -133,9 +141,27 @@ void CxResListWidget::refresh()
 		m_contentList << var->data(Qt::EditRole).toString() ;
 		m_typeList << var->data(Qt::EditRole+1).toInt() ;
 		QLabel* lb = getLabel(var) ;
-		lb->setStyleSheet(QString("QLabel{background:%1;}QLabel::hover{background:#ababab;}").arg(i%2?"#545454":"#f3f3f3")) ;
+		lb->setStyleSheet(getStyleSheet(var->isSelected(),i)) ;
 	}
 	emit __changed(m_index) ;
+}
+
+QString CxResListWidget::getStyleSheet( bool isSelected, int row )
+{
+	QString border = (isSelected?"border-style:solid;border-color:yellow;border-width:3px;":"") ;
+	QString ret = QString("QLabel{background:%1;%2}QLabel::hover{background:#ababab;%3}").arg(row%2?"#545454":"#f3f3f3").arg(border).arg(border) ;
+	return ret ;
+}
+
+void CxResListWidget::onSelectionChanged()
+{
+	for( int i = 0; i < count(); i++ )
+	{
+		QListWidgetItem* var = item(i) ;
+		QLabel* lb = getLabel(var) ;
+		if( !lb ) continue ;
+		lb->setStyleSheet(getStyleSheet(var->isSelected(),i)) ;
+	}
 }
 
 void CxResListWidget::setData( QStringList contentList, QList<int> typeList )

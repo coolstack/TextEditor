@@ -24,6 +24,10 @@ public:
 	void setData( QStringList contentList, QList<int> typeList ) ;
 	QStringList contentList(){ return m_contentList ; }
 	QList<int> contentTypeList() { return m_typeList ; }
+	QString getStyleSheet( bool isSelected, int row ) ;
+private slots:
+	void onChangeItem( QListWidgetItem* item ) ;
+	void onSelectionChanged() ;
 signals:
 	void __changed(int) ;
 	void __moveContent( int id, QListWidgetItem* item ) ;

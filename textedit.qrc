@@ -1,5 +1,11 @@
 <RCC>
   <qresource prefix="/">
+    <file>res/icon/fill.png</file>
+    <file>res/icon/dropdown.png</file>
+    <file>res/icon/font.png</file>
+    <file>res/icon/text_highlight.png</file>
+    <file>res/icon/font_decrease.png</file>
+    <file>res/icon/font_increase.png</file>
     <file>res/icon/icon.ico</file>
     <file>res/icon/icon.png</file>
     <file>res/icon/Actions-go-next-view-icon.png</file>

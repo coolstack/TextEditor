@@ -21,6 +21,8 @@ TextEdit::TextEdit(QWidget *parent /* = 0 */)
 {
 	ui.setupUi(this) ;
 	m_pageMenu = new CxPageMenu(this) ;
+	m_pageMenu->hide() ;
+	m_collectDlg = new CxAllChapterDlg ;
 	initUI() ;
 	initConnection() ;
 	init() ;
@@ -50,6 +52,7 @@ void TextEdit::initUI()
 	int h = 9.84*myWidget->logicalDpiY() ;
 	m_pageSize = QSize(w,h) ;
 	ui.textEdit->setFixedWidth(w) ;
+	ui.w_pagination->setFixedWidth(w) ;
 	ui.cb_fontsize->setEditable(true);
 	ui.w_textcolor->setIndex(TEXTCOLOR) ;
 	ui.w_highlightcolor->setIndex(HIGHLIGHTCOLOR) ;
@@ -114,6 +117,7 @@ void TextEdit::initConnection()
 	connect(ui.tb_print, SIGNAL(clicked()), this, SLOT(onPrint())) ;
 	connect( ui.tb_save, SIGNAL(clicked()), this, SLOT(onSave())) ;
 	connect( ui.tb_show_page, SIGNAL(__showPageMenu(bool)), this, SLOT(onShowPageMenu(bool))) ;
+	connect( m_pageMenu, SIGNAL(__selectPage(int)), this, SLOT(onMovePage(int))) ;
 	for( int i = 1; i <= 5; i++ )
 	{
 		CxPageLabel* lb = (CxPageLabel*)(findChild<QLabel*>(QString("lb_page_%1").arg(i)));
@@ -157,6 +161,7 @@ void TextEdit::initConnection()
 
 void TextEdit::onAddChapter()
 {
+	QMessageBox::information(NULL,"",QString::number(ui.w_text_area->width()));
 	bool ok;
 	QString text = QInputDialog::getText(NULL, tr("Create Chapter"),
 		tr("Chapter Name:"), QLineEdit::Normal, "", &ok);
@@ -265,6 +270,7 @@ void TextEdit::onTextChanged()
 {
 //	QMessageBox::information(NULL,"","A") ;
 	int pg = getPageCount() ;
+	m_pageMenu->setCount(pg) ;
 //	QMessageBox::information(NULL,"",QString::number(pg)) ;
 	for( int i = 1; i <= 5; i++ )
 	{
@@ -286,6 +292,7 @@ void TextEdit::onSliderValueChanged(int val)
 		CxPageLabel* lb = (CxPageLabel*)(findChild<QLabel*>(QString("lb_page_%1").arg(i)));
 		lb->setSelected(i==m_curPage) ;
 	}
+	m_pageMenu->setCurrentPage(m_curPage) ;
 }
 
 void TextEdit::onMovePage(int page)
@@ -397,16 +404,10 @@ void TextEdit::onRedo()
 
 void TextEdit::onContentChanged(int id)
 {
-	if( !id )
-	{
-		m_contentList[id][m_curChapter] = ui.lw_res_1->contentList() ;
-		m_contentTypeList[id][m_curChapter] = ui.lw_res_1->contentTypeList() ;
-	}
-	else
-	{
-		m_contentList[id][m_curChapter] = ui.lw_res_2->contentList() ;
-		m_contentTypeList[id][m_curChapter] = ui.lw_res_2->contentTypeList() ;
-	}
+	CxResListWidget* w = ui.lw_res_1 ;
+	if( id == 1 ) w = ui.lw_res_2 ;
+	m_contentList[id][m_curChapter] = ui.lw_res_1->contentList() ;
+	m_contentTypeList[id][m_curChapter] = ui.lw_res_1->contentTypeList() ;
 }
 
 void TextEdit::onPreChanged( int id, bool isAdd )
@@ -686,7 +687,8 @@ void TextEdit::onAutoSave()
 
 void TextEdit::onCollectAll()
 {
-
+	m_collectDlg->setData(m_docList, ui.lw_chapter_list->chapterList()) ;
+	m_collectDlg->exec() ;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -735,8 +737,12 @@ void TextEdit::onShowPageMenu( bool on )
 {
 	if( on )
 	{
+		int pg = getPageCount() ;
+		m_pageMenu->setCount(pg) ;
+		if( pg <= 5 ) return ;
+
 		QPoint pnt = mapFromGlobal(ui.tb_show_page->mapToGlobal(QPoint(0,0))) ;
-		m_pageMenu->setGeometry(pnt.x()-310,pnt.y(), 300, 300 ) ;
+		m_pageMenu->setGeometry(pnt.x()-10-m_pageMenu->prefWidth(),pnt.y(), m_pageMenu->prefWidth(), m_pageMenu->prefHeight() ) ;
 		m_pageMenu->setVisible(true) ;
 	}
 	else
@@ -751,7 +757,7 @@ void TextEdit::timerEvent(QTimerEvent* event)
 	if( m_pageMenu->isVisible() )
 	{
 		QRect rc = m_pageMenu->geometry() ;
-		if( rc.contains(QCursor::pos()) ) return ;
+		if( rc.contains(mapFromGlobal(QCursor::pos()))) return ;
 		m_pageMenu->hide();
 	}
 	m_timer.stop() ;

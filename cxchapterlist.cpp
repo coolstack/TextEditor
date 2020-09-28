@@ -10,7 +10,7 @@
 #include <QScrollBar>
 
 #define ITEMW 100
-#define ITEMH 50
+#define ITEMH 42
 CxChapterList::CxChapterList(QWidget *parent)
 	: QListWidget(parent)
 {

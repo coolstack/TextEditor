@@ -35,9 +35,9 @@ public:
     {
         if (Form_Color_Widget->objectName().isEmpty())
             Form_Color_Widget->setObjectName(QStringLiteral("Form_Color_Widget"));
-        Form_Color_Widget->resize(96, 40);
-        Form_Color_Widget->setMinimumSize(QSize(45, 40));
-        Form_Color_Widget->setMaximumSize(QSize(96, 40));
+        Form_Color_Widget->resize(96, 30);
+        Form_Color_Widget->setMinimumSize(QSize(45, 30));
+        Form_Color_Widget->setMaximumSize(QSize(96, 30));
         gridLayout = new QGridLayout(Form_Color_Widget);
         gridLayout->setObjectName(QStringLiteral("gridLayout"));
         gridLayout->setHorizontalSpacing(1);
@@ -45,16 +45,16 @@ public:
         gridLayout->setContentsMargins(0, 0, 0, 0);
         widget = new QWidget(Form_Color_Widget);
         widget->setObjectName(QStringLiteral("widget"));
-        widget->setMinimumSize(QSize(30, 40));
-        widget->setMaximumSize(QSize(30, 40));
+        widget->setMinimumSize(QSize(30, 30));
+        widget->setMaximumSize(QSize(30, 30));
         gridLayout_2 = new QGridLayout(widget);
         gridLayout_2->setSpacing(0);
         gridLayout_2->setObjectName(QStringLiteral("gridLayout_2"));
         gridLayout_2->setContentsMargins(0, 0, 0, 4);
         tb_action = new QToolButton(widget);
         tb_action->setObjectName(QStringLiteral("tb_action"));
-        tb_action->setMinimumSize(QSize(26, 30));
-        tb_action->setMaximumSize(QSize(26, 30));
+        tb_action->setMinimumSize(QSize(26, 22));
+        tb_action->setMaximumSize(QSize(26, 22));
         tb_action->setStyleSheet(QLatin1String("QToolButton\n"
 "{ border-style:none;}"));
 
@@ -62,8 +62,8 @@ public:
 
         lbl_color = new QLabel(widget);
         lbl_color->setObjectName(QStringLiteral("lbl_color"));
-        lbl_color->setMinimumSize(QSize(26, 6));
-        lbl_color->setMaximumSize(QSize(26, 6));
+        lbl_color->setMinimumSize(QSize(26, 4));
+        lbl_color->setMaximumSize(QSize(26, 4));
 
         gridLayout_2->addWidget(lbl_color, 1, 0, 1, 1);
 
@@ -72,8 +72,12 @@ public:
 
         tb_menu = new QToolButton(Form_Color_Widget);
         tb_menu->setObjectName(QStringLiteral("tb_menu"));
-        tb_menu->setMinimumSize(QSize(15, 40));
-        tb_menu->setMaximumSize(QSize(15, 16777215));
+        tb_menu->setMinimumSize(QSize(15, 30));
+        tb_menu->setMaximumSize(QSize(15, 30));
+        QIcon icon;
+        icon.addFile(QStringLiteral(":/res/icon/dropdown.png"), QSize(), QIcon::Normal, QIcon::Off);
+        tb_menu->setIcon(icon);
+        tb_menu->setIconSize(QSize(13, 13));
 
         gridLayout->addWidget(tb_menu, 0, 1, 1, 1);
 

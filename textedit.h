@@ -11,6 +11,7 @@
 #include <QBasicTimer>
 
 #include "cxpagemenu.h"
+#include "cxallchapterdlg.h"
 
 class TextEdit : public QWidget
 {
@@ -96,6 +97,7 @@ private:
 	QAction* m_autoSaveAction ;
 	QBasicTimer m_timer ;
 	CxPageMenu* m_pageMenu ;
+	CxAllChapterDlg* m_collectDlg ;
 };
 
 #endif // TEXTEDIT_H
