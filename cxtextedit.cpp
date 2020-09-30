@@ -26,7 +26,10 @@ void CxTextEdit::dragEnterEvent(QDragEnterEvent *event)
 	return ;
 	QString str = event->mimeData()->data("tom_content") ;
 	if( !str.length() ) event->ignore() ;
-	else event->accept() ;
+	else {
+		event->acceptProposedAction() ;
+		event->accept() ;
+	}
 }
 
 void CxTextEdit::dragMoveEvent(QDragMoveEvent* event)
@@ -45,7 +48,12 @@ event->acceptProposedAction();
 	return ;
 	QString str = event->mimeData()->data("tom_content") ;
 	if( !str.length() ) event->ignore() ;
-	else event->accept() ;
+	else {
+		QTextCursor t = cursorForPosition(event->pos());
+		setTextCursor(t) ;
+		event->acceptProposedAction() ;
+		event->accept() ;
+	}
 }
 
 
@@ -82,7 +90,9 @@ void CxTextEdit::dropEvent(QDropEvent *event)
 
 	QMimeData* mimeData = new QMimeData ;
 	mimeData->setText("") ;
-	QDropEvent* dummy = new QDropEvent(event->posF(), event->possibleActions(),mimeData, event->mouseButtons(), event->keyboardModifiers()) ;
+	event->setDropAction(Qt::MoveAction) ;
+	event->accept() ;
+	QDropEvent* dummy = new QDropEvent(event->posF(), Qt::MoveAction,mimeData, event->mouseButtons(), event->keyboardModifiers()) ;
 	QTextEdit::dropEvent(dummy) ;
 }
 

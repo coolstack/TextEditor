@@ -8,27 +8,37 @@
 #include <QAction>
 #include <QCursor>
 #include <QDrag>
+#include <QCursor>
 
 #include "cxsmalltext.h"
-#define TEXTITEMH 40
+#define TEXTITEMH 60
 
 CxResListWidget::CxResListWidget(QWidget *parent)
 	: QListWidget(parent)
 {
 	m_isRemoteMode = false ;
 	setViewMode(QListView::IconMode) ;
-//	setLayoutDirection(Qt::LeftToRight) ;
-	setSpacing(0) ;
+	setSpacing(5) ;
+	setUniformItemSizes(true) ;
 	setFlow(QListView::LeftToRight) ;
 //	setFlow(QListView::TopToBottom) ;
 	setDragDropMode(QAbstractItemView::DragDrop) ;
+
+
+	setAcceptDrops(true) ;
 	setDragEnabled(true) ;
 	setDefaultDropAction(Qt::MoveAction) ;
 	setWrapping(true);
 	showDropIndicator() ;
-//	setIconSize(QSize(ITEMW,ITEMH)) ;
+	setResizeMode(QListView::Adjust);
+
+
+
 	connect( this, SIGNAL(itemDoubleClicked(QListWidgetItem*)), this, SLOT(onChangeItem(QListWidgetItem*))) ;
 	connect( this, SIGNAL(itemSelectionChanged()), this, SLOT(onSelectionChanged())) ;
+	m_preView = new CxPreviewLabel(this) ;
+//	m_preView->setGeometry(0,0,40,40) ;
+//	m_preView->hide() ;
 }
 
 CxResListWidget::~CxResListWidget()
@@ -38,15 +48,20 @@ CxResListWidget::~CxResListWidget()
 
 void CxResListWidget::addImage(QString fileName)
 {
-	int w = width()/2 ;
+	addImage(count(),fileName) ;
+}
+
+void CxResListWidget::addImage( int pos, QString fileName )
+{
+	int w = (viewport()->width()-spacing()*3)/2-10;
 	setIconSize(QSize(w,TEXTITEMH)) ;
 	QListWidgetItem* item = new QListWidgetItem ;
-	QLabel* lb = new QLabel ;
+	CxContentLabel* lb = new CxContentLabel(item) ;
+	lb->setPixmap(QPixmap(fileName).scaled(w,TEXTITEMH,Qt::KeepAspectRatio,Qt::SmoothTransformation)) ;
 	lb->resize(w,TEXTITEMH) ;
 	lb->setAlignment(Qt::AlignCenter) ;
-	lb->setPixmap(QPixmap(fileName).scaled(w,TEXTITEMH,Qt::KeepAspectRatio,Qt::SmoothTransformation)) ;
-	addItem(item) ;
 	item->setSizeHint(QSize(w,TEXTITEMH)) ;
+	insertItem(pos,item) ;
 	setItemWidget(item,lb) ;
 	m_contentList << fileName ;
 	m_typeList << IMAGETYPE ;
@@ -57,29 +72,71 @@ void CxResListWidget::addImage(QString fileName)
 
 void CxResListWidget::addText(QString txt)
 {
-	int w = width() ;
+	addText(count(),txt) ;
+}
+
+void CxResListWidget::addText( int pos, QString txt )
+{
+	int w = (viewport()->width()-spacing()*3)/2-10;
+	setIconSize(QSize(w,TEXTITEMH)) ;
 	QListWidgetItem* item = new QListWidgetItem ;
-	QLabel* lb = new QLabel ;
+	CxContentLabel* lb = new CxContentLabel(item) ;
+	//	QLabel* lb = new QLabel() ;
+	lb->setText("<b> "+txt+"</b>") ;
+	lb->setTextInteractionFlags(Qt::NoTextInteraction) ;
+	//	lb->setText(txt) ;
+	//	item->setBackground(Qt::white) ;
 	lb->resize(w,TEXTITEMH) ;
-//	te->setTextInteractionFlags(Qt::NoTextInteraction) ;
-	lb->setAlignment(Qt::AlignCenter) ;
-	lb->setFont(QFont("arial",10)) ;
-	lb->setText(txt) ;
-	lb->setWordWrap(true) ;
-	addItem(item) ;
 	item->setSizeHint(QSize(w,TEXTITEMH)) ;
+	insertItem(pos,item) ;
 	setItemWidget(item,lb) ;
 	m_contentList << txt ;
 	m_typeList << TEXTTYPE ;
 	item->setData(Qt::EditRole,txt) ;
 	item->setData(Qt::EditRole+1,TEXTTYPE) ;
 	refresh() ;
+	repaint() ;
+}
+
+void CxResListWidget::dragMoveEvent(QDragMoveEvent* e)
+{
+	if (e->mimeData()->hasFormat("application/x-item")) {
+		e->setDropAction(Qt::MoveAction);
+		e->accept();
+	} else
+		e->ignore();
 }
 
 void CxResListWidget::dropEvent(QDropEvent* event)
 {
-	QListWidget::dropEvent(event) ;
-	refresh() ;
+	if (event->mimeData()->hasFormat("application/x-item")) {
+		QListWidgetItem* item = itemAt(event->pos()) ;
+		if( !item )
+		{
+			event->ignore() ;
+			return ;
+		}
+		int tar = row(item) ;
+		QListWidgetItem *newItem = new QListWidgetItem;
+		QString name = event->mimeData()->data("application/x-item");
+		newItem->setText(name);
+//		item->setIcon(QIcon(":/images/iString")); //set path to image
+//		if( tar > m_dragIndex ) tar-- ;
+//		tar++ ;
+		QString str = event->mimeData()->data("tom_content") ;
+		int contentType = event->mimeData()->data("tom_content_type").toInt() ;
+		if( contentType == 0 ) addText(tar,str) ;
+		else addImage(tar,str) ;
+
+		//		insertItem(tar,newItem) ;
+//		QMessageBox::information(NULL,"",QString("%1 %2").arg(m_dragIndex).arg(tar)) ;
+		event->accept();
+		event->setDropAction(Qt::MoveAction);
+		refresh() ;
+	} else
+		event->ignore();
+// 	QListWidget::dropEvent(event) ;
+// 	refresh() ;
 }
 
 void CxResListWidget::onChangeItem( QListWidgetItem* item )
@@ -90,13 +147,18 @@ void CxResListWidget::onChangeItem( QListWidgetItem* item )
 	if( dlg.exec() == QDialog::Accepted )
 	{
 		item->setData(Qt::EditRole,dlg.content()) ;
-		getLabel(item)->setText(dlg.content()) ;
+		CxContentLabel* lb = getLabel(item) ;
+		if( lb ) lb->setText(dlg.content()) ;
 		refresh() ;
 	}
 }
 
 void CxResListWidget::contextMenuEvent(QContextMenuEvent *event)
 {
+
+	QMargins var = contentsMargins() ;
+//	QMessageBox::information(NULL,"",QString("%1 %2 %3 %4").arg(var.left()).arg(var.right()).arg(var.top()).arg(var.bottom())) ;
+
 	QListWidgetItem*item = itemAt(event->pos()) ;
 	if(item)
 	{
@@ -127,9 +189,9 @@ void CxResListWidget::contextMenuEvent(QContextMenuEvent *event)
 	}
 }
 
-QLabel* CxResListWidget::getLabel(QListWidgetItem* item)
+CxContentLabel* CxResListWidget::getLabel(QListWidgetItem* item)
 {
-	return (QLabel*)itemWidget(item) ;
+	return (CxContentLabel*)itemWidget(item) ;
 }
 
 
@@ -142,7 +204,7 @@ void CxResListWidget::refresh()
 		QListWidgetItem* var = item(i) ;
 		m_contentList << var->data(Qt::EditRole).toString() ;
 		m_typeList << var->data(Qt::EditRole+1).toInt() ;
-//		QLabel* lb = getLabel(var) ;
+//		CxContentLabel* lb = getLabel(var) ;
 //		lb->setStyleSheet(getStyleSheet(var->isSelected(),i)) ;
 	}
 	refit() ;
@@ -161,7 +223,7 @@ void CxResListWidget::onSelectionChanged()
 	for( int i = 0; i < count(); i++ )
 	{
 		QListWidgetItem* var = item(i) ;
-//		QLabel* lb = getLabel(var) ;
+//		CxContentLabel* lb = getLabel(var) ;
 //		if( !lb ) continue ;
 //		lb->setStyleSheet(getStyleSheet(var->isSelected(),i)) ;
 	}
@@ -181,15 +243,17 @@ void CxResListWidget::setData( QStringList contentList, QList<int> typeList )
 	}
 	m_isRemoteMode = false ;
 }
-
-
 QMimeData* CxResListWidget::mimeData(const QList<QListWidgetItem *> items) const
 {
 	QMimeData *md = QListWidget::mimeData(items);
+	return md ;
 	QStringList texts;
 	for(QListWidgetItem *item : selectedItems())
 	{
 		texts << item->text();
+		QByteArray ba;
+		ba = item->text().toLatin1().data();
+		md->setData("application/x-item", ba);
 		md->setText(texts.join(QStringLiteral("\n")));
 		md->setData("tom_content",item->data(Qt::EditRole).toString().toLatin1()) ;
 		md->setData("tom_content_type",item->data(Qt::EditRole+1).toString().toLatin1()) ;
@@ -198,11 +262,55 @@ QMimeData* CxResListWidget::mimeData(const QList<QListWidgetItem *> items) const
 	return md;
 }
 
+void CxResListWidget::dragEnterEvent(QDragEnterEvent* event)
+{
+	if (event->mimeData()->hasFormat("application/x-item"))
+		event->accept();
+	else
+		event->ignore();
+}
+
+Qt::DropAction CxResListWidget::supportedDropActions()
+{
+	return Qt::MoveAction;
+}
 
 void CxResListWidget::startDrag(Qt::DropActions supportedActions)
 {
-	QListWidget::startDrag(supportedActions) ;	
-	return ;
+	QListWidgetItem* item = currentItem();
+	m_dragIndex = row(item) ;
+	QList<QListWidgetItem*> itemList ;
+	itemList<<item ;
+//	QMimeData *md = mimeData(itemList);
+	QMimeData* md = new QMimeData;
+
+	QByteArray ba;
+	ba = item->text().toLatin1().data();
+	md->setText("SSS") ;
+	md->setData("application/x-item", ba);
+	md->setData("tom_content",item->data(Qt::EditRole).toString().toLatin1()) ;
+	md->setData("tom_content_type",item->data(Qt::EditRole+1).toString().toLatin1()) ;
+	
+	QDrag* drag = new QDrag(this);
+	drag->setMimeData(md);
+//	int sz = getLabel(item)->size() ;
+	CxContentLabel* lb = getLabel(item) ;
+	if(!lb) return ;
+	drag->setPixmap(lb->grab() ) ;
+//	drag->setHotSpot(lb->mapFromGlobal(QCursor::pos()));
+	takeItem(m_dragIndex) ;
+	int ret = drag->exec(Qt::MoveAction) ;
+	if ( ret == Qt::MoveAction) {
+	}
+	else
+	{
+		QString str=  item->data(Qt::EditRole).toString() ;
+		if( item->data(Qt::EditRole+1).toInt() == 0 ) addText(m_dragIndex,str) ;
+		else addImage(m_dragIndex,str) ;
+	}
+
+//	QListWidget::startDrag(supportedActions) ;	
+//	return ;
 	/*
 	QListWidgetItem* item = currentItem();
 	QMimeData* mimeData = new QMimeData;
@@ -234,13 +342,32 @@ void CxResListWidget::resizeEvent(QResizeEvent* event)
 void CxResListWidget::refit()
 {
 	int cnt = count() ;
-	int w = viewport()->width()/2;
-	setIconSize(QSize(w,TEXTITEMH)) ;
+	int w = (viewport()->width()-spacing()*3)/2-10;
+//	setGridSize(QSize(w, TEXTITEMH));
+// 	return ;
+//	setIconSize(QSize(w,TEXTITEMH)) ;
 	for( int i = 0; i < cnt; i++ )
 	{
 		QListWidgetItem* var = item(i) ;
 		var->setSizeHint(QSize(w,TEXTITEMH)) ;
-		QLabel* lb = getLabel(var) ;
-		if( lb ) lb->resize(w,TEXTITEMH) ;
+		CxContentLabel* lb = getLabel(var) ;
+		if( lb ) {
+			lb->resize(w,TEXTITEMH) ;
+			if(m_typeList[i] == IMAGETYPE)
+			{
+				lb->setPixmap(QPixmap(m_contentList[i]).scaled(w,TEXTITEMH,Qt::KeepAspectRatio,Qt::SmoothTransformation)) ;
+			}
+		}
+	}
+}
+
+void CxResListWidget::onShowPreview( QListWidgetItem* item, bool on, QPoint pnt )
+{
+	if( on )
+	{
+	}
+	else
+	{
+		m_preView->hide() ;
 	}
 }

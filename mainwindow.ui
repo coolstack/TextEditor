@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1250</width>
-    <height>711</height>
+    <height>727</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -93,16 +93,6 @@ background:#c3c3c3;
       <property name="spacing">
        <number>0</number>
       </property>
-      <item row="0" column="1">
-       <widget class="QLabel" name="lbl_status">
-        <property name="text">
-         <string/>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-       </widget>
-      </item>
       <item row="0" column="0">
        <widget class="QToolButton" name="tb_add_chapter">
         <property name="minimumSize">
@@ -131,6 +121,16 @@ background:#fff200;
         </property>
         <property name="text">
          <string>+ ADD CHAP</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QLabel" name="lbl_status">
+        <property name="text">
+         <string/>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
         </property>
        </widget>
       </item>
@@ -920,6 +920,9 @@ border-width:3px;
 border-color:#fff864;
 background:#fff864;
 }</string>
+              </property>
+              <property name="verticalScrollBarPolicy">
+               <enum>Qt::ScrollBarAlwaysOff</enum>
               </property>
               <property name="horizontalScrollBarPolicy">
                <enum>Qt::ScrollBarAlwaysOff</enum>

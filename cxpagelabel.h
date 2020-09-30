@@ -18,9 +18,11 @@ signals:
 protected:
 	void mousePressEvent(QMouseEvent *ev) ;
 	void paintEvent(QPaintEvent* event) ;
+	void enterEvent(QEvent *event) ;
+	void leaveEvent(QEvent *event) ;
 private:
 	int m_index ;
-	bool m_isSelected ;
+	bool m_isSelected, m_isFocused ;
 };
 
 #endif // CXPAGELABEL_H

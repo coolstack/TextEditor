@@ -37,8 +37,8 @@ public:
     QGridLayout *gridLayout;
     QWidget *w_blank;
     QGridLayout *gridLayout_7;
-    QLabel *lbl_status;
     QToolButton *tb_add_chapter;
+    QLabel *lbl_status;
     QWidget *w_top;
     QGridLayout *gridLayout_2;
     QWidget *widget_5;
@@ -128,7 +128,7 @@ public:
     {
         if (Form_MainWindow->objectName().isEmpty())
             Form_MainWindow->setObjectName(QStringLiteral("Form_MainWindow"));
-        Form_MainWindow->resize(1250, 711);
+        Form_MainWindow->resize(1250, 727);
         QSizePolicy sizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
@@ -159,12 +159,6 @@ public:
         gridLayout_7->setSpacing(0);
         gridLayout_7->setObjectName(QStringLiteral("gridLayout_7"));
         gridLayout_7->setContentsMargins(100, 0, 0, 0);
-        lbl_status = new QLabel(w_blank);
-        lbl_status->setObjectName(QStringLiteral("lbl_status"));
-        lbl_status->setAlignment(Qt::AlignCenter);
-
-        gridLayout_7->addWidget(lbl_status, 0, 1, 1, 1);
-
         tb_add_chapter = new QToolButton(w_blank);
         tb_add_chapter->setObjectName(QStringLiteral("tb_add_chapter"));
         tb_add_chapter->setMinimumSize(QSize(150, 40));
@@ -179,6 +173,12 @@ public:
 "}"));
 
         gridLayout_7->addWidget(tb_add_chapter, 0, 0, 1, 1);
+
+        lbl_status = new QLabel(w_blank);
+        lbl_status->setObjectName(QStringLiteral("lbl_status"));
+        lbl_status->setAlignment(Qt::AlignCenter);
+
+        gridLayout_7->addWidget(lbl_status, 0, 1, 1, 1);
 
 
         gridLayout->addWidget(w_blank, 1, 0, 1, 1);
@@ -542,6 +542,7 @@ public:
 "border-color:#fff864;\n"
 "background:#fff864;\n"
 "}"));
+        lw_res_1->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
         lw_res_1->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
         gridLayout_16->addWidget(lw_res_1, 0, 0, 1, 1);
@@ -1123,8 +1124,8 @@ public:
     void retranslateUi(QWidget *Form_MainWindow)
     {
         Form_MainWindow->setWindowTitle(QApplication::translate("Form_MainWindow", "Form", 0));
-        lbl_status->setText(QString());
         tb_add_chapter->setText(QApplication::translate("Form_MainWindow", "+ ADD CHAP", 0));
+        lbl_status->setText(QString());
         tb_menu_file->setText(QApplication::translate("Form_MainWindow", "FILE", 0));
         tb_menu_text->setText(QApplication::translate("Form_MainWindow", "TEXT", 0));
         label->setText(QString());
