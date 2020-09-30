@@ -35,8 +35,11 @@ protected:
 	void dropEvent(QDropEvent* event) ;
 	void contextMenuEvent(QContextMenuEvent *event) ;
 	void startDrag(Qt::DropActions supportedActions) ;
+	void showEvent(QShowEvent* event) ;
+	void resizeEvent(QResizeEvent* event) ;
 	QMimeData *mimeData(const QList<QListWidgetItem *> items) const ;
 private:
+	void refit() ;
 	QStringList m_contentList ;
 	QList<int> m_typeList ;
 	int m_index ;

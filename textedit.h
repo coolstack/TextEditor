@@ -77,6 +77,8 @@ protected:
 	void mouseMoveEvent(QMouseEvent *event) ;
 	void timerEvent(QTimerEvent* event) ;
 	void closeEvent(QCloseEvent* event) ;
+	void showEvent(QShowEvent *event) ;
+	void resizeEvent(QResizeEvent *event) ;
 private:
 	void initUI() ;
 	void initConnection() ;

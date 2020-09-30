@@ -10,20 +10,21 @@
 #include <QDrag>
 
 #include "cxsmalltext.h"
-#define TEXTITEMH 100
+#define TEXTITEMH 40
 
 CxResListWidget::CxResListWidget(QWidget *parent)
 	: QListWidget(parent)
 {
 	m_isRemoteMode = false ;
-	setViewMode(QListView::ListMode) ;
+	setViewMode(QListView::IconMode) ;
 //	setLayoutDirection(Qt::LeftToRight) ;
-	setSpacing(5) ;
-	setFlow(QListView::TopToBottom) ;
+	setSpacing(0) ;
+	setFlow(QListView::LeftToRight) ;
+//	setFlow(QListView::TopToBottom) ;
 	setDragDropMode(QAbstractItemView::DragDrop) ;
 	setDragEnabled(true) ;
 	setDefaultDropAction(Qt::MoveAction) ;
-	setWrapping(false);
+	setWrapping(true);
 	showDropIndicator() ;
 //	setIconSize(QSize(ITEMW,ITEMH)) ;
 	connect( this, SIGNAL(itemDoubleClicked(QListWidgetItem*)), this, SLOT(onChangeItem(QListWidgetItem*))) ;
@@ -37,7 +38,8 @@ CxResListWidget::~CxResListWidget()
 
 void CxResListWidget::addImage(QString fileName)
 {
-	int w = width() ;
+	int w = width()/2 ;
+	setIconSize(QSize(w,TEXTITEMH)) ;
 	QListWidgetItem* item = new QListWidgetItem ;
 	QLabel* lb = new QLabel ;
 	lb->resize(w,TEXTITEMH) ;
@@ -61,7 +63,7 @@ void CxResListWidget::addText(QString txt)
 	lb->resize(w,TEXTITEMH) ;
 //	te->setTextInteractionFlags(Qt::NoTextInteraction) ;
 	lb->setAlignment(Qt::AlignCenter) ;
-	lb->setFont(QFont("Impact",13)) ;
+	lb->setFont(QFont("arial",10)) ;
 	lb->setText(txt) ;
 	lb->setWordWrap(true) ;
 	addItem(item) ;
@@ -140,9 +142,10 @@ void CxResListWidget::refresh()
 		QListWidgetItem* var = item(i) ;
 		m_contentList << var->data(Qt::EditRole).toString() ;
 		m_typeList << var->data(Qt::EditRole+1).toInt() ;
-		QLabel* lb = getLabel(var) ;
-		lb->setStyleSheet(getStyleSheet(var->isSelected(),i)) ;
+//		QLabel* lb = getLabel(var) ;
+//		lb->setStyleSheet(getStyleSheet(var->isSelected(),i)) ;
 	}
+	refit() ;
 	emit __changed(m_index) ;
 }
 
@@ -158,9 +161,9 @@ void CxResListWidget::onSelectionChanged()
 	for( int i = 0; i < count(); i++ )
 	{
 		QListWidgetItem* var = item(i) ;
-		QLabel* lb = getLabel(var) ;
-		if( !lb ) continue ;
-		lb->setStyleSheet(getStyleSheet(var->isSelected(),i)) ;
+//		QLabel* lb = getLabel(var) ;
+//		if( !lb ) continue ;
+//		lb->setStyleSheet(getStyleSheet(var->isSelected(),i)) ;
 	}
 }
 
@@ -216,3 +219,28 @@ void CxResListWidget::startDrag(Qt::DropActions supportedActions)
 	*/
 }
 
+void CxResListWidget::showEvent(QShowEvent* event)
+{
+	QListWidget::showEvent(event) ;
+	refit() ;
+}
+
+void CxResListWidget::resizeEvent(QResizeEvent* event)
+{
+	QListWidget::resizeEvent(event) ;
+	refit() ;
+}
+
+void CxResListWidget::refit()
+{
+	int cnt = count() ;
+	int w = viewport()->width()/2;
+	setIconSize(QSize(w,TEXTITEMH)) ;
+	for( int i = 0; i < cnt; i++ )
+	{
+		QListWidgetItem* var = item(i) ;
+		var->setSizeHint(QSize(w,TEXTITEMH)) ;
+		QLabel* lb = getLabel(var) ;
+		if( lb ) lb->resize(w,TEXTITEMH) ;
+	}
+}

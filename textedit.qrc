@@ -1,5 +1,7 @@
 <RCC>
   <qresource prefix="/">
+    <file>res/icon/arrow-dropleft-icon_1.png</file>
+    <file>res/icon/arrow-dropright-icon_1.png</file>
     <file>res/icon/Redo-icon.png</file>
     <file>res/icon/Undo-icon.png</file>
     <file>res/icon/down-icon.png</file>

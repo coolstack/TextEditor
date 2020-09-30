@@ -20,14 +20,18 @@
 #include <QDataStream>
 #include <QPrintDialog>
 #include "centeredtoolbuttonstyle.h"
+#include <QTextCodec>
+#include <QDomDocument>
+#include <QProcess>
 
 TextEdit::TextEdit(QWidget *parent /* = 0 */)
 {
 	ui.setupUi(this) ;
+//	setMinimumSize(1200,600) ;
 	m_version = 100 ;
 	m_pageMenu = new CxPageMenu(this) ;
 	m_pageMenu->hide() ;
-	m_autoSaveTimer = new QTimeLine(20000,this) ;
+	m_autoSaveTimer = new QTimeLine(120000,this) ;
 	m_collectDlg = new CxAllChapterDlg ;
 	m_wordHandler = new CxWordHandler ;
 	initUI() ;
@@ -52,18 +56,28 @@ TextEdit::TextEdit(QWidget *parent /* = 0 */)
 	ui.tb_undo->setEnabled(false) ;
 	ui.tb_redo->setEnabled(false) ;
 	onDocumentChanged(false) ;
+//	resize(1366,768) ;
 //	ui.w_pagination->setMouseTracking(true) ;
 }
 
 
 void TextEdit::initUI()
 {	
+	ui.lbl_title->hide() ;
+	//setWindowFlags(Qt::Dialog);
+	//setWindowState(windowState() & ~Qt::WindowMinimized | Qt::WindowActive);
+//	setWindowFlags(Qt::FramelessWindowHint);
 	QDesktopWidget* myWidget = new QDesktopWidget;
 	int w = 6.93*myWidget->logicalDpiX() ;
 	int h = 9.84*myWidget->logicalDpiY() ;
 	m_pageSize = QSize(w,h) ;
-	ui.textEdit->setFixedWidth(w) ;
-	ui.w_pagination->setFixedWidth(w) ;
+
+// 	ui.textEdit->setFixedWidth(w) ;
+// 	ui.w_pagination->setFixedWidth(w) ;
+
+//	ui.textEdit->setMininumSoWidth(w) ;
+//	ui.w_pagination->setFixedWidth(w) ;
+
 	ui.cb_fontsize->setEditable(true);
 	ui.w_textcolor->setIndex(TEXTCOLOR) ;
 	ui.w_highlightcolor->setIndex(HIGHLIGHTCOLOR) ;
@@ -245,6 +259,8 @@ void TextEdit::startBook(QString str, bool isOpenMode)
 
 	m_curDirPath = dirPath ;
 	m_curBookName = str ;
+	ui.lbl_title->setText("    "+str+"    ") ;
+	ui.lbl_title->show() ;
 	init() ;
 	ui.w_top->setEnabled(true) ;
 	setWindowTitle(m_curBookName) ;
@@ -357,7 +373,7 @@ void TextEdit::onUploadFile()
 {
 	QString fileName = QFileDialog::getOpenFileName(this, tr("Upload File"),
 		"",
-		tr("Files (*.txt *.doc *.docx *.png *.jpg)")) ;
+		tr("Files (*.txt *.doc *.docx *.odt *.png *.jpg)")) ;
 	if( fileName.length() == 0 ) return ;
 	QString suf = QFileInfo(fileName).suffix().toLower() ;
 	CxResListWidget* w = ui.lw_res_1 ;
@@ -384,6 +400,30 @@ void TextEdit::onUploadFile()
 		QString filePath = QString("res/image/%1.%2").arg(createSimpleUuid()).arg(QFileInfo(fileName).suffix()) ;
 		QFile(fileName).copy(filePath) ;
 		w->addImage(filePath) ;
+		return ;
+	}
+	if( suf.contains("odt") )
+	{
+		QStringList arg ;
+		QString dirPath = QString("res/tmp/%1").arg(createSimpleUuid()) ;
+		QDir().mkpath(dirPath) ;
+		QFile newFile(dirPath+"/"+"content.xml") ;
+// 		QString filePath = QString("%1/%2.zip").arg(dirPath).arg(createSimpleUuid()) ;
+// 		QFile(fileName).copy(filePath) ;
+//		 x D:/1.odt -oD:\bid content.xml -r
+ 		arg << "x" << fileName << QString("-o%1").arg(dirPath) << "content.xml" << "-r" ;
+		QProcess::execute( "7z",arg ) ;
+		QTextEdit tmp ;
+		QTextStream in(&newFile) ;
+		if( newFile.open(QIODevice::ReadOnly) )
+		{
+			QString str = in.readAll();
+			newFile.close() ;
+			newFile.remove() ;
+			tmp.setHtml(str) ;
+			w->addText(tmp.toPlainText()) ;
+		}
+		QDir(dirPath).removeRecursively() ;
 		return ;
 	}
 	QFile file(fileName) ;
@@ -429,10 +469,10 @@ void TextEdit::switchContent(int id)
 	m_curLWTab = id ;
 	QStringList wStyle, btnStyle ;
 	wStyle << "QWidget{background:#fff200;}" << "QWidget{background:#c3c3c3;}" ;
-	btnStyle << "QToolButton{border-style:solid;border-width:1px;border-color:black;}" 
-		<< "QToolButton{border-style:solid;border-width:1px;border-color:black;color:#7f7f7f;}" ;
-	ui.w_res_1->setStyleSheet(wStyle[id]) ;
-	ui.w_res_2->setStyleSheet(wStyle[!id]) ;
+	btnStyle << "QToolButton{background:#fff200;border:1px solid #c3c3c3;border-radius:15px;}" 
+		<< "QToolButton{background:#ebebeb; border:1px solid #c3c3c3;border-radius:15px;}"  ;
+//	ui.w_res_1->setStyleSheet(wStyle[id]) ;
+//	ui.w_res_2->setStyleSheet(wStyle[!id]) ;
 	ui.tb_res_1->setStyleSheet(btnStyle[id]) ;
 	ui.tb_res_2->setStyleSheet(btnStyle[!id]) ;
 	ui.lw_res_1->setVisible(id==0) ;
@@ -710,6 +750,9 @@ void TextEdit::onFontSizeDecrease()
 
 void TextEdit::onSave()
 {
+	
+//	QMessageBox::information(NULL,"",QString("%1 %2").arg(width()).arg(height())) ;
+
 	if( m_autoSaveTimer->state() == QTimeLine::Running )
 	{
 		m_autoSaveTimer->stop() ;
@@ -794,6 +837,13 @@ void TextEdit::onPdf()
 
 void TextEdit::onPrint()
 {
+
+// 	QFile file("D://content.xml") ;
+// 	QTextStream in(&file) ;
+// 	file.open(QIODevice::ReadOnly) ;
+// 	QString  str = in.readAll() ;
+// //	ui.textEdit->setHtml(QDomDocument("D://content.xml").toString()) ;
+// 	ui.textEdit->setHtml(str) ;
 //	QPrinter printer(QPrinter::HighResolution);
 	QPrinter printer(QPrinter::ScreenResolution);
 	printer.setPageSize(QPagedPaintDevice::B5) ;
@@ -840,7 +890,7 @@ void TextEdit::onShowPageMenu( bool on )
 		if( pg <= 5 ) return ;
 
 		QPoint pnt = mapFromGlobal(ui.tb_show_page->mapToGlobal(QPoint(0,0))) ;
-		m_pageMenu->setGeometry(pnt.x()-10-m_pageMenu->prefWidth(),pnt.y(), m_pageMenu->prefWidth(), m_pageMenu->prefHeight() ) ;
+		m_pageMenu->setGeometry(pnt.x()+40,pnt.y(), m_pageMenu->prefWidth(), m_pageMenu->prefHeight() ) ;
 		m_pageMenu->setVisible(true) ;
 	}
 	else
@@ -1004,4 +1054,21 @@ void TextEdit::load()
 		}
 	}
 	if( m_chapterList.count() ) ui.lw_chapter_list->setCurrentRow(0) ;
+}
+
+void TextEdit::showEvent(QShowEvent* event)
+{
+	QWidget::showEvent(event) ;
+	QDesktopWidget* w = new QDesktopWidget ;
+	int h = w->availableGeometry().height() ;
+	if( h < 800 ) h = qMin(h,600) ;
+	else h = h*0.9 ;
+	resize(width(),h) ;
+//	showMaximized() ;
+//	setMinimumHeight(700) ;
+}
+
+void TextEdit::resizeEvent(QResizeEvent *event)
+{
+	QWidget::resizeEvent(event) ;
 }

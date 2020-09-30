@@ -1,6 +1,7 @@
 #include "cxpagemenu.h"
 #define BTNSZ 30
-#define COLCNT 10
+#define COLCNT 15
+#define PAGEN 200
 
 CxPageMenu::CxPageMenu(QWidget *parent)
 	: QWidget(parent)
@@ -9,7 +10,7 @@ CxPageMenu::CxPageMenu(QWidget *parent)
 //	setFixedWidth(BTNSZ*COLCNT) ;
 	m_mapper = new QSignalMapper(this) ;
 	m_cnt = 1 ;
-	for( int i = 0; i < 200; i++ )
+	for( int i = 0; i < PAGEN; i++ )
 	{
 		QToolButton* bt = new QToolButton(this) ;
 		bt->setGeometry((i%COLCNT)*BTNSZ,(i/COLCNT)*BTNSZ,BTNSZ,BTNSZ) ;
@@ -30,7 +31,7 @@ CxPageMenu::~CxPageMenu()
 
 void CxPageMenu::setCount( int cnt )
 {
-	for( int i = 6; i < 156; i++ )
+	for( int i = 6; i < 6+PAGEN; i++ )
 	{
 		m_btnList[i-6]->setVisible(i<=cnt) ;
 	}
@@ -40,7 +41,7 @@ void CxPageMenu::setCount( int cnt )
 
 void CxPageMenu::setCurrentPage( int id )
 {
-	for( int i = 0; i < 150; i++ )
+	for( int i = 0; i < PAGEN; i++ )
 	{
 		m_btnList[i]->setStyleSheet(QString("QToolButton{background:none;color:%1;}").arg(id==i+6?"green":"blue")) ;
 	}

@@ -152,7 +152,10 @@ void CxChapterList::onNext()
 	if( !cnt || cur + 1 >= count() ) return ;
 //	scrollToItem(item(cur+1)) ;
 //	scrollContentsBy(30,0) ;
-	horizontalScrollBar()->setValue(horizontalScrollBar()->value()+30) ;
+//	QMessageBox::information(NULL,"",QString("%1").arg(horizontalScrollBar()->maximum())) ;
+	setCurrentRow(cur+1) ;
+//	horizontalScrollBar()->setValue(horizontalScrollBar()->value()+1) ;
+//	QMessageBox::information(NULL,"",QString("%1").arg(horizontalScrollBar()->value())) ;
 }
 
 void CxChapterList::onPrevious()
@@ -162,7 +165,8 @@ void CxChapterList::onPrevious()
 	if( !cnt || !cur ) return ;
 //	scrollContentsBy(-30,0) ;
 //	scrollToItem(item(cur-1)) ;
-	horizontalScrollBar()->setValue(horizontalScrollBar()->value()-30) ;
+//	horizontalScrollBar()->setValue(horizontalScrollBar()->value()-1) ;
+	setCurrentRow(cur-1) ;
 }
 
 void CxChapterList::resizeItem(QListWidgetItem* item)
