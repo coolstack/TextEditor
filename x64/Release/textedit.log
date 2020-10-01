@@ -1,4 +1,4 @@
-﻿Build started 10/1/2020 5:00:13 AM.
+﻿Build started 10/1/2020 9:51:20 AM.
      1>Project "D:\dev\TKTextEditor\textedit\textedit.vcxproj" on node 2 (Build target(s)).
      1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V110\Microsoft.CppBuild.targets(345,5): warning MSB8004: Intermediate Directory does not end with a trailing slash.  This build instance will add the slash as it is required to allow proper evaluation of the Intermediate Directory.
      1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V110\Microsoft.CppBuild.targets(346,5): warning MSB8004: Output Directory does not end with a trailing slash.  This build instance will add the slash as it is required to allow proper evaluation of the Output Directory.
@@ -52,4 +52,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:04.85
+Time Elapsed 00:00:04.62

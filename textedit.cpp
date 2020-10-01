@@ -1112,13 +1112,14 @@ void TextEdit::mouseDoubleClickEvent(QMouseEvent *event)
 void TextEdit::onMaximize()
 {
 	if( m_isMaximized ){
-		showNormal() ;
-//		setGeometry(m_restoreRect) ;
+//		showNormal() ;
+		setGeometry(m_restoreRect) ;
 	}
 	else
 	{
 		m_restoreRect = geometry() ;
-		showMaximized() ;
+		setGeometry(QApplication::desktop()->availableGeometry()) ;
+//		showMaximized() ;
 	}
 	m_isMaximized = !m_isMaximized ; 
 }

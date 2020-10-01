@@ -506,7 +506,7 @@ public:
         gridLayout_9->setObjectName(QStringLiteral("gridLayout_9"));
         gridLayout_9->setHorizontalSpacing(0);
         gridLayout_9->setVerticalSpacing(5);
-        gridLayout_9->setContentsMargins(0, 0, 10, 0);
+        gridLayout_9->setContentsMargins(0, 0, 10, 10);
         widget = new QWidget(w_content);
         widget->setObjectName(QStringLiteral("widget"));
         widget->setMinimumSize(QSize(0, 40));
