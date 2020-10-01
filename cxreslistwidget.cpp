@@ -38,7 +38,7 @@ CxResListWidget::CxResListWidget(QWidget *parent)
 	connect( this, SIGNAL(itemSelectionChanged()), this, SLOT(onSelectionChanged())) ;
 	m_preView = new CxPreviewLabel(this) ;
 //	m_preView->setGeometry(0,0,40,40) ;
-//	m_preView->hide() ;
+	m_preView->hide() ;
 }
 
 CxResListWidget::~CxResListWidget()

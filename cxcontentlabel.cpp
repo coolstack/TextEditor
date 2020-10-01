@@ -4,7 +4,7 @@ CxContentLabel::CxContentLabel(QListWidgetItem* parentItem, QWidget *parent)
 	: QLabel(parent)
 {
 	m_parentItem = parentItem ;
-	setStyleSheet("QLabel{background:#E7F3FF;border-radius:8px;border:1px solid black;}") ;
+	setStyleSheet("QLabel{background:#E7F3FF;border-radius:8px;border:1px solid #fff200;}") ;
 	setFont(QFont("arial",10)) ;
 	setTextFormat(Qt::RichText) ;
 }

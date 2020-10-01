@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_TextEdit_t {
-    QByteArrayData data[64];
-    char stringdata[741];
+    QByteArrayData data[66];
+    char stringdata[762];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -71,28 +71,30 @@ QT_MOC_LITERAL(38, 399, 14),
 QT_MOC_LITERAL(39, 414, 2),
 QT_MOC_LITERAL(40, 417, 11),
 QT_MOC_LITERAL(41, 429, 8),
-QT_MOC_LITERAL(42, 438, 24),
-QT_MOC_LITERAL(43, 463, 15),
-QT_MOC_LITERAL(44, 479, 6),
-QT_MOC_LITERAL(45, 486, 8),
-QT_MOC_LITERAL(46, 495, 13),
-QT_MOC_LITERAL(47, 509, 10),
-QT_MOC_LITERAL(48, 520, 10),
-QT_MOC_LITERAL(49, 531, 1),
-QT_MOC_LITERAL(50, 533, 8),
-QT_MOC_LITERAL(51, 542, 1),
-QT_MOC_LITERAL(52, 544, 9),
-QT_MOC_LITERAL(53, 554, 10),
-QT_MOC_LITERAL(54, 565, 11),
-QT_MOC_LITERAL(55, 577, 12),
-QT_MOC_LITERAL(56, 590, 16),
-QT_MOC_LITERAL(57, 607, 18),
-QT_MOC_LITERAL(58, 626, 18),
-QT_MOC_LITERAL(59, 645, 18),
-QT_MOC_LITERAL(60, 664, 3),
-QT_MOC_LITERAL(61, 668, 24),
-QT_MOC_LITERAL(62, 693, 28),
-QT_MOC_LITERAL(63, 722, 17)
+QT_MOC_LITERAL(42, 438, 10),
+QT_MOC_LITERAL(43, 449, 9),
+QT_MOC_LITERAL(44, 459, 24),
+QT_MOC_LITERAL(45, 484, 15),
+QT_MOC_LITERAL(46, 500, 6),
+QT_MOC_LITERAL(47, 507, 8),
+QT_MOC_LITERAL(48, 516, 13),
+QT_MOC_LITERAL(49, 530, 10),
+QT_MOC_LITERAL(50, 541, 10),
+QT_MOC_LITERAL(51, 552, 1),
+QT_MOC_LITERAL(52, 554, 8),
+QT_MOC_LITERAL(53, 563, 1),
+QT_MOC_LITERAL(54, 565, 9),
+QT_MOC_LITERAL(55, 575, 10),
+QT_MOC_LITERAL(56, 586, 11),
+QT_MOC_LITERAL(57, 598, 12),
+QT_MOC_LITERAL(58, 611, 16),
+QT_MOC_LITERAL(59, 628, 18),
+QT_MOC_LITERAL(60, 647, 18),
+QT_MOC_LITERAL(61, 666, 18),
+QT_MOC_LITERAL(62, 685, 3),
+QT_MOC_LITERAL(63, 689, 24),
+QT_MOC_LITERAL(64, 714, 28),
+QT_MOC_LITERAL(65, 743, 17)
     },
     "TextEdit\0onStartNewBook\0\0onAddChapter\0"
     "onSelectChapter\0onTextChanged\0"
@@ -106,13 +108,13 @@ QT_MOC_LITERAL(63, 722, 17)
     "item\0onSave\0onRequireColorMenu\0"
     "CxColorWidget*\0w\0onCollectAll\0onAutoSave\0"
     "onShowPageMenu\0on\0saveContent\0saveText\0"
-    "currentCharFormatChanged\0QTextCharFormat\0"
-    "format\0textBold\0textUnderline\0textItalic\0"
-    "textFamily\0f\0textSize\0p\0textColor\0"
-    "onTextLeft\0onTextRight\0onTextCenter\0"
-    "onShowTextFormat\0onFontSizeIncrease\0"
-    "onFontSizeDecrease\0onTextColorChanged\0"
-    "col\0onHightlightColorChanged\0"
+    "onMaximize\0onCopyAll\0currentCharFormatChanged\0"
+    "QTextCharFormat\0format\0textBold\0"
+    "textUnderline\0textItalic\0textFamily\0"
+    "f\0textSize\0p\0textColor\0onTextLeft\0"
+    "onTextRight\0onTextCenter\0onShowTextFormat\0"
+    "onFontSizeIncrease\0onFontSizeDecrease\0"
+    "onTextColorChanged\0col\0onHightlightColorChanged\0"
     "onTextBackgroundColorChanged\0"
     "onDocumentChanged\0"
 };
@@ -124,7 +126,7 @@ static const uint qt_meta_data_TextEdit[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-      47,   14, // methods
+      49,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -132,53 +134,55 @@ static const uint qt_meta_data_TextEdit[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags
-       1,    0,  249,    2, 0x08,
-       3,    0,  250,    2, 0x08,
-       4,    1,  251,    2, 0x08,
-       5,    0,  254,    2, 0x08,
-       6,    1,  255,    2, 0x08,
-       7,    0,  258,    2, 0x08,
-       8,    0,  259,    2, 0x08,
-       9,    0,  260,    2, 0x08,
-      10,    1,  261,    2, 0x08,
-      12,    0,  264,    2, 0x08,
-      13,    0,  265,    2, 0x08,
-      14,    0,  266,    2, 0x08,
-      15,    0,  267,    2, 0x08,
-      16,    0,  268,    2, 0x08,
-      17,    0,  269,    2, 0x08,
-      18,    0,  270,    2, 0x08,
-      19,    0,  271,    2, 0x08,
-      20,    0,  272,    2, 0x08,
-      21,    2,  273,    2, 0x08,
-      24,    1,  278,    2, 0x08,
-      25,    2,  281,    2, 0x08,
-      28,    2,  286,    2, 0x08,
-      32,    0,  291,    2, 0x08,
-      33,    1,  292,    2, 0x08,
-      36,    0,  295,    2, 0x08,
-      37,    0,  296,    2, 0x08,
-      38,    1,  297,    2, 0x08,
-      40,    0,  300,    2, 0x08,
-      41,    0,  301,    2, 0x08,
-      41,    1,  302,    2, 0x08,
-      42,    1,  305,    2, 0x08,
-      45,    0,  308,    2, 0x08,
-      46,    0,  309,    2, 0x08,
-      47,    0,  310,    2, 0x08,
-      48,    1,  311,    2, 0x08,
-      50,    1,  314,    2, 0x08,
-      52,    0,  317,    2, 0x08,
-      53,    0,  318,    2, 0x08,
-      54,    0,  319,    2, 0x08,
-      55,    0,  320,    2, 0x08,
-      56,    0,  321,    2, 0x08,
-      57,    0,  322,    2, 0x08,
-      58,    0,  323,    2, 0x08,
-      59,    1,  324,    2, 0x08,
-      61,    1,  327,    2, 0x08,
-      62,    1,  330,    2, 0x08,
-      63,    1,  333,    2, 0x08,
+       1,    0,  259,    2, 0x08,
+       3,    0,  260,    2, 0x08,
+       4,    1,  261,    2, 0x08,
+       5,    0,  264,    2, 0x08,
+       6,    1,  265,    2, 0x08,
+       7,    0,  268,    2, 0x08,
+       8,    0,  269,    2, 0x08,
+       9,    0,  270,    2, 0x08,
+      10,    1,  271,    2, 0x08,
+      12,    0,  274,    2, 0x08,
+      13,    0,  275,    2, 0x08,
+      14,    0,  276,    2, 0x08,
+      15,    0,  277,    2, 0x08,
+      16,    0,  278,    2, 0x08,
+      17,    0,  279,    2, 0x08,
+      18,    0,  280,    2, 0x08,
+      19,    0,  281,    2, 0x08,
+      20,    0,  282,    2, 0x08,
+      21,    2,  283,    2, 0x08,
+      24,    1,  288,    2, 0x08,
+      25,    2,  291,    2, 0x08,
+      28,    2,  296,    2, 0x08,
+      32,    0,  301,    2, 0x08,
+      33,    1,  302,    2, 0x08,
+      36,    0,  305,    2, 0x08,
+      37,    0,  306,    2, 0x08,
+      38,    1,  307,    2, 0x08,
+      40,    0,  310,    2, 0x08,
+      41,    0,  311,    2, 0x08,
+      41,    1,  312,    2, 0x08,
+      42,    0,  315,    2, 0x08,
+      43,    0,  316,    2, 0x08,
+      44,    1,  317,    2, 0x08,
+      47,    0,  320,    2, 0x08,
+      48,    0,  321,    2, 0x08,
+      49,    0,  322,    2, 0x08,
+      50,    1,  323,    2, 0x08,
+      52,    1,  326,    2, 0x08,
+      54,    0,  329,    2, 0x08,
+      55,    0,  330,    2, 0x08,
+      56,    0,  331,    2, 0x08,
+      57,    0,  332,    2, 0x08,
+      58,    0,  333,    2, 0x08,
+      59,    0,  334,    2, 0x08,
+      60,    0,  335,    2, 0x08,
+      61,    1,  336,    2, 0x08,
+      63,    1,  339,    2, 0x08,
+      64,    1,  342,    2, 0x08,
+      65,    1,  345,    2, 0x08,
 
  // slots: parameters
     QMetaType::Void,
@@ -211,12 +215,14 @@ static const uint qt_meta_data_TextEdit[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void, QMetaType::Int,   22,
-    QMetaType::Void, 0x80000000 | 43,   44,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void, 0x80000000 | 45,   46,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::QString,   49,
     QMetaType::Void, QMetaType::QString,   51,
+    QMetaType::Void, QMetaType::QString,   53,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
@@ -224,9 +230,9 @@ static const uint qt_meta_data_TextEdit[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::QColor,   60,
-    QMetaType::Void, QMetaType::QColor,   60,
-    QMetaType::Void, QMetaType::QColor,   60,
+    QMetaType::Void, QMetaType::QColor,   62,
+    QMetaType::Void, QMetaType::QColor,   62,
+    QMetaType::Void, QMetaType::QColor,   62,
     QMetaType::Void, QMetaType::Bool,   39,
 
        0        // eod
@@ -267,23 +273,25 @@ void TextEdit::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, vo
         case 27: _t->saveContent(); break;
         case 28: _t->saveText(); break;
         case 29: _t->saveText((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 30: _t->currentCharFormatChanged((*reinterpret_cast< const QTextCharFormat(*)>(_a[1]))); break;
-        case 31: _t->textBold(); break;
-        case 32: _t->textUnderline(); break;
-        case 33: _t->textItalic(); break;
-        case 34: _t->textFamily((*reinterpret_cast< const QString(*)>(_a[1]))); break;
-        case 35: _t->textSize((*reinterpret_cast< const QString(*)>(_a[1]))); break;
-        case 36: _t->textColor(); break;
-        case 37: _t->onTextLeft(); break;
-        case 38: _t->onTextRight(); break;
-        case 39: _t->onTextCenter(); break;
-        case 40: _t->onShowTextFormat(); break;
-        case 41: _t->onFontSizeIncrease(); break;
-        case 42: _t->onFontSizeDecrease(); break;
-        case 43: _t->onTextColorChanged((*reinterpret_cast< QColor(*)>(_a[1]))); break;
-        case 44: _t->onHightlightColorChanged((*reinterpret_cast< QColor(*)>(_a[1]))); break;
-        case 45: _t->onTextBackgroundColorChanged((*reinterpret_cast< QColor(*)>(_a[1]))); break;
-        case 46: _t->onDocumentChanged((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 30: _t->onMaximize(); break;
+        case 31: _t->onCopyAll(); break;
+        case 32: _t->currentCharFormatChanged((*reinterpret_cast< const QTextCharFormat(*)>(_a[1]))); break;
+        case 33: _t->textBold(); break;
+        case 34: _t->textUnderline(); break;
+        case 35: _t->textItalic(); break;
+        case 36: _t->textFamily((*reinterpret_cast< const QString(*)>(_a[1]))); break;
+        case 37: _t->textSize((*reinterpret_cast< const QString(*)>(_a[1]))); break;
+        case 38: _t->textColor(); break;
+        case 39: _t->onTextLeft(); break;
+        case 40: _t->onTextRight(); break;
+        case 41: _t->onTextCenter(); break;
+        case 42: _t->onShowTextFormat(); break;
+        case 43: _t->onFontSizeIncrease(); break;
+        case 44: _t->onFontSizeDecrease(); break;
+        case 45: _t->onTextColorChanged((*reinterpret_cast< QColor(*)>(_a[1]))); break;
+        case 46: _t->onHightlightColorChanged((*reinterpret_cast< QColor(*)>(_a[1]))); break;
+        case 47: _t->onTextBackgroundColorChanged((*reinterpret_cast< QColor(*)>(_a[1]))); break;
+        case 48: _t->onDocumentChanged((*reinterpret_cast< bool(*)>(_a[1]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
@@ -325,13 +333,13 @@ int TextEdit::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 47)
+        if (_id < 49)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 47;
+        _id -= 49;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 47)
+        if (_id < 49)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 47;
+        _id -= 49;
     }
     return _id;
 }

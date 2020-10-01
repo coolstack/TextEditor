@@ -21,10 +21,10 @@ void CxPageLabel::setIndex( int id )
 void CxPageLabel::paintEvent(QPaintEvent* event)
 {
 	QPainter painter(this); 
-	painter.setPen(Qt::blue) ;
+	painter.setPen(Qt::black) ;
 	painter.setFont(QFont("Impact",m_isFocused?28:20)) ;
 	painter.drawText(0,0,width(),height(),Qt::AlignCenter,QString("%1").arg(m_index)) ;
-	painter.setBrush(Qt::blue) ;
+	painter.setBrush(Qt::black) ;
 	painter.setPen(Qt::NoPen) ;
 //	if( m_isSelected ) painter.drawRect(0,height()-5,width(),5) ;
 }

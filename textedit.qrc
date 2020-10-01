@@ -1,5 +1,13 @@
 <RCC>
   <qresource prefix="/">
+    <file>res/icon/restore-window-256.png</file>
+    <file>res/icon/red-book.png</file>
+    <file>res/icon/close-window-256.png</file>
+    <file>res/icon/maximize-window-256.png</file>
+    <file>res/icon/minimize-window-256.png</file>
+    <file>res/icon/Close-icon.png</file>
+    <file>res/icon/Programming-Maximize-Window-icon.png</file>
+    <file>res/icon/Programming-Minimize-Window-icon.png</file>
     <file>res/icon/arrow-dropleft-icon_1.png</file>
     <file>res/icon/arrow-dropright-icon_1.png</file>
     <file>res/icon/Redo-icon.png</file>

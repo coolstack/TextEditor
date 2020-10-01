@@ -35,26 +35,29 @@ class Ui_Form_MainWindow
 {
 public:
     QGridLayout *gridLayout;
-    QWidget *w_blank;
-    QGridLayout *gridLayout_7;
-    QToolButton *tb_add_chapter;
-    QLabel *lbl_status;
+    QWidget *w_chapter_control;
+    QGridLayout *gridLayout_4;
+    QToolButton *tb_collect;
+    QToolButton *tb_prev_chapter;
+    CxChapterList *lw_chapter_list;
+    QToolButton *tb_next_chapter;
     QWidget *w_top;
     QGridLayout *gridLayout_2;
     QWidget *widget_5;
     QGridLayout *gridLayout_3;
-    QToolButton *tb_menu_file;
     QToolButton *tb_menu_text;
+    QToolButton *tb_menu_file;
+    QToolButton *tb_start;
+    QToolButton *tb_add_chapter;
     QWidget *widget_7;
     QGridLayout *gridLayout_19;
-    QLabel *label;
+    QWidget *widget_6;
+    QGridLayout *gridLayout_7;
+    QToolButton *tb_minimize;
+    QToolButton *tb_maximize;
+    QToolButton *tb_close;
+    QSpacerItem *horizontalSpacer_5;
     QLabel *lbl_title;
-    QWidget *w_chapter_control;
-    QGridLayout *gridLayout_4;
-    CxChapterList *lw_chapter_list;
-    QToolButton *tb_prev_chapter;
-    QToolButton *tb_start;
-    QToolButton *tb_next_chapter;
     QWidget *w_main;
     QGridLayout *gridLayout_5;
     QWidget *w_content;
@@ -121,6 +124,10 @@ public:
     QWidget *widget_12;
     QGridLayout *gridLayout_14;
     CxTextEdit *textEdit;
+    QWidget *widget_8;
+    QGridLayout *gridLayout_22;
+    QToolButton *tb_copy_all;
+    QSpacerItem *verticalSpacer;
     QSpacerItem *horizontalSpacer;
     QButtonGroup *buttonGroup;
 
@@ -128,7 +135,7 @@ public:
     {
         if (Form_MainWindow->objectName().isEmpty())
             Form_MainWindow->setObjectName(QStringLiteral("Form_MainWindow"));
-        Form_MainWindow->resize(1250, 727);
+        Form_MainWindow->resize(1250, 722);
         QSizePolicy sizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
@@ -147,101 +154,139 @@ public:
         gridLayout->setSpacing(0);
         gridLayout->setObjectName(QStringLiteral("gridLayout"));
         gridLayout->setContentsMargins(0, 0, 0, 0);
-        w_blank = new QWidget(Form_MainWindow);
-        w_blank->setObjectName(QStringLiteral("w_blank"));
-        w_blank->setMinimumSize(QSize(0, 40));
-        w_blank->setMaximumSize(QSize(16777215, 40));
-        w_blank->setStyleSheet(QLatin1String("QWidget\n"
+        w_chapter_control = new QWidget(Form_MainWindow);
+        w_chapter_control->setObjectName(QStringLiteral("w_chapter_control"));
+        w_chapter_control->setMinimumSize(QSize(0, 60));
+        w_chapter_control->setMaximumSize(QSize(16777215, 60));
+        gridLayout_4 = new QGridLayout(w_chapter_control);
+        gridLayout_4->setSpacing(0);
+        gridLayout_4->setObjectName(QStringLiteral("gridLayout_4"));
+        gridLayout_4->setContentsMargins(0, 0, 0, 0);
+        tb_collect = new QToolButton(w_chapter_control);
+        tb_collect->setObjectName(QStringLiteral("tb_collect"));
+        tb_collect->setMinimumSize(QSize(60, 50));
+        tb_collect->setMaximumSize(QSize(60, 50));
+        tb_collect->setStyleSheet(QLatin1String("QToolButton\n"
+"{\n"
+"background:#7f7f7f;\n"
+"border:none;\n"
+"}\n"
+"\n"
+"QToolButton:hover\n"
 "{\n"
 "background:#c3c3c3;\n"
+"border:none;\n"
 "}"));
-        gridLayout_7 = new QGridLayout(w_blank);
-        gridLayout_7->setSpacing(0);
-        gridLayout_7->setObjectName(QStringLiteral("gridLayout_7"));
-        gridLayout_7->setContentsMargins(100, 0, 0, 0);
-        tb_add_chapter = new QToolButton(w_blank);
-        tb_add_chapter->setObjectName(QStringLiteral("tb_add_chapter"));
-        tb_add_chapter->setMinimumSize(QSize(150, 40));
-        tb_add_chapter->setMaximumSize(QSize(150, 40));
-        QFont font;
-        font.setFamily(QStringLiteral("Impact"));
-        font.setPointSize(20);
-        tb_add_chapter->setFont(font);
-        tb_add_chapter->setStyleSheet(QLatin1String("QToolButton\n"
+        QIcon icon1;
+        icon1.addFile(QStringLiteral(":/res/icon/more_page_btn_diasbled.png"), QSize(), QIcon::Normal, QIcon::Off);
+        tb_collect->setIcon(icon1);
+        tb_collect->setIconSize(QSize(40, 40));
+
+        gridLayout_4->addWidget(tb_collect, 0, 3, 1, 1);
+
+        tb_prev_chapter = new QToolButton(w_chapter_control);
+        tb_prev_chapter->setObjectName(QStringLiteral("tb_prev_chapter"));
+        tb_prev_chapter->setMinimumSize(QSize(100, 50));
+        tb_prev_chapter->setMaximumSize(QSize(16777215, 50));
+        tb_prev_chapter->setStyleSheet(QLatin1String("QToolButton\n"
 "{\n"
-"background:#fff200;\n"
+"background:#e9e9e9;\n"
+"border:none;\n"
+"}\n"
+"\n"
+"QToolButton:hover\n"
+"{\n"
+"background:#919191;\n"
+"border:none;\n"
 "}"));
+        QIcon icon2;
+        icon2.addFile(QStringLiteral(":/res/icon/left-xxl.png"), QSize(), QIcon::Normal, QIcon::Off);
+        tb_prev_chapter->setIcon(icon2);
+        tb_prev_chapter->setIconSize(QSize(40, 40));
 
-        gridLayout_7->addWidget(tb_add_chapter, 0, 0, 1, 1);
+        gridLayout_4->addWidget(tb_prev_chapter, 0, 0, 1, 1);
 
-        lbl_status = new QLabel(w_blank);
-        lbl_status->setObjectName(QStringLiteral("lbl_status"));
-        lbl_status->setAlignment(Qt::AlignCenter);
+        lw_chapter_list = new CxChapterList(w_chapter_control);
+        lw_chapter_list->setObjectName(QStringLiteral("lw_chapter_list"));
+        QSizePolicy sizePolicy1(QSizePolicy::Minimum, QSizePolicy::Fixed);
+        sizePolicy1.setHorizontalStretch(0);
+        sizePolicy1.setVerticalStretch(0);
+        sizePolicy1.setHeightForWidth(lw_chapter_list->sizePolicy().hasHeightForWidth());
+        lw_chapter_list->setSizePolicy(sizePolicy1);
+        lw_chapter_list->setMinimumSize(QSize(0, 50));
+        lw_chapter_list->setMaximumSize(QSize(16777215, 50));
+        lw_chapter_list->setStyleSheet(QLatin1String("QListWidget\n"
+"{\n"
+"  border-top: 4px solid gray;;\n"
+"  border-bottom: 4px solid #e9e9e9;\n"
+"}"));
+        lw_chapter_list->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+        lw_chapter_list->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
-        gridLayout_7->addWidget(lbl_status, 0, 1, 1, 1);
+        gridLayout_4->addWidget(lw_chapter_list, 0, 1, 1, 1);
+
+        tb_next_chapter = new QToolButton(w_chapter_control);
+        tb_next_chapter->setObjectName(QStringLiteral("tb_next_chapter"));
+        tb_next_chapter->setMinimumSize(QSize(100, 50));
+        tb_next_chapter->setMaximumSize(QSize(16777215, 50));
+        tb_next_chapter->setStyleSheet(QLatin1String("QToolButton\n"
+"{\n"
+"background:#e9e9e9;\n"
+"border:none;\n"
+"}\n"
+"\n"
+"QToolButton:hover\n"
+"{\n"
+"background:#919191;\n"
+"border:none;\n"
+"}"));
+        QIcon icon3;
+        icon3.addFile(QStringLiteral(":/res/icon/right-xxl.png"), QSize(), QIcon::Normal, QIcon::Off);
+        tb_next_chapter->setIcon(icon3);
+        tb_next_chapter->setIconSize(QSize(40, 40));
+
+        gridLayout_4->addWidget(tb_next_chapter, 0, 2, 1, 1);
 
 
-        gridLayout->addWidget(w_blank, 1, 0, 1, 1);
+        gridLayout->addWidget(w_chapter_control, 1, 0, 1, 1);
 
         w_top = new QWidget(Form_MainWindow);
         w_top->setObjectName(QStringLiteral("w_top"));
-        w_top->setMinimumSize(QSize(0, 40));
-        w_top->setMaximumSize(QSize(16777215, 40));
+        w_top->setMinimumSize(QSize(0, 60));
+        w_top->setMaximumSize(QSize(16777215, 60));
         w_top->setStyleSheet(QLatin1String("QToolButton\n"
 "{\n"
 "background:#919191;\n"
 "}"));
         gridLayout_2 = new QGridLayout(w_top);
+        gridLayout_2->setSpacing(0);
         gridLayout_2->setObjectName(QStringLiteral("gridLayout_2"));
-        gridLayout_2->setHorizontalSpacing(0);
-        gridLayout_2->setContentsMargins(0, 0, 0, 0);
+        gridLayout_2->setContentsMargins(0, 0, 0, 10);
         widget_5 = new QWidget(w_top);
         widget_5->setObjectName(QStringLiteral("widget_5"));
-        widget_5->setMinimumSize(QSize(140, 40));
-        widget_5->setMaximumSize(QSize(140, 40));
+        widget_5->setMinimumSize(QSize(350, 50));
+        widget_5->setMaximumSize(QSize(350, 50));
         widget_5->setStyleSheet(QLatin1String("QWidget\n"
 "{\n"
 "border: 5px solid black;\n"
 "}"));
         gridLayout_3 = new QGridLayout(widget_5);
-        gridLayout_3->setSpacing(0);
         gridLayout_3->setObjectName(QStringLiteral("gridLayout_3"));
-        gridLayout_3->setContentsMargins(5, 5, 5, 5);
-        tb_menu_file = new QToolButton(widget_5);
-        tb_menu_file->setObjectName(QStringLiteral("tb_menu_file"));
-        QSizePolicy sizePolicy1(QSizePolicy::Minimum, QSizePolicy::Minimum);
-        sizePolicy1.setHorizontalStretch(0);
-        sizePolicy1.setVerticalStretch(0);
-        sizePolicy1.setHeightForWidth(tb_menu_file->sizePolicy().hasHeightForWidth());
-        tb_menu_file->setSizePolicy(sizePolicy1);
-        QFont font1;
-        font1.setFamily(QStringLiteral("Impact"));
-        font1.setPointSize(14);
-        tb_menu_file->setFont(font1);
-        tb_menu_file->setStyleSheet(QLatin1String("QToolButton\n"
-"{\n"
-"border:0px;\n"
-"background:#c3c3c3;\n"
-"}\n"
-"\n"
-"QToolButton::menu-indicator { image: none; }\n"
-"\n"
-"QToolButton:hover\n"
-"{\n"
-"border:0px;\n"
-"background:#83d7f3;\n"
-"}\n"
-"\n"
-""));
-        tb_menu_file->setPopupMode(QToolButton::InstantPopup);
-
-        gridLayout_3->addWidget(tb_menu_file, 0, 0, 1, 1);
-
+        gridLayout_3->setHorizontalSpacing(10);
+        gridLayout_3->setVerticalSpacing(0);
+        gridLayout_3->setContentsMargins(5, 5, 14, 5);
         tb_menu_text = new QToolButton(widget_5);
         tb_menu_text->setObjectName(QStringLiteral("tb_menu_text"));
-        sizePolicy1.setHeightForWidth(tb_menu_text->sizePolicy().hasHeightForWidth());
-        tb_menu_text->setSizePolicy(sizePolicy1);
-        tb_menu_text->setFont(font1);
+        QSizePolicy sizePolicy2(QSizePolicy::Minimum, QSizePolicy::Minimum);
+        sizePolicy2.setHorizontalStretch(0);
+        sizePolicy2.setVerticalStretch(0);
+        sizePolicy2.setHeightForWidth(tb_menu_text->sizePolicy().hasHeightForWidth());
+        tb_menu_text->setSizePolicy(sizePolicy2);
+        tb_menu_text->setMaximumSize(QSize(70, 16777215));
+        QFont font;
+        font.setFamily(QStringLiteral("Impact"));
+        font.setPointSize(14);
+        tb_menu_text->setFont(font);
         tb_menu_text->setStyleSheet(QLatin1String("QToolButton\n"
 "{\n"
 "border:0px;\n"
@@ -262,29 +307,156 @@ public:
 
         gridLayout_3->addWidget(tb_menu_text, 0, 1, 1, 1);
 
+        tb_menu_file = new QToolButton(widget_5);
+        tb_menu_file->setObjectName(QStringLiteral("tb_menu_file"));
+        sizePolicy2.setHeightForWidth(tb_menu_file->sizePolicy().hasHeightForWidth());
+        tb_menu_file->setSizePolicy(sizePolicy2);
+        tb_menu_file->setMaximumSize(QSize(70, 16777215));
+        tb_menu_file->setFont(font);
+        tb_menu_file->setStyleSheet(QLatin1String("QToolButton\n"
+"{\n"
+"border:0px;\n"
+"background:#c3c3c3;\n"
+"}\n"
+"\n"
+"QToolButton::menu-indicator { image: none; }\n"
+"\n"
+"QToolButton:hover\n"
+"{\n"
+"border:0px;\n"
+"background:#83d7f3;\n"
+"}\n"
+"\n"
+""));
+        tb_menu_file->setPopupMode(QToolButton::InstantPopup);
+
+        gridLayout_3->addWidget(tb_menu_file, 0, 0, 1, 1);
+
+        tb_start = new QToolButton(widget_5);
+        tb_start->setObjectName(QStringLiteral("tb_start"));
+        sizePolicy2.setHeightForWidth(tb_start->sizePolicy().hasHeightForWidth());
+        tb_start->setSizePolicy(sizePolicy2);
+        tb_start->setMinimumSize(QSize(3, 35));
+        tb_start->setMaximumSize(QSize(16777215, 35));
+        tb_start->setFont(font);
+        tb_start->setStyleSheet(QLatin1String("QToolButton\n"
+"{\n"
+"border:0px;\n"
+"border:3px solid black;\n"
+"background:#c3c3c3;\n"
+"}\n"
+"\n"
+"QToolButton::menu-indicator { image: none; }\n"
+"\n"
+"QToolButton:hover\n"
+"{\n"
+"border:0px;\n"
+"border:3px solid black;\n"
+"background:#83d7f3;\n"
+"}\n"
+"\n"
+""));
+        tb_start->setPopupMode(QToolButton::DelayedPopup);
+        tb_start->setArrowType(Qt::NoArrow);
+
+        gridLayout_3->addWidget(tb_start, 0, 2, 1, 1);
+
+        tb_add_chapter = new QToolButton(widget_5);
+        tb_add_chapter->setObjectName(QStringLiteral("tb_add_chapter"));
+        sizePolicy2.setHeightForWidth(tb_add_chapter->sizePolicy().hasHeightForWidth());
+        tb_add_chapter->setSizePolicy(sizePolicy2);
+        tb_add_chapter->setMinimumSize(QSize(0, 35));
+        tb_add_chapter->setMaximumSize(QSize(16777215, 35));
+        tb_add_chapter->setFont(font);
+        tb_add_chapter->setStyleSheet(QLatin1String("QToolButton\n"
+"{\n"
+"border:0px;\n"
+"background:#c3c3c3;\n"
+"border:3px solid black;\n"
+"\n"
+"}\n"
+"\n"
+"QToolButton::menu-indicator { image: none; }\n"
+"\n"
+"QToolButton:hover\n"
+"{\n"
+"border:0px;\n"
+"background:#83d7f3;\n"
+"border:3px solid black;\n"
+"}\n"
+"\n"
+""));
+        tb_add_chapter->setPopupMode(QToolButton::DelayedPopup);
+        tb_add_chapter->setArrowType(Qt::NoArrow);
+
+        gridLayout_3->addWidget(tb_add_chapter, 0, 3, 1, 1);
+
 
         gridLayout_2->addWidget(widget_5, 0, 0, 1, 1);
 
         widget_7 = new QWidget(w_top);
         widget_7->setObjectName(QStringLiteral("widget_7"));
-        QSizePolicy sizePolicy2(QSizePolicy::MinimumExpanding, QSizePolicy::Preferred);
-        sizePolicy2.setHorizontalStretch(0);
-        sizePolicy2.setVerticalStretch(0);
-        sizePolicy2.setHeightForWidth(widget_7->sizePolicy().hasHeightForWidth());
-        widget_7->setSizePolicy(sizePolicy2);
+        QSizePolicy sizePolicy3(QSizePolicy::MinimumExpanding, QSizePolicy::Preferred);
+        sizePolicy3.setHorizontalStretch(0);
+        sizePolicy3.setVerticalStretch(0);
+        sizePolicy3.setHeightForWidth(widget_7->sizePolicy().hasHeightForWidth());
+        widget_7->setSizePolicy(sizePolicy3);
         widget_7->setMinimumSize(QSize(200, 0));
         gridLayout_19 = new QGridLayout(widget_7);
         gridLayout_19->setSpacing(0);
         gridLayout_19->setObjectName(QStringLiteral("gridLayout_19"));
         gridLayout_19->setContentsMargins(0, 0, 0, 15);
-        label = new QLabel(widget_7);
-        label->setObjectName(QStringLiteral("label"));
-        label->setStyleSheet(QLatin1String("QLabel\n"
+        widget_6 = new QWidget(widget_7);
+        widget_6->setObjectName(QStringLiteral("widget_6"));
+        widget_6->setStyleSheet(QLatin1String("QWidget\n"
 "{\n"
 "background:black;\n"
 "}"));
+        gridLayout_7 = new QGridLayout(widget_6);
+        gridLayout_7->setSpacing(0);
+        gridLayout_7->setObjectName(QStringLiteral("gridLayout_7"));
+        gridLayout_7->setContentsMargins(0, 0, 0, 0);
+        tb_minimize = new QToolButton(widget_6);
+        tb_minimize->setObjectName(QStringLiteral("tb_minimize"));
+        tb_minimize->setMinimumSize(QSize(30, 30));
+        tb_minimize->setMaximumSize(QSize(30, 30));
+        QIcon icon4;
+        icon4.addFile(QStringLiteral(":/res/icon/minimize-window-256.png"), QSize(), QIcon::Normal, QIcon::Off);
+        tb_minimize->setIcon(icon4);
+        tb_minimize->setIconSize(QSize(30, 30));
 
-        gridLayout_19->addWidget(label, 0, 0, 1, 1);
+        gridLayout_7->addWidget(tb_minimize, 0, 1, 1, 1);
+
+        tb_maximize = new QToolButton(widget_6);
+        tb_maximize->setObjectName(QStringLiteral("tb_maximize"));
+        tb_maximize->setMinimumSize(QSize(30, 30));
+        tb_maximize->setMaximumSize(QSize(30, 30));
+        QIcon icon5;
+        icon5.addFile(QStringLiteral(":/res/icon/maximize-window-256.png"), QSize(), QIcon::Normal, QIcon::Off);
+        icon5.addFile(QStringLiteral(":/res/icon/restore-window-256.png"), QSize(), QIcon::Normal, QIcon::On);
+        tb_maximize->setIcon(icon5);
+        tb_maximize->setIconSize(QSize(30, 30));
+        tb_maximize->setCheckable(true);
+
+        gridLayout_7->addWidget(tb_maximize, 0, 2, 1, 1);
+
+        tb_close = new QToolButton(widget_6);
+        tb_close->setObjectName(QStringLiteral("tb_close"));
+        tb_close->setMinimumSize(QSize(30, 30));
+        tb_close->setMaximumSize(QSize(30, 30));
+        QIcon icon6;
+        icon6.addFile(QStringLiteral(":/res/icon/close-window-256.png"), QSize(), QIcon::Normal, QIcon::Off);
+        tb_close->setIcon(icon6);
+        tb_close->setIconSize(QSize(30, 30));
+
+        gridLayout_7->addWidget(tb_close, 0, 3, 1, 1);
+
+        horizontalSpacer_5 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        gridLayout_7->addItem(horizontalSpacer_5, 0, 0, 1, 1);
+
+
+        gridLayout_19->addWidget(widget_6, 0, 0, 1, 1);
 
 
         gridLayout_2->addWidget(widget_7, 0, 2, 1, 1);
@@ -293,7 +465,10 @@ public:
         lbl_title->setObjectName(QStringLiteral("lbl_title"));
         lbl_title->setMinimumSize(QSize(140, 0));
         lbl_title->setMaximumSize(QSize(500, 16777215));
-        lbl_title->setFont(font);
+        QFont font1;
+        font1.setFamily(QStringLiteral("Impact"));
+        font1.setPointSize(20);
+        lbl_title->setFont(font1);
         lbl_title->setStyleSheet(QLatin1String("QLabel\n"
 "{\n"
 "background-color:#969696;\n"
@@ -305,92 +480,6 @@ public:
 
 
         gridLayout->addWidget(w_top, 0, 0, 1, 1);
-
-        w_chapter_control = new QWidget(Form_MainWindow);
-        w_chapter_control->setObjectName(QStringLiteral("w_chapter_control"));
-        w_chapter_control->setMinimumSize(QSize(0, 60));
-        w_chapter_control->setMaximumSize(QSize(16777215, 60));
-        gridLayout_4 = new QGridLayout(w_chapter_control);
-        gridLayout_4->setSpacing(0);
-        gridLayout_4->setObjectName(QStringLiteral("gridLayout_4"));
-        gridLayout_4->setContentsMargins(0, 0, 0, 0);
-        lw_chapter_list = new CxChapterList(w_chapter_control);
-        lw_chapter_list->setObjectName(QStringLiteral("lw_chapter_list"));
-        QSizePolicy sizePolicy3(QSizePolicy::Minimum, QSizePolicy::Fixed);
-        sizePolicy3.setHorizontalStretch(0);
-        sizePolicy3.setVerticalStretch(0);
-        sizePolicy3.setHeightForWidth(lw_chapter_list->sizePolicy().hasHeightForWidth());
-        lw_chapter_list->setSizePolicy(sizePolicy3);
-        lw_chapter_list->setMinimumSize(QSize(0, 50));
-        lw_chapter_list->setMaximumSize(QSize(16777215, 50));
-        lw_chapter_list->setStyleSheet(QLatin1String("QListWidget\n"
-"{\n"
-"  border-top: 4px solid gray;;\n"
-"  border-bottom: 4px solid #e9e9e9;\n"
-"}"));
-        lw_chapter_list->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-        lw_chapter_list->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-
-        gridLayout_4->addWidget(lw_chapter_list, 0, 2, 1, 1);
-
-        tb_prev_chapter = new QToolButton(w_chapter_control);
-        tb_prev_chapter->setObjectName(QStringLiteral("tb_prev_chapter"));
-        tb_prev_chapter->setMinimumSize(QSize(100, 50));
-        tb_prev_chapter->setMaximumSize(QSize(16777215, 50));
-        tb_prev_chapter->setStyleSheet(QLatin1String("QToolButton\n"
-"{\n"
-"background:#e9e9e9;\n"
-"border:none;\n"
-"}\n"
-"\n"
-"QToolButton:hover\n"
-"{\n"
-"background:#919191;\n"
-"border:none;\n"
-"}"));
-        QIcon icon1;
-        icon1.addFile(QStringLiteral(":/res/icon/left-xxl.png"), QSize(), QIcon::Normal, QIcon::Off);
-        tb_prev_chapter->setIcon(icon1);
-        tb_prev_chapter->setIconSize(QSize(40, 40));
-
-        gridLayout_4->addWidget(tb_prev_chapter, 0, 0, 1, 1);
-
-        tb_start = new QToolButton(w_chapter_control);
-        tb_start->setObjectName(QStringLiteral("tb_start"));
-        tb_start->setMinimumSize(QSize(150, 50));
-        tb_start->setMaximumSize(QSize(150, 16777215));
-        tb_start->setFont(font);
-        tb_start->setStyleSheet(QLatin1String("QToolButton\n"
-"{\n"
-"background:#fff75b;\n"
-"}"));
-
-        gridLayout_4->addWidget(tb_start, 0, 1, 1, 1);
-
-        tb_next_chapter = new QToolButton(w_chapter_control);
-        tb_next_chapter->setObjectName(QStringLiteral("tb_next_chapter"));
-        tb_next_chapter->setMinimumSize(QSize(100, 50));
-        tb_next_chapter->setMaximumSize(QSize(16777215, 50));
-        tb_next_chapter->setStyleSheet(QLatin1String("QToolButton\n"
-"{\n"
-"background:#e9e9e9;\n"
-"border:none;\n"
-"}\n"
-"\n"
-"QToolButton:hover\n"
-"{\n"
-"background:#919191;\n"
-"border:none;\n"
-"}"));
-        QIcon icon2;
-        icon2.addFile(QStringLiteral(":/res/icon/right-xxl.png"), QSize(), QIcon::Normal, QIcon::Off);
-        tb_next_chapter->setIcon(icon2);
-        tb_next_chapter->setIconSize(QSize(40, 40));
-
-        gridLayout_4->addWidget(tb_next_chapter, 0, 3, 1, 1);
-
-
-        gridLayout->addWidget(w_chapter_control, 2, 0, 1, 1);
 
         w_main = new QWidget(Form_MainWindow);
         w_main->setObjectName(QStringLiteral("w_main"));
@@ -429,9 +518,9 @@ public:
         gridLayout_10->setContentsMargins(0, 0, 0, 0);
         tb_create_text = new CxCenterButton(widget);
         tb_create_text->setObjectName(QStringLiteral("tb_create_text"));
-        sizePolicy1.setHeightForWidth(tb_create_text->sizePolicy().hasHeightForWidth());
-        tb_create_text->setSizePolicy(sizePolicy1);
-        tb_create_text->setFont(font1);
+        sizePolicy2.setHeightForWidth(tb_create_text->sizePolicy().hasHeightForWidth());
+        tb_create_text->setSizePolicy(sizePolicy2);
+        tb_create_text->setFont(font);
         tb_create_text->setLayoutDirection(Qt::RightToLeft);
         tb_create_text->setStyleSheet(QLatin1String("QToolButton\n"
 "{\n"
@@ -439,9 +528,9 @@ public:
 "border:1px solid #c3c3c3;\n"
 "border-radius:10px;\n"
 "}"));
-        QIcon icon3;
-        icon3.addFile(QStringLiteral(":/res/icon/down-icon.png"), QSize(), QIcon::Normal, QIcon::Off);
-        tb_create_text->setIcon(icon3);
+        QIcon icon7;
+        icon7.addFile(QStringLiteral(":/res/icon/down-icon.png"), QSize(), QIcon::Normal, QIcon::Off);
+        tb_create_text->setIcon(icon7);
         tb_create_text->setIconSize(QSize(25, 25));
         tb_create_text->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
 
@@ -449,9 +538,9 @@ public:
 
         tb_upload = new CxCenterButton(widget);
         tb_upload->setObjectName(QStringLiteral("tb_upload"));
-        sizePolicy1.setHeightForWidth(tb_upload->sizePolicy().hasHeightForWidth());
-        tb_upload->setSizePolicy(sizePolicy1);
-        tb_upload->setFont(font1);
+        sizePolicy2.setHeightForWidth(tb_upload->sizePolicy().hasHeightForWidth());
+        tb_upload->setSizePolicy(sizePolicy2);
+        tb_upload->setFont(font);
         tb_upload->setLayoutDirection(Qt::RightToLeft);
         tb_upload->setStyleSheet(QLatin1String("QToolButton\n"
 "{\n"
@@ -459,9 +548,9 @@ public:
 "border:1px solid #c3c3c3;\n"
 "border-radius:10px;\n"
 "}"));
-        QIcon icon4;
-        icon4.addFile(QStringLiteral(":/res/icon/Upload-2-icon.png"), QSize(), QIcon::Normal, QIcon::Off);
-        tb_upload->setIcon(icon4);
+        QIcon icon8;
+        icon8.addFile(QStringLiteral(":/res/icon/Upload-2-icon.png"), QSize(), QIcon::Normal, QIcon::Off);
+        tb_upload->setIcon(icon8);
         tb_upload->setIconSize(QSize(25, 25));
         tb_upload->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
 
@@ -487,9 +576,9 @@ public:
         gridLayout_17->setContentsMargins(0, 0, 0, 0);
         tb_res_1 = new QToolButton(w_res_1);
         tb_res_1->setObjectName(QStringLiteral("tb_res_1"));
-        sizePolicy1.setHeightForWidth(tb_res_1->sizePolicy().hasHeightForWidth());
-        tb_res_1->setSizePolicy(sizePolicy1);
-        tb_res_1->setFont(font);
+        sizePolicy2.setHeightForWidth(tb_res_1->sizePolicy().hasHeightForWidth());
+        tb_res_1->setSizePolicy(sizePolicy2);
+        tb_res_1->setFont(font1);
         tb_res_1->setStyleSheet(QStringLiteral(""));
 
         gridLayout_17->addWidget(tb_res_1, 0, 0, 1, 1);
@@ -505,9 +594,9 @@ public:
         gridLayout_18->setContentsMargins(0, 0, 0, 0);
         tb_res_2 = new QToolButton(w_res_2);
         tb_res_2->setObjectName(QStringLiteral("tb_res_2"));
-        sizePolicy1.setHeightForWidth(tb_res_2->sizePolicy().hasHeightForWidth());
-        tb_res_2->setSizePolicy(sizePolicy1);
-        tb_res_2->setFont(font);
+        sizePolicy2.setHeightForWidth(tb_res_2->sizePolicy().hasHeightForWidth());
+        tb_res_2->setSizePolicy(sizePolicy2);
+        tb_res_2->setFont(font1);
         tb_res_2->setStyleSheet(QLatin1String("QToolButton{\n"
 "color:#7f7f7f;\n"
 "border-style:solid;\n"
@@ -532,8 +621,8 @@ public:
         gridLayout_16->setContentsMargins(0, 0, 0, 0);
         lw_res_1 = new CxResListWidget(widget_3);
         lw_res_1->setObjectName(QStringLiteral("lw_res_1"));
-        sizePolicy1.setHeightForWidth(lw_res_1->sizePolicy().hasHeightForWidth());
-        lw_res_1->setSizePolicy(sizePolicy1);
+        sizePolicy2.setHeightForWidth(lw_res_1->sizePolicy().hasHeightForWidth());
+        lw_res_1->setSizePolicy(sizePolicy2);
         lw_res_1->setStyleSheet(QLatin1String("QListWidget\n"
 "{\n"
 "border-radius:15px;\n"
@@ -549,8 +638,8 @@ public:
 
         lw_res_2 = new CxResListWidget(widget_3);
         lw_res_2->setObjectName(QStringLiteral("lw_res_2"));
-        sizePolicy1.setHeightForWidth(lw_res_2->sizePolicy().hasHeightForWidth());
-        lw_res_2->setSizePolicy(sizePolicy1);
+        sizePolicy2.setHeightForWidth(lw_res_2->sizePolicy().hasHeightForWidth());
+        lw_res_2->setSizePolicy(sizePolicy2);
         lw_res_2->setStyleSheet(QLatin1String("QListWidget\n"
 "{\n"
 "border-radius:15px;\n"
@@ -596,8 +685,8 @@ public:
         gridLayout_21->setContentsMargins(0, 0, 0, 0);
         cb_font = new QFontComboBox(w_cfmt_bar);
         cb_font->setObjectName(QStringLiteral("cb_font"));
-        sizePolicy1.setHeightForWidth(cb_font->sizePolicy().hasHeightForWidth());
-        cb_font->setSizePolicy(sizePolicy1);
+        sizePolicy2.setHeightForWidth(cb_font->sizePolicy().hasHeightForWidth());
+        cb_font->setSizePolicy(sizePolicy2);
         cb_font->setMinimumSize(QSize(0, 30));
         cb_font->setMaximumSize(QSize(250, 30));
         cb_font->setStyleSheet(QLatin1String("QFontComboBox\n"
@@ -635,9 +724,9 @@ public:
 "{\n"
 "background:#e5e5e5;\n"
 "}"));
-        QIcon icon5;
-        icon5.addFile(QStringLiteral(":/res/icon/font_increase.png"), QSize(), QIcon::Normal, QIcon::Off);
-        tb_font_inc->setIcon(icon5);
+        QIcon icon9;
+        icon9.addFile(QStringLiteral(":/res/icon/font_increase.png"), QSize(), QIcon::Normal, QIcon::Off);
+        tb_font_inc->setIcon(icon9);
         tb_font_inc->setIconSize(QSize(20, 20));
 
         gridLayout_21->addWidget(tb_font_inc, 0, 3, 1, 1);
@@ -655,9 +744,9 @@ public:
 "{\n"
 "background:#e5e5e5;\n"
 "}"));
-        QIcon icon6;
-        icon6.addFile(QStringLiteral(":/res/icon/font_decrease.png"), QSize(), QIcon::Normal, QIcon::Off);
-        tb_font_dec->setIcon(icon6);
+        QIcon icon10;
+        icon10.addFile(QStringLiteral(":/res/icon/font_decrease.png"), QSize(), QIcon::Normal, QIcon::Off);
+        tb_font_dec->setIcon(icon10);
         tb_font_dec->setIconSize(QSize(20, 20));
 
         gridLayout_21->addWidget(tb_font_dec, 0, 4, 1, 1);
@@ -678,9 +767,9 @@ public:
 "{\n"
 "background:#e5e5e5;\n"
 "}"));
-        QIcon icon7;
-        icon7.addFile(QStringLiteral(":/res/icon/textbold.png"), QSize(), QIcon::Normal, QIcon::Off);
-        tb_bold->setIcon(icon7);
+        QIcon icon11;
+        icon11.addFile(QStringLiteral(":/res/icon/textbold.png"), QSize(), QIcon::Normal, QIcon::Off);
+        tb_bold->setIcon(icon11);
         tb_bold->setIconSize(QSize(25, 25));
         tb_bold->setCheckable(true);
 
@@ -698,9 +787,9 @@ public:
 "{\n"
 "background:#e5e5e5;\n"
 "}"));
-        QIcon icon8;
-        icon8.addFile(QStringLiteral(":/res/icon/textitalic.png"), QSize(), QIcon::Normal, QIcon::Off);
-        tb_italic->setIcon(icon8);
+        QIcon icon12;
+        icon12.addFile(QStringLiteral(":/res/icon/textitalic.png"), QSize(), QIcon::Normal, QIcon::Off);
+        tb_italic->setIcon(icon12);
         tb_italic->setIconSize(QSize(25, 25));
         tb_italic->setCheckable(true);
 
@@ -718,9 +807,9 @@ public:
 "{\n"
 "background:#e5e5e5;\n"
 "}"));
-        QIcon icon9;
-        icon9.addFile(QStringLiteral(":/res/icon/textunder.png"), QSize(), QIcon::Normal, QIcon::Off);
-        tb_underline->setIcon(icon9);
+        QIcon icon13;
+        icon13.addFile(QStringLiteral(":/res/icon/textunder.png"), QSize(), QIcon::Normal, QIcon::Off);
+        tb_underline->setIcon(icon13);
         tb_underline->setIconSize(QSize(25, 25));
         tb_underline->setCheckable(true);
 
@@ -741,9 +830,9 @@ public:
 "{\n"
 "background:#e5e5e5;\n"
 "}"));
-        QIcon icon10;
-        icon10.addFile(QStringLiteral(":/res/icon/textleft.png"), QSize(), QIcon::Normal, QIcon::Off);
-        tb_left->setIcon(icon10);
+        QIcon icon14;
+        icon14.addFile(QStringLiteral(":/res/icon/textleft.png"), QSize(), QIcon::Normal, QIcon::Off);
+        tb_left->setIcon(icon14);
         tb_left->setIconSize(QSize(25, 25));
         tb_left->setCheckable(true);
 
@@ -762,9 +851,9 @@ public:
 "{\n"
 "background:#e5e5e5;\n"
 "}"));
-        QIcon icon11;
-        icon11.addFile(QStringLiteral(":/res/icon/textcenter.png"), QSize(), QIcon::Normal, QIcon::Off);
-        tb_center->setIcon(icon11);
+        QIcon icon15;
+        icon15.addFile(QStringLiteral(":/res/icon/textcenter.png"), QSize(), QIcon::Normal, QIcon::Off);
+        tb_center->setIcon(icon15);
         tb_center->setIconSize(QSize(25, 25));
         tb_center->setCheckable(true);
 
@@ -783,9 +872,9 @@ public:
 "{\n"
 "background:#e5e5e5;\n"
 "}"));
-        QIcon icon12;
-        icon12.addFile(QStringLiteral(":/res/icon/textright.png"), QSize(), QIcon::Normal, QIcon::Off);
-        tb_right->setIcon(icon12);
+        QIcon icon16;
+        icon16.addFile(QStringLiteral(":/res/icon/textright.png"), QSize(), QIcon::Normal, QIcon::Off);
+        tb_right->setIcon(icon16);
         tb_right->setIconSize(QSize(25, 25));
         tb_right->setCheckable(true);
 
@@ -828,9 +917,9 @@ public:
 "{\n"
 "background:#e5e5e5;\n"
 "}"));
-        QIcon icon13;
-        icon13.addFile(QStringLiteral(":/res/icon/exportpdf.png"), QSize(), QIcon::Normal, QIcon::Off);
-        tb_pdf->setIcon(icon13);
+        QIcon icon17;
+        icon17.addFile(QStringLiteral(":/res/icon/exportpdf.png"), QSize(), QIcon::Normal, QIcon::Off);
+        tb_pdf->setIcon(icon17);
         tb_pdf->setIconSize(QSize(32, 32));
 
         gridLayout_21->addWidget(tb_pdf, 0, 16, 1, 1);
@@ -847,9 +936,9 @@ public:
 "{\n"
 "background:#e5e5e5;\n"
 "}"));
-        QIcon icon14;
-        icon14.addFile(QStringLiteral(":/res/icon/fileprint.png"), QSize(), QIcon::Normal, QIcon::Off);
-        tb_print->setIcon(icon14);
+        QIcon icon18;
+        icon18.addFile(QStringLiteral(":/res/icon/fileprint.png"), QSize(), QIcon::Normal, QIcon::Off);
+        tb_print->setIcon(icon18);
         tb_print->setIconSize(QSize(32, 32));
 
         gridLayout_21->addWidget(tb_print, 0, 17, 1, 1);
@@ -866,9 +955,9 @@ public:
 "{\n"
 "background:#e5e5e5;\n"
 "}"));
-        QIcon icon15;
-        icon15.addFile(QStringLiteral(":/res/icon/filesave.png"), QSize(), QIcon::Normal, QIcon::Off);
-        tb_save->setIcon(icon15);
+        QIcon icon19;
+        icon19.addFile(QStringLiteral(":/res/icon/filesave.png"), QSize(), QIcon::Normal, QIcon::Off);
+        tb_save->setIcon(icon19);
         tb_save->setIconSize(QSize(32, 32));
 
         gridLayout_21->addWidget(tb_save, 0, 18, 1, 1);
@@ -950,9 +1039,9 @@ public:
 "{\n"
 "background:transparent;\n"
 "}"));
-        QIcon icon16;
-        icon16.addFile(QStringLiteral(":/res/icon/arrow-dropright-icon_1.png"), QSize(), QIcon::Normal, QIcon::Off);
-        tb_next_page->setIcon(icon16);
+        QIcon icon20;
+        icon20.addFile(QStringLiteral(":/res/icon/arrow-dropright-icon_1.png"), QSize(), QIcon::Normal, QIcon::Off);
+        tb_next_page->setIcon(icon20);
         tb_next_page->setIconSize(QSize(100, 100));
 
         gridLayout_15->addWidget(tb_next_page, 0, 7, 1, 1);
@@ -965,9 +1054,9 @@ public:
 "{\n"
 "background-color:transparent;\n"
 "}"));
-        QIcon icon17;
-        icon17.addFile(QStringLiteral(":/res/icon/arrow-dropleft-icon_1.png"), QSize(), QIcon::Normal, QIcon::Off);
-        tb_prev_page->setIcon(icon17);
+        QIcon icon21;
+        icon21.addFile(QStringLiteral(":/res/icon/arrow-dropleft-icon_1.png"), QSize(), QIcon::Normal, QIcon::Off);
+        tb_prev_page->setIcon(icon21);
         tb_prev_page->setIconSize(QSize(50, 50));
 
         gridLayout_15->addWidget(tb_prev_page, 0, 0, 1, 1);
@@ -1002,9 +1091,9 @@ public:
 "background:#83d7f3;\n"
 "}\n"
 ""));
-        QIcon icon18;
-        icon18.addFile(QStringLiteral(":/res/icon/Undo-icon.png"), QSize(), QIcon::Normal, QIcon::Off);
-        tb_undo->setIcon(icon18);
+        QIcon icon22;
+        icon22.addFile(QStringLiteral(":/res/icon/Undo-icon.png"), QSize(), QIcon::Normal, QIcon::Off);
+        tb_undo->setIcon(icon22);
         tb_undo->setIconSize(QSize(25, 25));
 
         gridLayout_20->addWidget(tb_undo, 0, 0, 1, 1);
@@ -1025,9 +1114,9 @@ public:
 "background:#83d7f3;\n"
 "}\n"
 ""));
-        QIcon icon19;
-        icon19.addFile(QStringLiteral(":/res/icon/Redo-icon.png"), QSize(), QIcon::Normal, QIcon::Off);
-        tb_redo->setIcon(icon19);
+        QIcon icon23;
+        icon23.addFile(QStringLiteral(":/res/icon/Redo-icon.png"), QSize(), QIcon::Normal, QIcon::Off);
+        tb_redo->setIcon(icon23);
         tb_redo->setIconSize(QSize(25, 25));
 
         gridLayout_20->addWidget(tb_redo, 0, 1, 1, 1);
@@ -1040,9 +1129,7 @@ public:
         tb_show_page->setEnabled(true);
         tb_show_page->setMinimumSize(QSize(40, 40));
         tb_show_page->setMaximumSize(QSize(40, 40));
-        QIcon icon20;
-        icon20.addFile(QStringLiteral(":/res/icon/more_page_btn_diasbled.png"), QSize(), QIcon::Normal, QIcon::Off);
-        tb_show_page->setIcon(icon20);
+        tb_show_page->setIcon(icon1);
         tb_show_page->setIconSize(QSize(40, 40));
 
         gridLayout_15->addWidget(tb_show_page, 0, 9, 1, 1);
@@ -1075,7 +1162,7 @@ public:
         gridLayout_13 = new QGridLayout(w_text_area);
         gridLayout_13->setObjectName(QStringLiteral("gridLayout_13"));
         gridLayout_13->setVerticalSpacing(0);
-        gridLayout_13->setContentsMargins(50, 20, 40, 30);
+        gridLayout_13->setContentsMargins(20, 20, 40, 30);
         widget_12 = new QWidget(w_text_area);
         widget_12->setObjectName(QStringLiteral("widget_12"));
         gridLayout_14 = new QGridLayout(widget_12);
@@ -1084,8 +1171,8 @@ public:
         gridLayout_14->setContentsMargins(0, 0, 0, 0);
         textEdit = new CxTextEdit(widget_12);
         textEdit->setObjectName(QStringLiteral("textEdit"));
-        sizePolicy1.setHeightForWidth(textEdit->sizePolicy().hasHeightForWidth());
-        textEdit->setSizePolicy(sizePolicy1);
+        sizePolicy2.setHeightForWidth(textEdit->sizePolicy().hasHeightForWidth());
+        textEdit->setSizePolicy(sizePolicy2);
         textEdit->setMinimumSize(QSize(400, 0));
         textEdit->setMaximumSize(QSize(111111, 16777215));
         textEdit->setStyleSheet(QLatin1String("QTextEdit\n"
@@ -1097,7 +1184,37 @@ public:
         gridLayout_14->addWidget(textEdit, 0, 0, 1, 1);
 
 
-        gridLayout_13->addWidget(widget_12, 1, 0, 1, 1);
+        gridLayout_13->addWidget(widget_12, 1, 1, 1, 1);
+
+        widget_8 = new QWidget(w_text_area);
+        widget_8->setObjectName(QStringLiteral("widget_8"));
+        widget_8->setMinimumSize(QSize(30, 0));
+        widget_8->setMaximumSize(QSize(30, 16777215));
+        widget_8->setStyleSheet(QLatin1String("QWidget\n"
+"{\n"
+"border:none;\n"
+"}"));
+        gridLayout_22 = new QGridLayout(widget_8);
+        gridLayout_22->setSpacing(0);
+        gridLayout_22->setObjectName(QStringLiteral("gridLayout_22"));
+        gridLayout_22->setContentsMargins(0, 0, 0, 0);
+        tb_copy_all = new QToolButton(widget_8);
+        tb_copy_all->setObjectName(QStringLiteral("tb_copy_all"));
+        tb_copy_all->setMinimumSize(QSize(30, 30));
+        tb_copy_all->setMaximumSize(QSize(30, 30));
+        QIcon icon24;
+        icon24.addFile(QStringLiteral(":/res/icon/red-book.png"), QSize(), QIcon::Normal, QIcon::Off);
+        tb_copy_all->setIcon(icon24);
+        tb_copy_all->setIconSize(QSize(30, 30));
+
+        gridLayout_22->addWidget(tb_copy_all, 0, 0, 1, 1);
+
+        verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
+
+        gridLayout_22->addItem(verticalSpacer, 1, 0, 1, 1);
+
+
+        gridLayout_13->addWidget(widget_8, 1, 0, 1, 1);
 
 
         gridLayout_12->addWidget(w_text_area, 0, 1, 1, 1);
@@ -1113,7 +1230,7 @@ public:
         gridLayout_5->addWidget(w_text, 0, 0, 1, 1);
 
 
-        gridLayout->addWidget(w_main, 3, 0, 1, 1);
+        gridLayout->addWidget(w_main, 2, 0, 1, 1);
 
 
         retranslateUi(Form_MainWindow);
@@ -1124,15 +1241,17 @@ public:
     void retranslateUi(QWidget *Form_MainWindow)
     {
         Form_MainWindow->setWindowTitle(QApplication::translate("Form_MainWindow", "Form", 0));
-        tb_add_chapter->setText(QApplication::translate("Form_MainWindow", "+ ADD CHAP", 0));
-        lbl_status->setText(QString());
-        tb_menu_file->setText(QApplication::translate("Form_MainWindow", "FILE", 0));
-        tb_menu_text->setText(QApplication::translate("Form_MainWindow", "TEXT", 0));
-        label->setText(QString());
-        lbl_title->setText(QString());
+        tb_collect->setText(QApplication::translate("Form_MainWindow", "->", 0));
         tb_prev_chapter->setText(QApplication::translate("Form_MainWindow", "<-", 0));
-        tb_start->setText(QApplication::translate("Form_MainWindow", "START", 0));
         tb_next_chapter->setText(QApplication::translate("Form_MainWindow", "->", 0));
+        tb_menu_text->setText(QApplication::translate("Form_MainWindow", "TEXT", 0));
+        tb_menu_file->setText(QApplication::translate("Form_MainWindow", "FILE", 0));
+        tb_start->setText(QApplication::translate("Form_MainWindow", "START", 0));
+        tb_add_chapter->setText(QApplication::translate("Form_MainWindow", "ADD CHAP", 0));
+        tb_minimize->setText(QApplication::translate("Form_MainWindow", "...", 0));
+        tb_maximize->setText(QApplication::translate("Form_MainWindow", "...", 0));
+        tb_close->setText(QApplication::translate("Form_MainWindow", "...", 0));
+        lbl_title->setText(QString());
         tb_create_text->setText(QApplication::translate("Form_MainWindow", "CREATE TEXT", 0));
         tb_upload->setText(QApplication::translate("Form_MainWindow", "UPLOAD FILE ", 0));
         tb_res_1->setText(QApplication::translate("Form_MainWindow", "CONTENT+", 0));
@@ -1158,6 +1277,7 @@ public:
         tb_undo->setText(QApplication::translate("Form_MainWindow", "...", 0));
         tb_redo->setText(QApplication::translate("Form_MainWindow", "...", 0));
         tb_show_page->setText(QApplication::translate("Form_MainWindow", "...", 0));
+        tb_copy_all->setText(QApplication::translate("Form_MainWindow", "...", 0));
     } // retranslateUi
 
 };

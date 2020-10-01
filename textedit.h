@@ -54,6 +54,8 @@ private slots:
 	void saveContent() ;
 	void saveText() ;
 	void saveText( int id ) ;
+	void onMaximize() ;
+	void onCopyAll() ;
 	//////////////////////////////////////////////////////////////////////////
 	void currentCharFormatChanged(const QTextCharFormat &format);
 	void textBold();
@@ -74,11 +76,14 @@ private slots:
 
 	void onDocumentChanged( bool on ) ;
 protected:
-	void mouseMoveEvent(QMouseEvent *event) ;
 	void timerEvent(QTimerEvent* event) ;
 	void closeEvent(QCloseEvent* event) ;
 	void showEvent(QShowEvent *event) ;
 	void resizeEvent(QResizeEvent *event) ;
+	void mousePressEvent(QMouseEvent *event) ;
+	void mouseMoveEvent(QMouseEvent *event) ;
+	void mouseReleaseEvent(QMouseEvent *event) ;
+	void mouseDoubleClickEvent(QMouseEvent *event) ;
 private:
 	void initUI() ;
 	void initConnection() ;
@@ -115,6 +120,12 @@ private:
 	CxWordHandler* m_wordHandler ;
 	QTimeLine* m_autoSaveTimer ;
 	int m_version ;
+
+	QRect m_oriRect;
+	QPoint m_oriPnt ;
+	bool m_isPressing ;
+	bool m_isMaximized ;
+	QRect m_restoreRect ;
 };
 
 #endif // TEXTEDIT_H

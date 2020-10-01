@@ -24,6 +24,8 @@
 #include <QDomDocument>
 #include <QProcess>
 
+#define TITLEHEIGHT 30
+
 TextEdit::TextEdit(QWidget *parent /* = 0 */)
 {
 	ui.setupUi(this) ;
@@ -63,6 +65,8 @@ TextEdit::TextEdit(QWidget *parent /* = 0 */)
 
 void TextEdit::initUI()
 {	
+	setWindowFlags(Qt::Widget | Qt::FramelessWindowHint | Qt::WindowSystemMenuHint | Qt::WindowMinimizeButtonHint );
+
 	ui.lbl_title->hide() ;
 	//setWindowFlags(Qt::Dialog);
 	//setWindowState(windowState() & ~Qt::WindowMinimized | Qt::WindowActive);
@@ -112,10 +116,20 @@ void TextEdit::initUI()
 	connect( m_autoSaveAction, SIGNAL(triggered()), this, SLOT(onAutoSave())) ;
 	connect( ui.tb_menu_text, SIGNAL(clicked()),ui.tb_menu_text, SLOT(showMenu())) ;
 	connect( ui.tb_menu_file, SIGNAL(clicked()),ui.tb_menu_file, SLOT(showMenu())) ;
+
+	m_isMaximized = false ;
+	m_isPressing = false ;
+
 }
 
 void TextEdit::initConnection()
 {
+	connect( ui.tb_collect, SIGNAL(clicked()), this, SLOT(onCollectAll())) ;
+	connect( ui.tb_copy_all, SIGNAL(clicked()), this, SLOT(onCopyAll())) ;
+	connect( ui.tb_minimize, SIGNAL(clicked()), this, SLOT(showMinimized())) ;
+	connect( ui.tb_maximize, SIGNAL(clicked()), this, SLOT(onMaximize())) ;
+	connect( ui.tb_close, SIGNAL(clicked()), this, SLOT(close())) ;
+
 	connect( ui.textEdit, SIGNAL(undoAvailable(bool)), ui.tb_undo, SLOT(setEnabled(bool))) ;
 	connect( ui.textEdit, SIGNAL(redoAvailable(bool)), ui.tb_redo, SLOT(setEnabled(bool))) ;
 	connect( m_autoSaveTimer, SIGNAL(finished()), this, SLOT(onSave())) ;
@@ -259,8 +273,8 @@ void TextEdit::startBook(QString str, bool isOpenMode)
 
 	m_curDirPath = dirPath ;
 	m_curBookName = str ;
-	ui.lbl_title->setText("    "+str+"    ") ;
-	ui.lbl_title->show() ;
+//	ui.lbl_title->setText("    "+str+"    ") ;
+//	ui.lbl_title->show() ;
 	init() ;
 	ui.w_top->setEnabled(true) ;
 	setWindowTitle(m_curBookName) ;
@@ -547,6 +561,7 @@ void TextEdit::onChapterChanged()
 	int cnt = m_chapterList.count() ;
 //	setEnabled(cnt) ;
 	ui.w_main->setEnabled(cnt) ;
+	ui.w_chapter_control->setEnabled(cnt) ;
 }
 
 void TextEdit::onMoveContent( int index, QListWidgetItem* item )
@@ -873,14 +888,6 @@ void TextEdit::onODT()
 }
 
 
-void TextEdit::mouseMoveEvent(QMouseEvent* event)
-{
-	QWidget::mouseMoveEvent(event) ;
-	QPoint pnt = event->pos() ;
-//	ui.lbl_status->setText(QString("%1 %2").arg(pnt.x()).arg(pnt.y())) ;
-//	ui.lbl_status->repaint() ;
-}
-
 void TextEdit::onShowPageMenu( bool on )
 {
 	if( on )
@@ -1071,4 +1078,60 @@ void TextEdit::showEvent(QShowEvent* event)
 void TextEdit::resizeEvent(QResizeEvent *event)
 {
 	QWidget::resizeEvent(event) ;
+}
+
+
+void TextEdit::mousePressEvent(QMouseEvent *event)
+{
+	if( m_isMaximized ) return ;
+	m_oriRect = geometry() ;
+	m_oriPnt = event->globalPos() ;
+	if( event->pos().y() < 0 || event->pos().y() > TITLEHEIGHT ) return ;
+	m_isPressing = true ;
+}
+
+void TextEdit::mouseMoveEvent(QMouseEvent *event)
+{
+	if( !m_isPressing ) return ;
+	QPoint tmp = event->globalPos()-m_oriPnt ;
+	QRect geo = m_oriRect.translated(tmp.x(),tmp.y()) ;
+	setGeometry(geo);
+}
+
+void TextEdit::mouseReleaseEvent(QMouseEvent *event)
+{
+	m_isPressing = false ;
+}
+
+void TextEdit::mouseDoubleClickEvent(QMouseEvent *event)
+{
+	if( event->pos().y() < 0 || event->pos().y() > TITLEHEIGHT ) return ;
+	onMaximize() ;
+}
+
+void TextEdit::onMaximize()
+{
+	if( m_isMaximized ){
+		showNormal() ;
+//		setGeometry(m_restoreRect) ;
+	}
+	else
+	{
+		m_restoreRect = geometry() ;
+		showMaximized() ;
+	}
+	m_isMaximized = !m_isMaximized ; 
+}
+
+void TextEdit::onCopyAll()
+{
+//	QMessageBox::information(NULL,"","A") ;
+	QApplication::setOverrideCursor(Qt::WaitCursor) ;
+	ui.textEdit->selectAll() ;
+	ui.textEdit->copy() ;
+	QTextCursor cursor = ui.textEdit->textCursor() ;
+	cursor.clearSelection() ;
+	ui.textEdit->setTextCursor(cursor) ;
+//	ui.textEdit->clearSe
+	QApplication::restoreOverrideCursor() ;
 }
